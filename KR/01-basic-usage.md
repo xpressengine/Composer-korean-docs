@@ -2,23 +2,17 @@
 
 ## 설치하기
 
-If you have not yet installed Composer, refer to the [Intro](00-intro.md) chapter.
+아직 컴포저를 설치하지 않았다면, [소개](00-intro.md) 챕터를 참고하시기 바랍니다. 
 
-## `composer.json`: Project Setup
+## `composer.json`: 프로젝트 셋업
 
-To start using Composer in your project, all you need is a `composer.json`
-file. This file describes the dependencies of your project and may contain
-other metadata as well.
+프로젝트에서 컴포저를 사용하기 위해서 필요한 것은 모두 `composer.json`파일에 있습니다. 이파일은 프로젝트의 의존성과 함께 많은 메타정보를 담고 있습니다. 
 
-The [JSON format](http://json.org/) is quite easy to write. It allows you to
-define nested structures.
+[JSON 포맷](http://json.org/)은 중첩된 구조를 정의하고 작성하는데 매우 쉬운 포맷입니다. 
 
-### The `require` Key
+### `require` key
 
-The first (and often only) thing you specify in `composer.json` is the
-`require` key. You're simply telling Composer which packages your project
-depends on.
-
+`composer.json`에서 처음으로 살펴볼 것은 매번 확인하게 되는 `require`키입니다. 이 키는 컴포저에게 프로젝트가 어떤 패키지들을 필요로 하는지 알려줍니다. 
 ```json
 {
     "require": {
@@ -27,12 +21,12 @@ depends on.
 }
 ```
 
-As you can see, `require` takes an object that maps **package names** (e.g. `monolog/monolog`)
-to **package versions** (e.g. `1.0.*`).
+보시는 바와 같이 `require` 는 **패키지 이름** (e.g. `monolog/monolog`)
+과 **패키지 버전** (e.g. `1.0.*`)의 맵핑 형태로 된 객체들로 표현됩니다.
 
-### Package Names
+### 패키지 이름
 
-The package name consists of a vendor name and the project's name. Often these
+패키지 이름은 벤더의 이름과 프로젝트의 이름으로 구성되어져 있습니다. Often these
 will be identical - the vendor name just exists to prevent naming clashes. It allows
 two different people to create a library named `json`, which would then just be
 named `igorw/json` and `seldaek/json`.
