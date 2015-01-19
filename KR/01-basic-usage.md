@@ -59,13 +59,9 @@
 > 이 말은 `~1` 으로 표현한 버전은 `~1.0`과 동일한 의미를 가지며 
 > 메이저 릴리즈가 업데이트 되기 전까지의 버전을 지칭한다고 할 수 있습니다.
 
-### Stability
+### Stability 버전 안정성
 
-By default only stable releases are taken into consideration. If you would like
-to also get RC, beta, alpha or dev versions of your dependencies you can do
-so using [stability flags](04-schema.md#package-links). To change that for all
-packages instead of doing per dependency you can also use the
-[minimum-stability](04-schema.md#minimum-stability) setting.
+기본적으로 버전 표시의 고려대상으로은 안정화 버전(stable)만을 의미합니다. 만약 RC, 베타, 알파 또는 개발 버전과 같은 표현이 필요하다면 [안정성 표시기호](04-schema.md#package-links)를 참고하십시오. 패키지의 의존성을 표시하는데 이러한 안정성 표현이 필요하다면 [최소 안정성](04-schema.md#minimum-stability) 셋팅을 참고하십시오.
 
 ## Installing Dependencies
 
