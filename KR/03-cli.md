@@ -1,71 +1,60 @@
-# Command-line interface / Commands
+# 커맨드라인 인터페이스 / 커맨드
 
-You've already learned how to use the command-line interface to do some
-things. This chapter documents all the available commands.
+당신은 이미 무언가를 하기 위해 커맨드라인 인터페이스를 사용하는 방법을 배웠습니다. 이 챕터에서는 모든 커맨드를 정리합니다.
 
-To get help from the command-line, simply call `composer` or `composer list`
-to see the complete list of commands, then `--help` combined with any of those
-can give you more information.
+커맨드라인에서 도움을 얻고 싶으면, 전체 커맨드 리스트를 보기 위해 그냥 `composer` 혹은 `composer list`를 호출하세요, 그리고 나서 각 커맨드에 `--help`를 붙이면 추가 정보를 얻을 수 있습니다. 
 
-## Global Options
+## 글로벌 옵션
 
-The following options are available with every command:
+다음의 옵션들은 모든 커맨드에 사용할 수 있습니다:
 
-* **--verbose (-v):** Increase verbosity of messages.
-* **--help (-h):** Display help information.
-* **--quiet (-q):** Do not output any message.
-* **--no-interaction (-n):** Do not ask any interactive question.
-* **--working-dir (-d):** If specified, use the given directory as working directory.
-* **--profile:** Display timing and memory usage information
-* **--ansi:** Force ANSI output.
-* **--no-ansi:** Disable ANSI output.
-* **--version (-V):** Display this application version.
+* **--verbose (-v):** 메시지를 더 풍부하게 해줍니다.
+* **--help (-h):** 도움 정보를 표현합니다.
+* **--quiet (-q):** 어떠한 메시지도 출력하지 않습니다.
+* **--no-interaction (-n):** 어떠한 대화형 질문도 하지 않습니다.
+* **--working-dir (-d):** 만약 지정되면, 지정된 디렉토리를 작업 디렉토리로 사용합니다.
+* **--profile:** 시간과 메모리 사용 정보를 표현합니다.
+* **--ansi:** 강제로 ANSI로 출력합니다.
+* **--no-ansi:** ANSI 출력을 할 수 없게 합니다.
+* **--version (-V):** 이 애플리케이션의 버전을 표현합니다. 
 
-## Process Exit Codes
+## 프로세스 종료 코드
 
 * **0:** OK
-* **1:** Generic/unknown error code
-* **2:** Dependency solving error code
+* **1:** 포괄적인/알려지지 않은 에러 코드
+* **2:** 의존성 해결 에러 코드
 
 ## init
 
-In the [Libraries](02-libraries.md) chapter we looked at how to create a
-`composer.json` by hand. There is also an `init` command available that makes
-it a bit easier to do this.
+[라이브러리](02-libraries.md) 챕터에서 `composer.json` 을 수동으로 만드는 방법을 살펴봤습니다. 이 작업을 조금 더 쉽게할 수 있게 해주는 `init` 커맨드가 있습니다.
 
-When you run the command it will interactively ask you to fill in the fields,
-while using some smart defaults.
+커맨드를 실행하면 필드를 채우도록 똑똑한 기본값들을 제시하면서 대화형 질문을 할 것입니다.
 
 ```sh
 php composer.phar init
 ```
 
-### Options
+### 옵션
 
-* **--name:** Name of the package.
-* **--description:** Description of the package.
-* **--author:** Author name of the package.
-* **--homepage:** Homepage of the package.
-* **--require:** Package to require with a version constraint. Should be
-  in format `foo/bar:1.0.0`.
-* **--require-dev:** Development requirements, see **--require**.
-* **--stability (-s):** Value for the `minimum-stability` field.
+* **--name:** 패키지 이름.
+* **--description:** 패키지 설명.
+* **--author:** 패키지 작성자의 이름
+* **--homepage:** 패키지의 홈페이지.
+* **--require:** 버전 제약하에 필요한 패키지들. `foo/bar:1.0.0`의 형태여야 합니다.
+* **--require-dev:** 개발시 필요한 것들, **--require**를 보세요.
+* **--stability (-s):** `minimum-stability` 필드 값.
 
-## install
+## 설치
 
-The `install` command reads the `composer.json` file from the current
-directory, resolves the dependencies, and installs them into `vendor`.
+`install` 커맨드는 현재 디렉토리에 있는 `composer.json` 파일을 읽고, 의존성을 해석하여, `vendor`에 설치합니다.
 
 ```sh
 php composer.phar install
 ```
 
-If there is a `composer.lock` file in the current directory, it will use the
-exact versions from there instead of resolving them. This ensures that
-everyone using the library will get the same versions of the dependencies.
+만약 현재 디렉토리에 `composer.lock` 파일이 있으면, 의존성을 해석하는 대신 `composer.lock`에 있는 것과 일치하는 버전을 사용할 것입니다. 이것은 라이브러리를 사용하는 사람들이 같은 의존성 버전을 갖도록 보장해줍니다.
 
-If there is no `composer.lock` file, composer will create one after dependency
-resolution.
+만약 `composer.lock` 파일이 없다면, 컴포저는 의존성을 해석한 후 그것을 만들것입니다.
 
 ### Options
 
