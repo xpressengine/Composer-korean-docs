@@ -26,59 +26,38 @@
 
 ### 패키지 이름
 
-패키지 이름은 벤더의 이름과 프로젝트의 이름으로 구성되어져 있습니다. Often these
-will be identical - the vendor name just exists to prevent naming clashes. It allows
-two different people to create a library named `json`, which would then just be
-named `igorw/json` and `seldaek/json`.
+패키지 이름은 벤더의 이름과 프로젝트의 이름으로 구성되어져 있습니다. 벤더 이름은 동일한 패키지 이름을 충돌을 방지하기 위해서 존재합니다(종종 동일한 패키지가 존재할 수 있습니다). 만약 각각 다른 두명의 사람이 `json`이라는 라이브러리를 만들더라도, 둘다 `igorw/json` 그리고 `seldaek/json`와 같이 구분하여 사용할 수 있게 해줍니다.
 
-Here we are requiring `monolog/monolog`, so the vendor name is the same as the
-project's name. For projects with a unique name this is recommended. It also
-allows adding more related projects under the same namespace later on. If you
-are maintaining a library, this would make it really easy to split it up into
-smaller decoupled parts.
+위에서 예시로든 `monolog/monolog`의 경우에는 벤더의 이름과 패키지 이름이 동일한 경우 입니다. 프로젝트가 하나만 존재하는 경우에는 이렇게 구성하는것이 권장됩니다.  또한 나중에 관련된 프로젝트를 동일한 이름에 더 추가할 수도 있습니다. 만약 라이브러리를 유지 보수한다면, 더 작은 부분들로 이루어 질 수 있도록 손쉽게 분리 할 수 있습니다. 
 
-### Package Versions
+### 패키지 버전
 
-In the previous example we were requiring version `1.0.*` of monolog. This
-means any version in the `1.0` development branch. It would match `1.0.0`,
-`1.0.2` or `1.0.20`.
+이전 예제에서 monolog 의 `1.0.*` 버전을 필요로 하다고 설정했습니다. 이 의미는 어떠한 `1.0` 브랜치도 가능하다는 뜻입니다. 따라서 버전이 `1.0.0`이 될수도 `1.0.2` 또는 `1.0.20`이 될수도 있습니다.
 
-Version constraints can be specified in a few different ways.
+버전의 표시는 몇가지 다른 방법으로 지정할 수 있습니다.
 
-Name           | Example                                                                  | Description
+이름           | 예제                                                                  | 설명
 -------------- | ------------------------------------------------------------------------ | -----------
-Exact version  | `1.0.2`                                                                  | You can specify the exact version of a package.
-Range          | `>=1.0` `>=1.0 <2.0` <code>&gt;=1.0 &lt;1.1 &#124;&#124; &gt;=1.2</code> | By using comparison operators you can specify ranges of valid versions. Valid operators are `>`, `>=`, `<`, `<=`, `!=`. <br />You can define multiple ranges. Ranges separated by a space (<code> </code>) or comma (`,`) will be treated as a **logical AND**. A double pipe (<code>&#124;&#124;</code>) will be treated as a **logical OR**. AND has higher precedence than OR.
-Hyphen Range   | `1.0 - 2.0`                                                              | Inclusive set of versions. Partial versions on the right include are completed with a wildcard. For example `1.0 - 2.0` is equivalent to `>=1.0.0 <2.1` as the `2.0` becomes `2.0.*`. On the other hand `1.0.0 - 2.1.0` is equivalent to `>=1.0.0 <=2.1.0`.
-Wildcard       | `1.0.*`                                                                  | You can specify a pattern with a `*` wildcard. `1.0.*` is the equivalent of `>=1.0 <1.1`.
-Tilde Operator | `~1.2`                                                                   | Very useful for projects that follow semantic versioning. `~1.2` is equivalent to `>=1.2 <2.0`. For more details, read the next section below.
-Caret Operator | `^1.2.3`                                                                 | Very useful for projects that follow semantic versioning. `^1.2.3` is equivalent to `>=1.2.3 <2.0`. For more details, read the next section below.
+정확한 버전  | `1.0.2`                                                                  | 해당 패키지의 정확한 버전을 지정할 수 있습니다.
+범위지정          | `>=1.0` `>=1.0 <2.0` <code>&gt;=1.0 &lt;1.1 &#124;&#124; &gt;=1.2</code> | 비교구문을 사용하여 일정한 범위내의 버전을 지정할 수 있습니다. 사용 가능한 연산자는 `>`, `>=`, `<`, `<=`, `!=` 입니다. <br /> 여러 범위를 지정할 수도 있습니다. 범위지정은 스페이스로 구분되어 지거나 (<code> </code>) **AND** 의미로 처리되는 콤마로 (`,`) 구분할 수도 있습니다. 두개의 파이프 기호는 (<code>&#124;&#124;</code>) **OR**로 처리됩니다. AND 가 OR 에 우선하는 처리순서를 가집니다. 
+하이픈 범위지정   | `1.0 - 2.0`                                                              | 버전의 포괄적인 지정을 의미합니다. 오른쪽에 기입한 버전은 와일드카드로 표현되는 버전을 포함함을 의미합니다. 예를 들어 `1.0 - 2.0` 라는 표현은 `>=1.0.0 <2.1` 와 동일한데 오른쪽에 기입한 `2.0` 은 `2.0.*`의 의미가 됩니다. 다른 표현으로 `1.0.0 - 2.1.0` 는 `>=1.0.0 <=2.1.0`과 동일합니다.
+와일드카드       | `1.0.*`                                                                  | 버전을 `*` 의 와일드카드를 포함한 형태로 입력할 수 있습니다. `1.0.*` 는 `>=1.0 <1.1`과 동일한 의미를 나타냅니다.
+물결표 표시 | `~1.2`                                                                   | 이 표현은 프로젝트에 있어서 매우 유용한 표현입니다. `~1.2`는 `>=1.2 <2.0`와 동일한 의미를 가집니다. 좀더 자세한 설명은 다음 섹션을 참고하십시오. 
+삽입기호(^) 표시 | `^1.2.3`                                                                 | 이 표현또한 프로젝트의 버전을 표시하는데 매우 유용합니다. `^1.2.3` 은 `>=1.2.3 <2.0`와 동일한 의미를 나타냅니다. 더 자세한 내용은, 다음 섹션을 참고하십시오.
 
-### Next Significant Release (Tilde and Caret Operators)
+### 다음 주요 릴리즈 (물결표 와 삽입기호(^)표현)
 
-The `~` operator is best explained by example: `~1.2` is equivalent to
-`>=1.2 <2.0.0`, while `~1.2.3` is equivalent to `>=1.2.3 <1.3.0`. As you can see
-it is mostly useful for projects respecting [semantic
-versioning](http://semver.org/). A common usage would be to mark the minimum
-minor version you depend on, like `~1.2` (which allows anything up to, but not
-including, 2.0). Since in theory there should be no backwards compatibility
-breaks until 2.0, that works well. Another way of looking at it is that using
-`~` specifies a minimum version, but allows the last digit specified to go up.
+ `~` 물결표 표현은 예를 들어서 보는것이 제일 좋습니다. `~1.2`은 `>=1.2 <2.0.0`와 동일하고, `~1.2.3`은 `>=1.2.3 <1.3.0`와 의미가 같습니다. 이러한 표현은 [시멘틱 버저닝](http://semver.org/)을 따르는 프로젝트에 있어서 매우 유용합니다. 일반적으로 `~1.2`와 같이 최소버전을 표시하는 형식으로 사용되어집니다.  (이상의 버전을 의미하지만 2.0 버전을 포함하지는 않음). 이러한 버저닝이 유지되려면 2.0 버전 이전까지는 호환성에 아무런 문제가 없어야 합니다. 위에서 보다시피 `~` 을 사용해서 최소버전을 지정하면, 지정된 마지막 자리까지만 허용하게 됩니다. 
 
-The `^` operator behaves very similarly but it sticks closer to semantic
-versioning, and will always allow non-breaking updates. For example `^1.2.3`
-is equivalent to `>=1.2.3 <2.0.0` as none of the releases until 2.0 should
-break backwards compatibility. For pre-1.0 versions it also acts with safety
-in mind and treats `^0.3` as `>=0.3.0 <0.4.0`
+`^` 삽입기호 표현은 시멘틱 버저닝의 표현과 비슷하게 동작하지만 다른 형태의 업데이트까지 허용합니다. 예를 들면 `^1.2.3`은 2.0 버전 미만의 호환성을 유지하는 `>=1.2.3 <2.0.0` 까지를 의미합니다. 또한 `^0.3`은 `>=0.3.0 <0.4.0`과 동일한 의미를 지닙니다.
 
-> **Note:** Though `2.0-beta.1` is strictly before `2.0`, a version constraint
-> like `~1.2` would not install it. As said above `~1.2` only means the `.2`
-> can change but the `1.` part is fixed.
+> **주의:** 비록 `2.0-beta.1`은 엄밀히 말해서 `2.0` 이전 버전이라고 할 수 있지만 
+> `~1.2`으로 표시되었을 때 이버전을 설치하지는 않습니다. 다시말해서 `~1.2` 는 `.2` 버전만을 의미합니다. 
+> 뒤의 버전은 변경될 수 있지만 `1.` 부분은 고정된 형식입니다.
 
-> **Note:** The `~` operator has an exception on its behavior for the major
-> release number. This means for example that `~1` is the same as `~1.0` as
-> it will not allow the major number to increase trying to keep backwards
-> compatibility.
+> **주의:** `~` 물결표 표현은 메이저 릴리즈 버전을 표시할 때 예외적으로 동작합니다. 
+> 이 말은 `~1` 으로 표현한 버전은 `~1.0`과 동일한 의미를 가지며 
+> 메이저 릴리즈가 업데이트 되기 전까지의 버전을 지칭한다고 할 수 있습니다.
 
 ### Stability
 
