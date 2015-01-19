@@ -58,82 +58,57 @@ php composer.phar install
 
 ### Options
 
-* **--prefer-source:** There are two ways of downloading a package: `source`
-  and `dist`. For stable versions composer will use the `dist` by default.
-  The `source` is a version control repository. If `--prefer-source` is
-  enabled, composer will install from `source` if there is one. This is
-  useful if you want to make a bugfix to a project and get a local git
-  clone of the dependency directly.
-* **--prefer-dist:** Reverse of `--prefer-source`, composer will install
-  from `dist` if possible. This can speed up installs substantially on build
-  servers and other use cases where you typically do not run updates of the
-  vendors. It is also a way to circumvent problems with git if you do not
-  have a proper setup.
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
-* **--dry-run:** If you want to run through an installation without actually
-  installing a package, you can use `--dry-run`. This will simulate the
-  installation and show you what would happen.
-* **--dev:** Install packages listed in `require-dev` (this is the default behavior).
-* **--no-dev:** Skip installing packages listed in `require-dev`.
-* **--no-autoloader:** Skips autoloader generation.
-* **--no-scripts:** Skips execution of scripts defined in `composer.json`.
-* **--no-plugins:** Disables plugins.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--optimize-autoloader (-o):** Convert PSR-0/4 autoloading to classmap to get a faster
-  autoloader. This is recommended especially for production, but can take
-  a bit of time to run so it is currently not done by default.
+* **--prefer-source:** 패키지를 다운로드 하는 데에는 `source`와 `dist` 두가지 방법이 있습니다. 안정화 버전에서는 `dist`가 기본값으로 쓰일것입니다. `source`는 버전 관리 저장소 입니다. 만약 `--prefer-source`를 활성화하면, 컴포저는 `source`로 부터 설치를 할 것입니다. 이것은 프로젝트에 버그를 수정하는 것과 의존성을 직접 로컬 git에 복사하는데에 유용합니다.
+* **--prefer-dist:** `--prefer-source`와 반대로, 가능하다면 컴포저는 `dist`로부터 설치를 합니다. 이 방법은 빌드 서버와 일반적으로 벤더를 업데이트 하지 않는 상황들에서 설치 속도를 상당히 올려줄 수 있습니다. 또한 적절하게 셋업되지 않은 경우에 발생할 수 있는 git과 관련된 문제를 피하는 방법이기도 합니다.
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
+* **--dry-run:** 만약 실제로 패키지들을 설치 하지 않고 빠르게 설치과정을 살펴보길 원한다면, `--dry-run`을 사용할 수 있습니다. 이것은 설치를 시뮬레이션하고 어떤일이 벌어질지를 보여줍니다.
+* **--dev:** `require-dev`에 있는 패키지들을 설치합니다 (이것은 기본으로 설정된 행위입니다).
+* **--no-dev:** `require-dev`에 있는 패키지들을 설치하지 않고 스킵합니다.
+* **--no-autoloader:** 오토로더를 생성하지 않고 넘어갑니다.
+* **--no-scripts:** `composer.json`에 정의된 스크립트를 실행하지 않고 넘어갑니다. 
+* **--no-plugins:** 플러그인들을 사용하지 않습니다.
+* **--no-progress:** 터미널이나 백스페이스 문자를 다루지 않는 스크립트를 지저분하게 만들 수 있는 진행사항 표시를 제거합니다.
+* **--optimize-autoloader (-o):** PSR-0/4 오토로딩을 클래스맵으로 전환시켜서 오토로더를 더 빠르게 합니다. 특히 프로덕션에 추천되지만, 시간이 조금 걸릴 수 있어서 현재는 기본설정에서는 빠져있습니다.
 
-## update
+## 업데이트
 
-In order to get the latest versions of the dependencies and to update the
-`composer.lock` file, you should use the `update` command.
+최종버전의 의존성을 확보하고, `composer.lock` 파일을 업데이트 하기 위해서는, `update` 커맨드를 사용해야 합니다.
 
 ```sh
 php composer.phar update
 ```
 
-This will resolve all dependencies of the project and write the exact versions
-into `composer.lock`.
+이것은 프로젝트의 모든 의존성을 해소하고 `composer.lock`에 정확한 버전을 작성해줍니다.
 
-If you just want to update a few packages and not all, you can list them as such:
+만약 당신이 전체가 아닌 일부 패키지만 업데이트하길 원한다면, 다음과 같이 할 수 있습니다.
 
 ```sh
 php composer.phar update vendor/package vendor/package2
 ```
 
-You can also use wildcards to update a bunch of packages at once:
+와일드카드를 사용해서 패키지 묶음을 한 번에 업데이트 할 수도 있습니다.
 
 ```sh
 php composer.phar update vendor/*
 ```
 
-### Options
+### 옵션
 
-* **--prefer-source:** Install packages from `source` when available.
-* **--prefer-dist:** Install packages from `dist` when available.
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
-* **--dry-run:** Simulate the command without actually doing anything.
-* **--dev:** Install packages listed in `require-dev` (this is the default behavior).
-* **--no-dev:** Skip installing packages listed in `require-dev`.
-* **--no-autoloader:** Skips autoloader generation.
-* **--no-scripts:** Skips execution of scripts defined in `composer.json`.
-* **--no-plugins:** Disables plugins.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--optimize-autoloader (-o):** Convert PSR-0/4 autoloading to classmap to get a faster
-  autoloader. This is recommended especially for production, but can take
-  a bit of time to run so it is currently not done by default.
-* **--lock:** Only updates the lock file hash to suppress warning about the
-  lock file being out of date.
-* **--with-dependencies** Add also all dependencies of whitelisted packages to the whitelist.
-* **--prefer-stable:** Prefer stable versions of dependencies.
-* **--prefer-lowest:** Prefer lowest versions of dependencies. Useful for testing minimal
-  versions of requirements, generally used with `--prefer-stable`.
+* **--prefer-source:** 가능한 경우 `source`로 부터 패키지를 설치합니다.
+* **--prefer-dist:** 가능한 경우 `dist`로 부터 패키지를 설치합니다.
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
+* **--dry-run:** 실제로는 실행하진 않고 커맨드를 시뮬레이션 합니다.
+* **--dev:** `require-dev`에 있는 패키지들을 설치합니다 (기본 설정입니다).
+* **--no-dev:** `require-dev`에 있는 패키지들은 설치하지 않고 넘어갑니다.
+* **--no-autoloader:** 오토로더를 생성하지 않고 넘어갑니다.
+* **--no-scripts:** `composer.json`에 정의된 스크립트를 실행하지 않고 넘어갑니다. 
+* **--no-plugins:** 플러그인을 사용하지 않습니다.
+* **--no-progress:** 터미널이나 백스페이스 문자를 다루지 않는 스크립트를 지저분하게 만들 수 있는 진행사항 표시를 제거합니다.
+* **--optimize-autoloader (-o):** PSR-0/4 오토로딩을 클래스맵으로 전환시켜서 오토로더를 더 빠르게 합니다. 특히 프로덕션에 추천되지만, 시간이 조금 걸릴 수 있어서 현재는 기본설정에서는 빠져있습니다.
+* **--lock:** lock 파일이 오래되었다는 경고를 나오지 않게 하기 위해 lock 파일의 해시만 업데이트 합니다.
+* **--with-dependencies** 화이트리스트에 화이트리스트 패키지의 모든 의존성을 추가합니다.
+* **--prefer-stable:** 안정 버전의 의존성을 선호합니다.
+* **--prefer-lowest:** 낮은 버전의 의존성을 선호합니다. 요구사항의 최소 버전을 테스트 하는데 유용하며, 일반적으로 `--prefer-stable`과 함께 쓰입니다.
 
 ## require
 
