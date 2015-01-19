@@ -219,19 +219,26 @@ php composer.phar global update
 
 ## search
 
+`search` 명령어는 현재 프로젝트의 저장소를 검색할 수 있도록 만들어 준다.
+보통 이것은 패키지스트가 됩니다(????). 당신은 간단하게(simply)이 명령어에게 당신이 찾고 싶은 단어를 전달하면 됩니다.
+
 The search command allows you to search through the current project's package repositories. Usually this will be just packagist. You simply pass it the terms you want to search for.
 
 ```sh
 php composer.phar search monolog
 ```
 
+또한 여러 단어(multiple arguments)를 사용하여 하나 이상의 단어를 찾을 수 있습니다.
+
 You can also search for more than one term by passing multiple arguments.
 
 ### Options
 
-* **--only-name (-N):** Search only in name.
+* **--only-name (-N):** Search only in name. // 이름으로만 검색한다.
 
 ## show
+
+
 
 To list all of the available packages, you can use the `show` command.
 
