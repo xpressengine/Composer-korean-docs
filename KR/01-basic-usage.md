@@ -63,28 +63,22 @@
 
 기본적으로 버전 표시의 고려대상으로은 안정화 버전(stable)만을 의미합니다. 만약 RC, 베타, 알파 또는 개발 버전과 같은 표현이 필요하다면 [안정성 표시기호](04-schema.md#package-links)를 참고하십시오. 패키지의 의존성을 표시하는데 이러한 안정성 표현이 필요하다면 [최소 안정성](04-schema.md#minimum-stability) 셋팅을 참고하십시오.
 
-## Installing Dependencies
+## 의존 패키지 설치하기
 
-To fetch the defined dependencies into your local project, just run the
-`install` command of `composer.phar`.
+의존관계가 선언된 패키지들을 로컬 프로젝트로 다운받기 위해서는 다음과 같이 `composer.phar`의 `install` 명령어를 입력하면 됩니다.
 
 ```sh
 php composer.phar install
 ```
 
-This will find the latest version of `monolog/monolog` that matches the
-supplied version constraint and download it into the `vendor` directory.
-It's a convention to put third party code into a directory named `vendor`.
-In case of monolog it will put it into `vendor/monolog/monolog`.
+이 명령어를 입력하면 `monolog/monolog` 패키지의 매칭 되는 가장 최신버전을 `vendor`디렉토리에 다운로드 받습니다. 
+`vendor` 디렉토리는 서드파티의 패키지들이 다운로드 되는 폴더를 의미합니다. 위에서 살펴본 monolog 경우에는 `vendor/monolog/monolog`에 다운로드 됩니다. 
 
-> **Tip:** If you are using git for your project, you probably want to add
-> `vendor` into your `.gitignore`. You really don't want to add all of that
-> code to your repository.
+> **참고:** 프로젝트를 git으로 관리하고 있는 경우에 모든 서드파티의 코드가 추가되길 원하지 않는다면 `vendor` 디렉토리를 `.gitignore`에 추가하여 관리하면 됩니다. 
 
-Another thing that the `install` command does is it adds a `composer.lock`
-file into your project root.
+`install` 명령어를 통해서 의존관계가 설정된 패키지들 설치한 후에는 `composer.lock`파일이 프로젝트 루트 디렉토리에 생성됩니다. 
 
-## `composer.lock` - The Lock File
+## `composer.lock` - 잠금 설정 파일
 
 After installing the dependencies, Composer writes the list of the exact
 versions it installed into a `composer.lock` file. This locks the project
