@@ -148,17 +148,17 @@ php composer.phar update vendor/*
 
 ## require
 
-`require` 명령어는 현재 디렉토리에 있는 `composer.json` 파일에 있는(적혀있는?) 새로운 패키지들을 추가하는 명령어입니다. 
+`require` 명령어는 현재 디렉토리에 있는 `composer.json` 파일에 입력되어있는 새로운 패키지들을 추가하는 명령어입니다. 
 The `require` command adds new packages to the `composer.json` file from the current directory. 
 
-해당하는 파일이 없을 경우에는 즉시 one(?)을 생성합니다.
-If no file exists one will be created (on the fly - 즉시).
+해당하는 파일이 없을 경우에는 즉시(on the fly) one(?)을 생성합니다.
+If no file exists one will be created.
 
 ```sh
 php composer.phar require
 ```
 
-요구사항들(requirements = packages in composer.json)응 추가하거나 변경한 이후에는 변경된 요구사항들을 설치하거나 업데이트해주어야 합니다.
+요구사항들(requirements = packages in composer.json)응 추가하거나 변경한 이후에는 변경된 요구사항들을 설치하거나 업데이트가 됩니다.
 After adding/changing the requirements, the modified requirements will be installed or updated.
 
 만약 요구사항이 호환이 되지 않게 하길 원한다면, 다음과 같은 방법으로 무시할 수 있습니다.
@@ -170,13 +170,13 @@ php composer.phar require vendor/package:2.* vendor/package2:dev-master
 
 ### Options
 
-* **--prefer-source:** Install packages from `source` when available. `source`에서 사용가능한 페키지를 설치합니다. 
-* **--prefer-dist:** Install packages from `dist` when available. `dist`에서 사용가능한 페키지를 설치합니다. 
+* **--prefer-source:** Install packages from `source` when available. `source`에서 사용가능한 패키지를 설치합니다. 
+* **--prefer-dist:** Install packages from `dist` when available. `dist`에서 사용가능한 패키지를 설치합니다. 
 * **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`	requirements and force the installation even if the local machine does not fulfill these.
 // `php`, `hhvm`, `lib-*`, `ext-*`의 요구사항을 무시하고, 로컬 머신(platform)이 요구를 충족하지 않더라도 인스톨을 강행합니다.
 * **--dev:** Add packages to `require-dev`. // `require-dev`에서 패키지를 더합니다.
 * **--no-update:** Disables the automatic update of the dependencies. // 의존성에 의한(연관있는 항목) 자동 업데이트를 사용하지 않습니다.
-* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
+* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
 * **--update-no-dev** Run the dependency update with the --no-dev option. // "--no-dev" 옵션을 첨가하여 의존성(관련항목) 업데이트를 진행(실행)합니다.
 * **--update-with-dependencies** Also update dependencies of the newly required packages. // 기존의 의존성이 있는 항목 이외에도 새롭게 필요로하는 패키지를 함께 업데이트(설치로 추정 됨)합니다.
 
@@ -194,7 +194,7 @@ After removing the requirements, the modified requirements will be uninstalled.
 * **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*` requirements and force the installation even if the local machine does not fulfill these. // `php`, `hhvm`, `lib-*`, `ext-*`의 요구사항을 무시하고, 로컬 머신(platform)이 요구를 충족하지 않더라도 인스톨을 강행합니다.
 * **--dev:** Remove packages from `require-dev`. // `require-dev`에 있는 패키지들을 제거합니다.
 * **--no-update:** Disables the automatic update of the dependencies.// 의존성에 의한(연관있는 항목) 자동 업데이트를 사용하지 않습니다.
-* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
+* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
 * **--update-no-dev** Run the dependency update with the --no-dev option. // "--no-dev" 옵션을 첨가하여 의존성(관련항목) 업데이트를 진행(실행)합니다.
 * **--update-with-dependencies** Also update dependencies of the removed packages.// 기존의 의존성이 있는 항목 이외에도 새로이 필요로하는 패키지를 함께 업데이트(설치로 추정 됨)합니다.
 
