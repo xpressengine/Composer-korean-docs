@@ -1,150 +1,114 @@
-# Command-line interface / Commands
+# 커맨드라인 인터페이스 / 커맨드
 
-You've already learned how to use the command-line interface to do some
-things. This chapter documents all the available commands.
+당신은 이미 무언가를 하기 위해 커맨드라인 인터페이스를 사용하는 방법을 배웠습니다. 이 챕터에서는 모든 커맨드를 정리합니다.
 
-To get help from the command-line, simply call `composer` or `composer list`
-to see the complete list of commands, then `--help` combined with any of those
-can give you more information.
+커맨드라인에서 도움을 얻고 싶으면, 전체 커맨드 리스트를 보기 위해 그냥 `composer` 혹은 `composer list`를 호출하세요, 그리고 나서 각 커맨드에 `--help`를 붙이면 추가 정보를 얻을 수 있습니다. 
 
-## Global Options
+## 글로벌 옵션
 
-The following options are available with every command:
+다음의 옵션들은 모든 커맨드에 사용할 수 있습니다:
 
-* **--verbose (-v):** Increase verbosity of messages.
-* **--help (-h):** Display help information.
-* **--quiet (-q):** Do not output any message.
-* **--no-interaction (-n):** Do not ask any interactive question.
-* **--working-dir (-d):** If specified, use the given directory as working directory.
-* **--profile:** Display timing and memory usage information
-* **--ansi:** Force ANSI output.
-* **--no-ansi:** Disable ANSI output.
-* **--version (-V):** Display this application version.
+* **--verbose (-v):** 메시지를 더 풍부하게 해줍니다.
+* **--help (-h):** 도움 정보를 표현합니다.
+* **--quiet (-q):** 어떠한 메시지도 출력하지 않습니다.
+* **--no-interaction (-n):** 어떠한 대화형 질문도 하지 않습니다.
+* **--working-dir (-d):** 만약 지정되면, 지정된 디렉토리를 작업 디렉토리로 사용합니다.
+* **--profile:** 시간과 메모리 사용 정보를 표현합니다.
+* **--ansi:** 강제로 ANSI로 출력합니다.
+* **--no-ansi:** ANSI 출력을 할 수 없게 합니다.
+* **--version (-V):** 이 애플리케이션의 버전을 표현합니다. 
 
-## Process Exit Codes
+## 프로세스 종료 코드
 
 * **0:** OK
-* **1:** Generic/unknown error code
-* **2:** Dependency solving error code
+* **1:** 포괄적인/알려지지 않은 에러 코드
+* **2:** 의존성 해결 에러 코드
 
 ## init
 
-In the [Libraries](02-libraries.md) chapter we looked at how to create a
-`composer.json` by hand. There is also an `init` command available that makes
-it a bit easier to do this.
+[라이브러리](02-libraries.md) 챕터에서 `composer.json` 을 수동으로 만드는 방법을 살펴봤습니다. 이 작업을 조금 더 쉽게할 수 있게 해주는 `init` 커맨드가 있습니다.
 
-When you run the command it will interactively ask you to fill in the fields,
-while using some smart defaults.
+커맨드를 실행하면 필드를 채우도록 똑똑한 기본값들을 제시하면서 대화형 질문을 할 것입니다.
 
 ```sh
 php composer.phar init
 ```
 
-### Options
+### 옵션
 
-* **--name:** Name of the package.
-* **--description:** Description of the package.
-* **--author:** Author name of the package.
-* **--homepage:** Homepage of the package.
-* **--require:** Package to require with a version constraint. Should be
-  in format `foo/bar:1.0.0`.
-* **--require-dev:** Development requirements, see **--require**.
-* **--stability (-s):** Value for the `minimum-stability` field.
+* **--name:** 패키지 이름.
+* **--description:** 패키지 설명.
+* **--author:** 패키지 작성자의 이름
+* **--homepage:** 패키지의 홈페이지.
+* **--require:** 버전 제약하에 필요한 패키지들. `foo/bar:1.0.0`의 형태여야 합니다.
+* **--require-dev:** 개발시 필요한 것들, **--require**를 보세요.
+* **--stability (-s):** `minimum-stability` 필드 값.
 
-## install
+## 설치
 
-The `install` command reads the `composer.json` file from the current
-directory, resolves the dependencies, and installs them into `vendor`.
+`install` 커맨드는 현재 디렉토리에 있는 `composer.json` 파일을 읽고, 의존성을 해석하여, `vendor`에 설치합니다.
 
 ```sh
 php composer.phar install
 ```
 
-If there is a `composer.lock` file in the current directory, it will use the
-exact versions from there instead of resolving them. This ensures that
-everyone using the library will get the same versions of the dependencies.
+만약 현재 디렉토리에 `composer.lock` 파일이 있으면, 의존성을 해석하는 대신 `composer.lock`에 있는 것과 일치하는 버전을 사용할 것입니다. 이것은 라이브러리를 사용하는 사람들이 같은 의존성 버전을 갖도록 보장해줍니다.
 
-If there is no `composer.lock` file, composer will create one after dependency
-resolution.
+만약 `composer.lock` 파일이 없다면, 컴포저는 의존성을 해석한 후 그것을 만들것입니다.
 
 ### Options
 
-* **--prefer-source:** There are two ways of downloading a package: `source`
-  and `dist`. For stable versions composer will use the `dist` by default.
-  The `source` is a version control repository. If `--prefer-source` is
-  enabled, composer will install from `source` if there is one. This is
-  useful if you want to make a bugfix to a project and get a local git
-  clone of the dependency directly.
-* **--prefer-dist:** Reverse of `--prefer-source`, composer will install
-  from `dist` if possible. This can speed up installs substantially on build
-  servers and other use cases where you typically do not run updates of the
-  vendors. It is also a way to circumvent problems with git if you do not
-  have a proper setup.
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
-* **--dry-run:** If you want to run through an installation without actually
-  installing a package, you can use `--dry-run`. This will simulate the
-  installation and show you what would happen.
-* **--dev:** Install packages listed in `require-dev` (this is the default behavior).
-* **--no-dev:** Skip installing packages listed in `require-dev`.
-* **--no-autoloader:** Skips autoloader generation.
-* **--no-scripts:** Skips execution of scripts defined in `composer.json`.
-* **--no-plugins:** Disables plugins.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--optimize-autoloader (-o):** Convert PSR-0/4 autoloading to classmap to get a faster
-  autoloader. This is recommended especially for production, but can take
-  a bit of time to run so it is currently not done by default.
+* **--prefer-source:** 패키지를 다운로드 하는 데에는 `source`와 `dist` 두가지 방법이 있습니다. 안정화 버전에서는 `dist`가 기본값으로 쓰일것입니다. `source`는 버전 관리 저장소 입니다. 만약 `--prefer-source`를 활성화하면, 컴포저는 `source`로 부터 설치를 할 것입니다. 이것은 프로젝트에 버그를 수정하는 것과 의존성을 직접 로컬 git에 복사하는데에 유용합니다.
+* **--prefer-dist:** `--prefer-source`와 반대로, 가능하다면 컴포저는 `dist`로부터 설치를 합니다. 이 방법은 빌드 서버와 일반적으로 벤더를 업데이트 하지 않는 상황들에서 설치 속도를 상당히 올려줄 수 있습니다. 또한 적절하게 셋업되지 않은 경우에 발생할 수 있는 git과 관련된 문제를 피하는 방법이기도 합니다.
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
+* **--dry-run:** 만약 실제로 패키지들을 설치 하지 않고 빠르게 설치과정을 살펴보길 원한다면, `--dry-run`을 사용할 수 있습니다. 이것은 설치를 시뮬레이션하고 어떤일이 벌어질지를 보여줍니다.
+* **--dev:** `require-dev`에 있는 패키지들을 설치합니다 (이것은 기본으로 설정된 행위입니다).
+* **--no-dev:** `require-dev`에 있는 패키지들을 설치하지 않고 스킵합니다.
+* **--no-autoloader:** 오토로더를 생성하지 않고 넘어갑니다.
+* **--no-scripts:** `composer.json`에 정의된 스크립트를 실행하지 않고 넘어갑니다. 
+* **--no-plugins:** 플러그인들을 사용하지 않습니다.
+* **--no-progress:** 터미널이나 백스페이스 문자를 다루지 않는 스크립트를 지저분하게 만들 수 있는 진행사항 표시를 제거합니다.
+* **--optimize-autoloader (-o):** PSR-0/4 오토로딩을 클래스맵으로 전환시켜서 오토로더를 더 빠르게 합니다. 특히 프로덕션에 추천되지만, 시간이 조금 걸릴 수 있어서 현재는 기본설정에서는 빠져있습니다.
 
-## update
+## 업데이트
 
-In order to get the latest versions of the dependencies and to update the
-`composer.lock` file, you should use the `update` command.
+최종버전의 의존성을 확보하고, `composer.lock` 파일을 업데이트 하기 위해서는, `update` 커맨드를 사용해야 합니다.
 
 ```sh
 php composer.phar update
 ```
 
-This will resolve all dependencies of the project and write the exact versions
-into `composer.lock`.
+이것은 프로젝트의 모든 의존성을 해소하고 `composer.lock`에 정확한 버전을 작성해줍니다.
 
-If you just want to update a few packages and not all, you can list them as such:
+만약 당신이 전체가 아닌 일부 패키지만 업데이트하길 원한다면, 다음과 같이 할 수 있습니다.
 
 ```sh
 php composer.phar update vendor/package vendor/package2
 ```
 
-You can also use wildcards to update a bunch of packages at once:
+와일드카드를 사용해서 패키지 묶음을 한 번에 업데이트 할 수도 있습니다.
 
 ```sh
 php composer.phar update vendor/*
 ```
 
-### Options
+### 옵션
 
-* **--prefer-source:** Install packages from `source` when available.
-* **--prefer-dist:** Install packages from `dist` when available.
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
-* **--dry-run:** Simulate the command without actually doing anything.
-* **--dev:** Install packages listed in `require-dev` (this is the default behavior).
-* **--no-dev:** Skip installing packages listed in `require-dev`.
-* **--no-autoloader:** Skips autoloader generation.
-* **--no-scripts:** Skips execution of scripts defined in `composer.json`.
-* **--no-plugins:** Disables plugins.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--optimize-autoloader (-o):** Convert PSR-0/4 autoloading to classmap to get a faster
-  autoloader. This is recommended especially for production, but can take
-  a bit of time to run so it is currently not done by default.
-* **--lock:** Only updates the lock file hash to suppress warning about the
-  lock file being out of date.
-* **--with-dependencies** Add also all dependencies of whitelisted packages to the whitelist.
-* **--prefer-stable:** Prefer stable versions of dependencies.
-* **--prefer-lowest:** Prefer lowest versions of dependencies. Useful for testing minimal
-  versions of requirements, generally used with `--prefer-stable`.
+* **--prefer-source:** 가능한 경우 `source`로 부터 패키지를 설치합니다.
+* **--prefer-dist:** 가능한 경우 `dist`로 부터 패키지를 설치합니다.
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
+* **--dry-run:** 실제로는 실행하진 않고 커맨드를 시뮬레이션 합니다.
+* **--dev:** `require-dev`에 있는 패키지들을 설치합니다 (기본 설정입니다).
+* **--no-dev:** `require-dev`에 있는 패키지들은 설치하지 않고 넘어갑니다.
+* **--no-autoloader:** 오토로더를 생성하지 않고 넘어갑니다.
+* **--no-scripts:** `composer.json`에 정의된 스크립트를 실행하지 않고 넘어갑니다. 
+* **--no-plugins:** 플러그인을 사용하지 않습니다.
+* **--no-progress:** 터미널이나 백스페이스 문자를 다루지 않는 스크립트를 지저분하게 만들 수 있는 진행사항 표시를 제거합니다.
+* **--optimize-autoloader (-o):** PSR-0/4 오토로딩을 클래스맵으로 전환시켜서 오토로더를 더 빠르게 합니다. 특히 프로덕션에 추천되지만, 시간이 조금 걸릴 수 있어서 현재는 기본설정에서는 빠져있습니다.
+* **--lock:** lock 파일이 오래되었다는 경고를 나오지 않게 하기 위해 lock 파일의 해시만 업데이트 합니다.
+* **--with-dependencies** 화이트리스트에 화이트리스트 패키지의 모든 의존성을 추가합니다.
+* **--prefer-stable:** 안정 버전의 의존성을 선호합니다.
+* **--prefer-lowest:** 낮은 버전의 의존성을 선호합니다. 요구사항의 최소 버전을 테스트 하는데 유용하며, 일반적으로 `--prefer-stable`과 함께 쓰입니다.
 
 ## require
 
