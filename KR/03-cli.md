@@ -112,18 +112,21 @@ php composer.phar update vendor/*
 
 ## require
 
-The `require` command adds new packages to the `composer.json` file from
-the current directory. If no file exists one will be created on the fly.
+`require` 명령어는 현재 디렉토리에 있는 `composer.json` 파일에 새로운 패키지들을 추가하는 명령어입니다. 
+The `require` command adds new packages to the `composer.json` file from the current directory. 
+
+`composer.json` 없을 경우(=no file exists)에는 즉시(on the fly) `composer.json`(=one)을 생성합니다.
+If no file exists one will be created.
 
 ```sh
 php composer.phar require
 ```
 
-After adding/changing the requirements, the modified requirements will be
-installed or updated.
+요구사항들(requirements = packages)을 추가하거나 변경한 이후에는 변경된 요구사항들을 설치하거나 업데이트가 됩니다.
+After adding/changing the requirements, the modified requirements will be installed or updated.
 
-If you do not want to choose requirements interactively, you can just pass them
-to the command.
+만약 요구사항이 호환이 되지 않게 하길 원한다면, 다음과 같은 방법으로 무시할 수 있습니다.
+If you do not want to choose requirements interactively, you can just pass them to the command.
 
 ```sh
 php composer.phar require vendor/package:2.* vendor/package2:dev-master
@@ -131,59 +134,50 @@ php composer.phar require vendor/package:2.* vendor/package2:dev-master
 
 ### Options
 
-* **--prefer-source:** Install packages from `source` when available.
-* **--prefer-dist:** Install packages from `dist` when available.
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
-* **--dev:** Add packages to `require-dev`.
-* **--no-update:** Disables the automatic update of the dependencies.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--update-no-dev** Run the dependency update with the --no-dev option.
-* **--update-with-dependencies** Also update dependencies of the newly
-  required packages.
+* **--prefer-source:** Install packages from `source` when available. `source`에서 사용가능한 패키지를 설치합니다. 
+* **--prefer-dist:** Install packages from `dist` when available. `dist`에서 사용가능한 패키지를 설치합니다. 
+* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`	requirements and force the installation even if the local machine does not fulfill these.
+// `php`, `hhvm`, `lib-*`, `ext-*`의 요구사항을 무시하고, 로컬 머신(platform)이 요구를 충족하지 않더라도 인스톨을 강행합니다.
+* **--dev:** Add packages to `require-dev`. // `require-dev`에 패키지를 더합니다.
+* **--no-update:** Disables the automatic update of the dependencies. // 의존성에 의한(연관있는 항목) 자동 업데이트를 사용하지 않습니다.
+* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
+* **--update-no-dev** Run the dependency update with the --no-dev option. // "--no-dev" 옵션을 첨가하여 의존성(관련항목) 업데이트를 진행(실행)합니다.
+* **--update-with-dependencies** Also update dependencies of the newly required packages. // 기존의 의존성이 있는 항목 이외에도 새롭게 필요로하는 패키지를 함께 업데이트 합니다.
 
 ## remove
-
-The `remove` command removes packages from the `composer.json` file from
-the current directory.
+`remove` 명령어는 현재 디렉토리에 있는 `composer.json` 파일 안에 적혀있는 패키지를 제거하는 명령어입니다.
+The `remove` command removes packages from the `composer.json` file from the current directory.
 
 ```sh
 php composer.phar remove vendor/package vendor/package2
 ```
-
-After removing the requirements, the modified requirements will be
-uninstalled.
+요구사항들(requirements = packages)을 제거한 후에, 변경된 요구사항들은 (자동으로) 삭제(be uninstalled)됩니다.
+After removing the requirements, the modified requirements will be uninstalled.
 
 ### Options
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
-* **--dev:** Remove packages from `require-dev`.
-* **--no-update:** Disables the automatic update of the dependencies.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--update-no-dev** Run the dependency update with the --no-dev option.
-* **--update-with-dependencies** Also update dependencies of the removed packages.
+* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*` requirements and force the installation even if the local machine does not fulfill these. // `php`, `hhvm`, `lib-*`, `ext-*`의 요구사항을 무시하고, 로컬 머신(platform)이 요구를 충족하지 않더라도 인스톨을 강행합니다.
+* **--dev:** Remove packages from `require-dev`. // `require-dev`에 있는 패키지들을 제거합니다.
+* **--no-update:** Disables the automatic update of the dependencies.// 의존성에 의한(연관있는 항목) 자동 업데이트를 사용하지 않습니다.
+* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
+* **--update-no-dev** Run the dependency update with the --no-dev option. // "--no-dev" 옵션을 첨가하여 의존성(관련항목) 업데이트를 진행(실행)합니다.
+* **--update-with-dependencies** Also update dependencies of the removed packages.// 기존의 의존성이 있는 항목 이외에도 새로이 필요로하는 패키지를 함께 업데이트 합니다.
 
 ## global
 
-The global command allows you to run other commands like `install`, `require`
-or `update` as if you were running them from the [COMPOSER_HOME](#composer-home)
+global 명령어는 [COMPOSER_HOME](#composer-home) 디렉토리에 있는 패키지이더라도 `install`, `require`, `update`와 같은 다른 명령어를 쓸 수 있도록 하게 합니다.
+
+The global command allows you to run other commands like `install`, `require` or `update` as if you were running them from the [COMPOSER_HOME](#composer-home)
 directory.
 
-This can be used to install CLI utilities globally and if you add
-`$COMPOSER_HOME/vendor/bin` to your `$PATH` environment variable. Here is an
-example:
+이 명령어는 CLI 유틸리티를 전역(globally)설치할 때 사용할 수 있고, `$COMPOSER_HOME/vendor/bin`을 당신의 `$PATH` 환경 변수로 추가 실킬수 있습니다. 여기 예제가 있습니다:
+This can be used to install CLI utilities globally and if you add `$COMPOSER_HOME/vendor/bin` to your `$PATH` environment variable. Here is an example:
 
 ```sh
 php composer.phar global require fabpot/php-cs-fixer:dev-master
 ```
 
-Now the `php-cs-fixer` binary is available globally (assuming you adjusted
-your PATH). If you wish to update the binary later on you can just run a
-global update:
+이제 `php-cs-fixer` 바이너리는 어디에서든지(globally) 사용이 가능합니다(당신의 PATH에도 당연하게 적용됩니다.). 만약 나중에(later on) 바이너리를 업데이트 하고 싶다면, 그냥 global update를 사용하면 됩니다:
+Now the `php-cs-fixer` binary is available globally (assuming you adjusted your PATH). If you wish to update the binary later on you can just run a global update:
 
 ```sh
 php composer.phar global update
@@ -191,21 +185,25 @@ php composer.phar global update
 
 ## search
 
-The search command allows you to search through the current project's package
-repositories. Usually this will be just packagist. You simply pass it the
-terms you want to search for.
+`search` 명령어는 현재 프로젝트의 저장소를 검색할 수 있도록 만들어 줍니다. 보통 저장소(this)는 패키지스트입니다. 당신은 간단하게(simply)이 명령어에게 당신이 찾고 싶은 단어를 전달하면 됩니다.
+
+The search command allows you to search through the current project's package repositories. Usually this will be just packagist. You simply pass it the terms you want to search for.
 
 ```sh
 php composer.phar search monolog
 ```
 
+또한 여러 단어(multiple arguments)를 명령어에 붙여서 사용하면 하나 이상의 단어를 찾을 수 있습니다.
+
 You can also search for more than one term by passing multiple arguments.
 
 ### Options
 
-* **--only-name (-N):** Search only in name.
+* **--only-name (-N):** Search only in name. // 이름으로만 검색합니다.
 
 ## show
+
+사용가능한 모든 패키지를 리스트화 시키기 위해, `show` 커맨드를 사용하면 됩니다.
 
 To list all of the available packages, you can use the `show` command.
 
@@ -213,8 +211,9 @@ To list all of the available packages, you can use the `show` command.
 php composer.phar show
 ```
 
-If you want to see the details of a certain package, you can pass the package
-name.
+만약에 패키지의 상세정보를 보고 싶다면, 패키지 이름을 입력하면 됩니다.
+
+If you want to see the details of a certain package, you can pass the package name.
 
 ```sh
 php composer.phar show monolog/monolog
@@ -235,8 +234,9 @@ requires
 php >=5.3.0
 ```
 
-You can even pass the package version, which will tell you the details of that
-specific version.
+패키지의 (이름에) 버전까지 입력하면, 입력한 버전의 상세정보를 볼 수 있습니다.
+
+You can even pass the package version, which will tell you the details of that specific version.
 
 ```sh
 php composer.phar show monolog/monolog 1.0.2
@@ -244,9 +244,9 @@ php composer.phar show monolog/monolog 1.0.2
 
 ### Options
 
-* **--installed (-i):** List the packages that are installed.
-* **--platform (-p):** List only platform packages (php & extensions).
-* **--self (-s):** List the root package info.
+* **--installed (-i):** List the packages that are installed. // 이미 설치된 패키지를 리스트로 보여줍니다.
+* **--platform (-p):** List only platform packages (php & extensions). // 플랫폼 패키지만 리스트로 보여줍니다.(php & extensions).
+* **--self (-s):** List the root package info. // 본(현재) 패키지의 정보를 리스트로 보여줍니다.
 
 ## browse / home
 
