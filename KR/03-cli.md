@@ -250,18 +250,16 @@ php composer.phar show monolog/monolog 1.0.2
 
 ## browse / home
 
-The `browse` (aliased to `home`) opens a package's repository URL or homepage
-in your browser.
+`browse`(별칭 `home`)는 브라우저로 패키지 저장소 URL 또는 홈페이지를 엽니다.
 
-### Options
+### 옵션
 
-* **--homepage (-H):** Open the homepage instead of the repository URL.
+* **--homepage (-H):** 저장소 URL 대신 홈페이지를 오픈하게 합니다.
 
 ## depends
 
-The `depends` command tells you which other packages depend on a certain
-package. You can specify which link types (`require`, `require-dev`)
-should be included in the listing. By default both are used.
+`depends` 명령은 `composer.json`에 열거된 패키지 중에서 특정 패키지에 종속적인 패키지들을 보여줍니다. `require`, `require-dev` 옵션을 사용해서 열거할 패키지 종류를 지정할 수 있습니다. 지정하지 않으면 둘 다 사용됩니다.
+
 
 ```sh
 php composer.phar depends --link-type=require monolog/monolog
@@ -273,37 +271,31 @@ symfony/monolog-bridge
 symfony/symfony
 ```
 
-### Options
+### 옵션
 
-* **--link-type:** The link types to match on, can be specified multiple
-  times.
+* **--link-type:** 열거할 링크 타입. 여러번 지정할 수 있습니다.
 
 ## validate
 
-You should always run the `validate` command before you commit your
-`composer.json` file, and before you tag a release. It will check if your
-`composer.json` is valid.
+`comoser.json`을 커밋하거나 릴리즈를 태그하기 전에 반드시 `validate` 명령을 항상 실행해야 합니다. 이 명령어는 `composer.json` 파일이 유효한지 체크합니다.
 
 ```sh
 php composer.phar validate
 ```
 
-### Options
+### 옴션
 
-* **--no-check-all:** Whether or not composer do a complete validation.
+* **--no-check-all:** 유효성 검사를 철저하게 할지 안할지 여부 지정
 
 ## status
 
-If you often need to modify the code of your dependencies and they are
-installed from source, the `status` command allows you to check if you have
-local changes in any of them.
+패키지를 `source`에서 설치를 하고, 이 소스를 종종 수정할 필요가 있다면, `status` 명령을 사용해서 로컬에 저장된 소스에 변경사항이 있는지 확인할 수 있습니다.
 
 ```sh
 php composer.phar status
 ```
 
-With the `--verbose` option you get some more information about what was
-changed:
+`--verbose` 옵션과 같이 사용하면 변경된 내용에 대해 더 자세한 정보를 알 수 있습니다.
 
 ```sh
 php composer.phar status -v
@@ -315,30 +307,29 @@ vendor/seld/jsonlint:
 
 ## self-update
 
-To update composer itself to the latest version, just run the `self-update`
-command. It will replace your `composer.phar` with the latest version.
+composer 자체를 최신의 버전으로 갱신하려면, `self-update` 명령을 실행하십시요. 이 명령은 `composer.phar`을 최신의 버전으로 교체합니다.
 
 ```sh
 php composer.phar self-update
 ```
 
-If you would like to instead update to a specific release simply specify it:
+특정 버전으로 갱신하려면, 버전정보를 뒤에 지정하면 됩니다:
 
 ```sh
 php composer.phar self-update 1.0.0-alpha7
 ```
 
-If you have installed composer for your entire system (see [global installation](00-intro.md#globally)),
-you may have to run the command with `root` privileges
+만약 composer를 시스템에 글로벌하게 설치했다면 ([글로벌 설치](00-intro.md#globally) 참고),
+`root` 권한으로 이 명령을 실행해야 합니다.
 
 ```sh
 sudo composer self-update
 ```
 
-### Options
+### 옵션
 
-* **--rollback (-r):** Rollback to the last version you had installed.
-* **--clean-backups:** Delete old backups during an update. This makes the current version of composer the only backup available after the update.
+* **--rollback (-r):** 설치된 가장 최신의 버전으로 롤백합니다.
+* **--clean-backups:** 갱신하면서 이전 백업본을 삭제합니다. 이 옵션을 사용하면 현재 갱신된 버전이 유일한 백업본이 됩니다.
 
 ## config
 
