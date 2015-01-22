@@ -24,6 +24,9 @@
 * **1:** 포괄적인/알려지지 않은 에러 코드
 * **2:** 의존성 해결 에러 코드
 
+(역자주 - 프로세스 종료코드는 실제 커맨드라인에서 명령어를 입력했을 때는 잘 알 수 없지만 composer 를 연동해서 작업을 수행해야하는 CI(continuous integration) 나 기타 시스템 스크립트 수행이 필요한 경우에 정상동작여부를 확인할 수 있게 제공되는 부분입니다. 만약 리눅스나 Mac 의 터미널이라면 composer 의 아무 명령어를 입력하고 $?를 입력하면 정상동작한 경우에 0, 에러가 난경우에는 1, 의존성 패키지 관련 에러는 2가 출력되는것을 확인할 수 있습니다.)
+
+
 ## init - 초기화
 
 [라이브러리](02-libraries.md) 챕터에서 `composer.json` 을 수동으로 만드는 방법을 살펴보았습니다. `init` 명령어는 이 작업을 조금 더 쉽게할 수 있게 해줍니다.
@@ -34,7 +37,7 @@
 php composer.phar init
 ```
 
-### 옵션
+### 초기화 옵션
 
 * **--name:** 패키지 이름.
 * **--description:** 패키지 설명.
@@ -56,7 +59,7 @@ php composer.phar install
 
 만약 `composer.lock` 파일이 없다면, 컴포저는 의존성을 해석한 후 새롭게 파일을 만들 것입니다.
 
-### Options
+### 설치 옵션
 
 * **--prefer-source:** 패키지를 다운로드 하는 데에는 `source`와 `dist` 두가지 방법이 존재합니다. 안정화 버전에서는 `dist`가 기본값으로 쓰일것입니다. `source`는 버전 관리 저장소를 의미합니다. 만약 `--prefer-source`옵션을 사용하면, 컴포저는 `source`로 부터 설치를 하는데, 이러한 경우는 프로젝트에 버그를 수정하려 할때와 의존 패키지의 로컬 git에 복제하는데에 유용합니다.
 * **--prefer-dist:** `--prefer-source`와 반대로, 가능하다면 컴포저는 `dist`로부터 설치를 합니다. 이 방법은 일반적으로 벤더를 업데이트 하지 않는 케이스와 빌드 서버로 부터 설치를 진행하는 형태로 설치 속도를 빠르게 해줄 수 있습니다. 또한 적절하게 셋업되지 않은 경우에 발생할 수 있는 git과 관련된 문제를 피하는 방법이기도 합니다.
@@ -67,7 +70,7 @@ php composer.phar install
 * **--no-autoloader:** 오토로더를 생성하지 않고 넘어갑니다.
 * **--no-scripts:** `composer.json`에 정의된 스크립트를 실행하지 않고 넘어갑니다. 
 * **--no-plugins:** 플러그인들을 사용하지 않습니다.
-* **--no-progress:** 스크립트를 지저분하게 만들 수 있는 터미널이나 백스페이스 문자를 다루지 않는 진행사항들의 표시를 제거합니다.
+* **--no-progress:** 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트들에서 화면이 지저분 해질 수 있는 진행 화면 표시기능을 제거합니다. 
 * **--optimize-autoloader (-o):** PSR-0/4 오토로딩을 클래스맵으로 전환시켜서 오토로더를 더 빠르게 합니다. 특히 프로덕션에 추천되지만, 시간이 조금 걸릴 수 있어서 현재는 기본설정에서는 빠져있습니다.
 
 ## 업데이트
@@ -92,38 +95,35 @@ php composer.phar update vendor/package vendor/package2
 php composer.phar update vendor/*
 ```
 
-### 옵션
+### 업데이트 옵션
 
 * **--prefer-source:** 가능한 경우 `source`로 부터 패키지를 설치합니다.
 * **--prefer-dist:** 가능한 경우 `dist`로 부터 패키지를 설치합니다.
 * **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
-* **--dry-run:** 실제로는 실행하진 않고 커맨드를 시뮬레이션 합니다.
+* **--dry-run:** 실제로는 명령을 수행하진 않고 시뮬레이션 합니다.
 * **--dev:** `require-dev`에 있는 패키지들을 설치합니다 (기본 설정입니다).
 * **--no-dev:** `require-dev`에 있는 패키지들은 설치하지 않고 넘어갑니다.
 * **--no-autoloader:** 오토로더를 생성하지 않고 넘어갑니다.
 * **--no-scripts:** `composer.json`에 정의된 스크립트를 실행하지 않고 넘어갑니다. 
 * **--no-plugins:** 플러그인을 사용하지 않습니다.
-* **--no-progress:** 스크립트를 지저분하게 만들 수 있는 터미널이나 백스페이스 문자를 다루지 않는 진행사항들의 표시를 제거합니다.
+* **--no-progress:** 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트들에서 화면이 지저분 해질 수 있는 진행 화면 표시기능을 제거합니다. 
 * **--optimize-autoloader (-o):** PSR-0/4 오토로딩을 클래스맵으로 전환시켜서 오토로더를 더 빠르게 합니다. 특히 프로덕션에 추천되지만, 시간이 조금 걸릴 수 있어서 현재는 기본설정에서는 빠져있습니다.
 * **--lock:** lock 파일이 오래되었다는 경고를 나오지 않게 하기 위해 lock 파일의 해시만 업데이트 합니다.
 * **--with-dependencies** 화이트리스트에 화이트리스트 패키지의 모든 의존성을 추가합니다.
-* **--prefer-stable:** 안정 버전의 의존성을 우선합니다.
+* **--prefer-stable:** 안정 버전(Stable version)의 의존성을 우선합니다.
 * **--prefer-lowest:** 낮은 버전의 의존성을 우선합니다. 요구사항의 최소 버전을 테스트 하는데 유용하며, 일반적으로 `--prefer-stable`과 함께 쓰입니다.
 
 ## require
 
 `require` 명령어는 현재 디렉토리에 있는 `composer.json` 파일에 새로운 패키지들을 추가하는 명령어입니다. 
-The `require` command adds new packages to the `composer.json` file from the current directory. 
 
-`composer.json` 없을 경우(=no file exists)에는 즉시(on the fly) `composer.json`(=one)을 생성합니다.
-If no file exists one will be created.
+`composer.json` 파일이 존재하지 않는 경우에는 파일을 직접 생성합니다.
 
 ```sh
 php composer.phar require
 ```
 
-요구사항들(requirements = packages)을 추가하거나 변경한 이후에는 변경된 요구사항들을 설치하거나 업데이트가 됩니다.
-After adding/changing the requirements, the modified requirements will be installed or updated.
+필요로 하는 패키지를 추가하거나 변경한 이후에는 자동으로 설치하거나 업데이트가 수행됩니다.
 
 만약 요구사항이 호환이 되지 않게 하길 원한다면, 다음과 같은 방법으로 무시할 수 있습니다.
 If you do not want to choose requirements interactively, you can just pass them to the command.
@@ -132,88 +132,77 @@ If you do not want to choose requirements interactively, you can just pass them 
 php composer.phar require vendor/package:2.* vendor/package2:dev-master
 ```
 
-### Options
+### require 옵션
 
-* **--prefer-source:** Install packages from `source` when available. `source`에서 사용가능한 패키지를 설치합니다. 
-* **--prefer-dist:** Install packages from `dist` when available. `dist`에서 사용가능한 패키지를 설치합니다. 
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`	requirements and force the installation even if the local machine does not fulfill these.
-// `php`, `hhvm`, `lib-*`, `ext-*`의 요구사항을 무시하고, 로컬 머신(platform)이 요구를 충족하지 않더라도 인스톨을 강행합니다.
-* **--dev:** Add packages to `require-dev`. // `require-dev`에 패키지를 더합니다.
-* **--no-update:** Disables the automatic update of the dependencies. // 의존성에 의한(연관있는 항목) 자동 업데이트를 사용하지 않습니다.
-* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
-* **--update-no-dev** Run the dependency update with the --no-dev option. // "--no-dev" 옵션을 첨가하여 의존성(관련항목) 업데이트를 진행(실행)합니다.
-* **--update-with-dependencies** Also update dependencies of the newly required packages. // 기존의 의존성이 있는 항목 이외에도 새롭게 필요로하는 패키지를 함께 업데이트 합니다.
+* **--prefer-source:** 가능한 경우 `source`로 부터 패키지를 설치합니다.
+* **--prefer-dist:** 가능한 경우 `dist`로 부터 패키지를 설치합니다.
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
+* **--dev:** `require-dev`에 패키지들을 추가합니다.
+* **--no-update:** 의존성 패키지들을 자동으로 업데이트 하지 않습니다. 
+* **--no-progress:** 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트들에서 화면이 지저분 해질 수 있는 진행 화면 표시기능을 제거합니다. 
+* **--update-no-dev** "--no-dev" 옵션을 추가하여 의존성 업데이트를 진행합니다.(`require-dev`에 있는 패키지들은 설치하지 않고 넘어갑니다.)
+* **--update-with-dependencies** 기존의 의존성이 있는 항목 이외에도 새롭게 필요로하는 패키지를 함께 업데이트 합니다.
 
-## remove
+## remove - 삭제 
 `remove` 명령어는 현재 디렉토리에 있는 `composer.json` 파일 안에 적혀있는 패키지를 제거하는 명령어입니다.
-The `remove` command removes packages from the `composer.json` file from the current directory.
 
 ```sh
 php composer.phar remove vendor/package vendor/package2
 ```
-요구사항들(requirements = packages)을 제거한 후에, 변경된 요구사항들은 (자동으로) 삭제(be uninstalled)됩니다.
-After removing the requirements, the modified requirements will be uninstalled.
+패키지들을 제거한 후에, 변경된 패키지 요구사항들(require)은 자동으로 삭제됩니다.
 
-### Options
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*` requirements and force the installation even if the local machine does not fulfill these. // `php`, `hhvm`, `lib-*`, `ext-*`의 요구사항을 무시하고, 로컬 머신(platform)이 요구를 충족하지 않더라도 인스톨을 강행합니다.
-* **--dev:** Remove packages from `require-dev`. // `require-dev`에 있는 패키지들을 제거합니다.
-* **--no-update:** Disables the automatic update of the dependencies.// 의존성에 의한(연관있는 항목) 자동 업데이트를 사용하지 않습니다.
-* **--no-progress:** Removes the progress display that can mess with some terminals or scripts which don't handle backspace characters. // 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트를 망칠(mess) 수 있는 진행 화면을 제거합니다.
-* **--update-no-dev** Run the dependency update with the --no-dev option. // "--no-dev" 옵션을 첨가하여 의존성(관련항목) 업데이트를 진행(실행)합니다.
-* **--update-with-dependencies** Also update dependencies of the removed packages.// 기존의 의존성이 있는 항목 이외에도 새로이 필요로하는 패키지를 함께 업데이트 합니다.
+### 삭제 옵션
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*` 와 `ext-*` 요구사항을 무시하고 로컬 머신이 이 조건을 만족하지 못한다고 하더라도 설치를 강행합니다.
+* **--dev:** `require-dev`에 있는 패키지들을 제거합니다.
+* **--no-update:** 의존성 패키지들을 자동으로 업데이트 하지 않습니다. 
+* **--no-progress:** 몇몇 터미널이나 백스페이스문자(\\)가 처리되지 않는 스크립트들에서 화면이 지저분 해질 수 있는 진행 화면 표시기능을 제거합니다. 
+* **--update-no-dev** "--no-dev" 옵션을 추가하여 의존성 업데이트를 진행합니다.(`require-dev`에 있는 패키지들은 설치하지 않고 넘어갑니다.)
+* **--update-with-dependencies** 기존의 의존성이 있는 항목 이외에도 새롭게 필요로하는 패키지를 함께 업데이트 합니다.
 
-## global
+## global - 글로벌
 
-global 명령어는 [COMPOSER_HOME](#composer-home) 디렉토리에 있는 패키지이더라도 `install`, `require`, `update`와 같은 다른 명령어를 쓸 수 있도록 하게 합니다.
+global 명령어는 [컴포저 홈 디렉토리](#composer-home)에 있는 패키지들도  `install`, `require`, `update`와 같은 다른 명령어를 쓸 수 있도록 해줍니다.
 
-The global command allows you to run other commands like `install`, `require` or `update` as if you were running them from the [COMPOSER_HOME](#composer-home)
-directory.
-
-이 명령어는 CLI 유틸리티를 전역(globally)설치할 때 사용할 수 있고, `$COMPOSER_HOME/vendor/bin`을 당신의 `$PATH` 환경 변수로 추가 실킬수 있습니다. 여기 예제가 있습니다:
-This can be used to install CLI utilities globally and if you add `$COMPOSER_HOME/vendor/bin` to your `$PATH` environment variable. Here is an example:
+이 명령어는 CLI 유틸리티를 전역(globally)설치할 때 사용할 수 있습니다. 필요한 경우에 `$COMPOSER_HOME/vendor/bin`을 로컬 환경의 `$PATH` 환경 변수로 추가하면 유용하게 컴포저 홈 디렉토리에 접근할 수 있습니다. 여기 예제가 있습니다:
 
 ```sh
 php composer.phar global require fabpot/php-cs-fixer:dev-master
 ```
 
-이제 `php-cs-fixer` 바이너리는 어디에서든지(globally) 사용이 가능합니다(당신의 PATH에도 당연하게 적용됩니다.). 만약 나중에(later on) 바이너리를 업데이트 하고 싶다면, 그냥 global update를 사용하면 됩니다:
-Now the `php-cs-fixer` binary is available globally (assuming you adjusted your PATH). If you wish to update the binary later on you can just run a global update:
+이제 `php-cs-fixer` 바이너리는 어디에서든지 사용이 가능해졌습니다.(PATH에 적용을 했다면). 만약 나중에 바이너리를 업데이트 하고 싶다면, 그냥 global update를 사용하면 됩니다:
 
 ```sh
 php composer.phar global update
 ```
 
-## search
+(역자주 - 컴포저를 홈 디렉토리에 추가하는 경우는 주로 phpunit, phpcs, laravel-homestead 와 같이 패키지에서 실행가능한 바이너리를 제공하는 경우에 많이 사용된다고 할 수 있습니다. phpunit 의 경우에 모든 개별 프로젝트 vendor 에 추가할 필요없이 글로벌로 설치해 놓으면 어디서든 접근이 가능해지기 때문입니다.)
 
-`search` 명령어는 현재 프로젝트의 저장소를 검색할 수 있도록 만들어 줍니다. 보통 저장소(this)는 패키지스트입니다. 당신은 간단하게(simply)이 명령어에게 당신이 찾고 싶은 단어를 전달하면 됩니다.
+## search - 검색
 
-The search command allows you to search through the current project's package repositories. Usually this will be just packagist. You simply pass it the terms you want to search for.
+`search` 명령어는 현재 프로젝트의 저장소를 검색할 수 있도록 만들어 줍니다. 기본적으로 저장소는 패키지스트로 설정되어 있습니다. 간단하게 search 명령어를 통해서 당신이 찾고 싶은 단어를 전달하면 됩니다.
 
 ```sh
 php composer.phar search monolog
 ```
 
-또한 여러 단어(multiple arguments)를 명령어에 붙여서 사용하면 하나 이상의 단어를 찾을 수 있습니다.
+또한 여러개의 단어를 명령어 뒤에 붙여서 사용하면 하나 이상의 단어에 대한 패키지들을 찾을 수 있습니다.
 
-You can also search for more than one term by passing multiple arguments.
+### 검색 옵션
 
-### Options
+* **--only-name (-N):** 이름을 통해서만 검색합니다.
 
-* **--only-name (-N):** Search only in name. // 이름으로만 검색합니다.
+## show - 보기
 
-## show
-
-사용가능한 모든 패키지를 리스트화 시키기 위해, `show` 커맨드를 사용하면 됩니다.
-
-To list all of the available packages, you can use the `show` command.
+사용가능한 모든 패키지의 목록을 확인하기 위해, `show` 명령어를 사용하면 됩니다.
 
 ```sh
 php composer.phar show
 ```
 
-만약에 패키지의 상세정보를 보고 싶다면, 패키지 이름을 입력하면 됩니다.
+(역자주 - 위의 명령어는 패키지스트를 통해서 설치 가능한 모든 패키지들의 목록을 확인하는 명령어로 수행 시간이 30초 이상, 오래걸릴 수 있습니다.)
 
-If you want to see the details of a certain package, you can pass the package name.
+만약에 패키지의 보다 상세한 정보를 보고 싶다면, 패키지 이름을 뒤에 입력하면 됩니다.
+
 
 ```sh
 php composer.phar show monolog/monolog
@@ -234,19 +223,18 @@ requires
 php >=5.3.0
 ```
 
-패키지의 (이름에) 버전까지 입력하면, 입력한 버전의 상세정보를 볼 수 있습니다.
+패키지 이름 뒤에 버전까지 입력하면, 입력한 버전에 대한 상세정보를 볼 수 있습니다.
 
-You can even pass the package version, which will tell you the details of that specific version.
 
 ```sh
 php composer.phar show monolog/monolog 1.0.2
 ```
 
-### Options
+### 보기 옵션(show Options)
 
-* **--installed (-i):** List the packages that are installed. // 이미 설치된 패키지를 리스트로 보여줍니다.
-* **--platform (-p):** List only platform packages (php & extensions). // 플랫폼 패키지만 리스트로 보여줍니다.(php & extensions).
-* **--self (-s):** List the root package info. // 본(현재) 패키지의 정보를 리스트로 보여줍니다.
+* **--installed (-i):** 현재 프로젝트에 이미 설치된 패키지들의 리스트를 보여줍니다.
+* **--platform (-p):** 플랫폼 패키지만 리스트로 보여줍니다.(php or hhvm or extensions).
+* **--self (-s):** 현재 프로젝트의 요약 정보를 목록으로 보여줍니다.
 
 ## browse / home
 
@@ -271,19 +259,20 @@ symfony/monolog-bridge
 symfony/symfony
 ```
 
-### 옵션
+### depends 옵션
 
 * **--link-type:** 열거할 링크 타입. 여러번 지정할 수 있습니다.
+(역자주 link-type : require, require-dev)
 
-## validate
+## validate - 유효성 검사
 
-`comoser.json`을 커밋하거나 릴리즈를 태그하기 전에 반드시 `validate` 명령을 항상 실행해야 합니다. 이 명령어는 `composer.json` 파일이 유효한지 체크합니다.
+`comoser.json`을 커밋하거나 릴리즈를 하기 위해서 버전을 태깅하기 전에 반드시 `validate` 명령을 실행하길 바랍니다. 이 명령어는 `composer.json` 파일이 유효한지 검사해줍니다. 
 
 ```sh
 php composer.phar validate
 ```
 
-### 옴션
+### validate 옵션
 
 * **--no-check-all:** 유효성 검사를 철저하게 할지 안할지 여부 지정
 
@@ -305,9 +294,13 @@ vendor/seld/jsonlint:
     M README.mdown
 ```
 
+(역자주 - 의존성 패키지들을 source 에서 받으면 git 저장소에서 복제하는 형태로 파일을 가져오고 dist 에서 받으면 zip 파일과 같이(존재한다면) 압축되어 있는 파일을 받는 형태로 설치 또는 업데이트가 진행됩니다. 따라서 일반적으로 dist 를 통해서 설치 또는 업데이트를 하는 것이 속도가 더 빠릅니다. status 명령어는 source 에서 설치한 경우에 해당 패키지들을 임의로 수정한 경우, 원래의 내용과 내가 임의로 수정한 vendor 밑에 패키지의 변경상태가 어떠한지 비교해서 보여줍니다. )
+
 ## self-update
 
 composer 자체를 최신의 버전으로 갱신하려면, `self-update` 명령을 실행하십시요. 이 명령은 `composer.phar`을 최신의 버전으로 교체합니다.
+
+(역자주 - 일반적으로 composer는 30일 동안 업데이트 하지 않으면 경고가 나타납니다. )
 
 ```sh
 php composer.phar self-update
@@ -326,10 +319,12 @@ php composer.phar self-update 1.0.0-alpha7
 sudo composer self-update
 ```
 
-### 옵션
+### self-update 옵션
 
 * **--rollback (-r):** 설치된 가장 최신의 버전으로 롤백합니다.
 * **--clean-backups:** 갱신하면서 이전 백업본을 삭제합니다. 이 옵션을 사용하면 현재 갱신된 버전이 유일한 백업본이 됩니다.
+
+(역자주 - composer self-update 를 수행하면 컴포저 홈 디렉토리에 이전 버전의 컴포저 파일이 저장되어 지고, 롤백을 통해서 다시 복구하거나, 저장된 이전 버전의 컴포저 파일을 clean-backups 를 통해서 삭제할 수 있습니다.)
 
 ## config
 
