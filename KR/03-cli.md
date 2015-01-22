@@ -328,8 +328,7 @@ sudo composer self-update
 
 ## config
 
-`config` 명령은 로컬 composer.json 파일 또는 글로벌 config.json 파일에 몇가지
-기본적인 컴포져 설정들을 편집할 수 있습니다.
+`config` 명령어는 로컬 composer.json 파일 또는 글로벌 config.json 파일에 설정된 몇가지의 기본적인 컴포져 설정들을 편집할 수 있게 해줍니다.
 
 ```sh
 php composer.phar config --list
@@ -340,7 +339,7 @@ php composer.phar config --list
 `config [options] [setting-key] [setting-value1] ... [setting-valueN]`
 
 `setting-key`는 설정 옵션 이름이며 `setting-value1`은 설정 값입니다.
-(`github-protocols` 같은) 값의 배열을 취할 수 있는 설정들에는 하나 이상의
+(`github-protocols`과 같은) 값의 배열을 취할 수 있는 설정들에는 하나 이상의
 setting-value 인자들이 허용됩니다.
 
 사용 가능한 설정 옵션에 대해서는 [설정 스키마 섹션](04-schema.md#config)을
@@ -348,17 +347,12 @@ setting-value 인자들이 허용됩니다.
 
 ### 옵션
 
-* **--global (-g):** 기본적으로 `$COMPOSER_HOME/config.json`에 위치한 글로벌
-  설정 파일을 조작합니다. 이 옵션이 없으면, 이 명령은 로컬 composer.json 파일
-  또는 `--file`에서 지정한 파일에 영향을 줍니다.
-* **--editor (-e):** `EDITOR` 환경 변수에 정의된 텍스트 편집기를 사용하여 로컬
-  composer.json 파일을 엽니다. `--global` 옵션을 지정하면, 글로벌 설정 파일을
-  엽니다.
+* **--global (-g):** 기본적으로 `$COMPOSER_HOME/config.json`에 위치한 글로벌 설정 파일을 조작합니다. 이 옵션이 없으면, 이 명령은 로컬 composer.json 파일 또는 `--file`에서 지정한 파일에 영향을 줍니다.
+* **--editor (-e):** `EDITOR` 환경 변수에 정의된 텍스트 편집기를 사용하여 로컬 composer.json 파일을 엽니다. `--global` 옵션을 지정하면, 글로벌 설정 파일을 엽니다.
 * **--unset:** `setting-key`로 명명된 설정 요소를 제거합니다.
 * **--list (-l):** 현재 설정 변수들의 목록을 보여줍니다. `--global` 옵션을
-  지정하면, 글로벌 설정만을 보여줍니다.
-* **--file="..." (-f):** composer.json 대신에 특정 파일을 조작합니다. `--global`
-  옵션과 함께 사용할 수 없습니다.
+ 지정하면, 글로벌 설정만을 보여줍니다.
+* **--file="..." (-f):** composer.json 대신에 특정 파일을 조작합니다. `--global` 옵션과 함께 사용할 수 없습니다.
 * **--absolute:** *-dir 설정 값을 가져올 때 상대 경로 대신 절대 경로를 반환합니다.
 
 ### 저장소 수정하기
@@ -373,9 +367,8 @@ php composer.phar config repositories.foo vcs http://github.com/foo/bar
 ## create-project
 
 컴포저를 이용하면 기존 패키지에서 새로운 프로젝트를 만들 수 있습니다. 이는 git
-clone/svn checkout 한 후 그 밴더의 컴포저를 설치한 것과 같습니다.
+clone/svn checkout 한 후 그 밴더의 컴포저를 설치(install)한 것과 같습니다.
 
-There are several applications for this:
 이것에 관한 몇 가지 응용이 있습니다:
 
 1. 애플리케이션 패키지들을 배포 할 수 있습니다.
@@ -383,11 +376,11 @@ There are several applications for this:
 3. 여러 개발자들이 함께하는 프로젝트는 개발을 위한 초기 애플리케이션을
    부트스트랩 하기 위해 이 기능을 사용할 수 있습니다.
 
-"create-project" 명령을 사용하여 컴포져를 이용해 새 프로젝트를 만듭니다.
+"create-project" 명령어를 실행하면 컴포져를 이용해 새 프로젝트를 만듭니다.
 패키지명을 전달하고, 디렉토리에 프로젝트를 만듭니다. 또한 세 번째 인수로 버전을
 지정 할 수 있습니다. 그렇지 않은 경우 최신 버전이 사용됩니다.
 
-디렉토리가 현재 존재하지 않는 경우 설치 중에 생성됩니다.
+해당 디렉토리가 존재하지 않는 경우 설치 중에 새롭게 생성됩니다.
 
 ```sh
 php composer.phar create-project doctrine/orm path 2.2.*
