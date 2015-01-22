@@ -328,44 +328,43 @@ sudo composer self-update
 
 ## config
 
-The `config` command allows you to edit some basic composer settings in either
-the local composer.json file or the global config.json file.
+`config` 명령은 로컬 composer.json 파일 또는 글로벌 config.json 파일에 몇가지
+기본적인 컴포져 설정들을 편집할 수 있습니다.
 
 ```sh
 php composer.phar config --list
 ```
 
-### Usage
+### 사용법
 
 `config [options] [setting-key] [setting-value1] ... [setting-valueN]`
 
-`setting-key` is a configuration option name and `setting-value1` is a
-configuration value.  For settings that can take an array of values (like
-`github-protocols`), more than one setting-value arguments are allowed.
+`setting-key`는 설정 옵션 이름이며 `setting-value1`은 설정 값입니다.
+(`github-protocols` 같은) 값의 배열을 취할 수 있는 설정들에는 하나 이상의
+setting-value 인자들이 허용됩니다.
 
-See the [config schema section](04-schema.md#config) for valid configuration
-options.
+사용 가능한 설정 옵션에 대해서는 [설정 스키마 섹션](04-schema.md#config)을
+참조하십시오.
 
-### Options
+### 옵션
 
-* **--global (-g):** Operate on the global config file located at
-  `$COMPOSER_HOME/config.json` by default.  Without this option, this command
-  affects the local composer.json file or a file specified by `--file`.
-* **--editor (-e):** Open the local composer.json file using in a text editor as
-  defined by the `EDITOR` env variable.  With the `--global` option, this opens
-  the global config file.
-* **--unset:** Remove the configuration element named by `setting-key`.
-* **--list (-l):** Show the list of current config variables.  With the `--global`
-  option this lists the global configuration only.
-* **--file="..." (-f):** Operate on a specific file instead of composer.json. Note
-  that this cannot be used in conjunction with the `--global` option.
-* **--absolute:** Returns absolute paths when fetching *-dir config values
-  instead of relative.
+* **--global (-g):** 기본적으로 `$COMPOSER_HOME/config.json`에 위치한 글로벌
+  설정 파일을 조작합니다. 이 옵션이 없으면, 이 명령은 로컬 composer.json 파일
+  또는 `--file`에서 지정한 파일에 영향을 줍니다.
+* **--editor (-e):** `EDITOR` 환경 변수에 정의된 텍스트 편집기를 사용하여 로컬
+  composer.json 파일을 엽니다. `--global` 옵션을 지정하면, 글로벌 설정 파일을
+  엽니다.
+* **--unset:** `setting-key`로 명명된 설정 요소를 제거합니다.
+* **--list (-l):** 현재 설정 변수들의 목록을 보여줍니다. `--global` 옵션을
+  지정하면, 글로벌 설정만을 보여줍니다.
+* **--file="..." (-f):** composer.json 대신에 특정 파일을 조작합니다. `--global`
+  옵션과 함께 사용할 수 없습니다.
+* **--absolute:** *-dir 설정 값을 가져올 때 상대 경로 대신 절대 경로를 반환합니다.
 
-### Modifying Repositories
+### 저장소 수정하기
 
-In addition to modifying the config section, the `config` command also supports making
-changes to the repositories section by using it the following way:
+설정 섹션을 변경할뿐만 아니라, `config` 명령은 다음 방법을 사용하여 저장소
+섹션을 변경하는 것 또한 지원합니다:
 
 ```sh
 php composer.phar config repositories.foo vcs http://github.com/foo/bar
@@ -373,92 +372,87 @@ php composer.phar config repositories.foo vcs http://github.com/foo/bar
 
 ## create-project
 
-You can use Composer to create new projects from an existing package. This is
-the equivalent of doing a git clone/svn checkout followed by a composer install
-of the vendors.
+컴포저를 이용하면 기존 패키지에서 새로운 프로젝트를 만들 수 있습니다. 이는 git
+clone/svn checkout 한 후 그 밴더의 컴포저를 설치한 것과 같습니다.
 
 There are several applications for this:
+이것에 관한 몇 가지 응용이 있습니다:
 
-1. You can deploy application packages.
-2. You can check out any package and start developing on patches for example.
-3. Projects with multiple developers can use this feature to bootstrap the
-   initial application for development.
+1. 애플리케이션 패키지들을 배포 할 수 있습니다.
+2. 어떤 패키지를 체크아웃 하고, 패치들에 개발을 시작 할 수 있습니다.
+3. 여러 개발자들이 함께하는 프로젝트는 개발을 위한 초기 애플리케이션을
+   부트스트랩 하기 위해 이 기능을 사용할 수 있습니다.
 
-To create a new project using composer you can use the "create-project" command.
-Pass it a package name, and the directory to create the project in. You can also
-provide a version as third argument, otherwise the latest version is used.
+"create-project" 명령을 사용하여 컴포져를 이용해 새 프로젝트를 만듭니다.
+패키지명을 전달하고, 디렉토리에 프로젝트를 만듭니다. 또한 세 번째 인수로 버전을
+지정 할 수 있습니다. 그렇지 않은 경우 최신 버전이 사용됩니다.
 
-If the directory does not currently exist, it will be created during installation.
+디렉토리가 현재 존재하지 않는 경우 설치 중에 생성됩니다.
 
 ```sh
 php composer.phar create-project doctrine/orm path 2.2.*
 ```
 
-It is also possible to run the command without params in a directory with an
-existing `composer.json` file to bootstrap a project.
+프로젝트를 부트스트랩하기 위해 `composer.json` 파일이 위치한 디렉토리 내에서
+별도의 파라미터 없이 명령을 실행할 수도 있습니다.
 
-By default the command checks for the packages on packagist.org.
+기본값에 따라 이 명령은 packagist.org에서 패키지를 확인합니다.
 
-### Options
+### 옵션
 
-* **--repository-url:** Provide a custom repository to search for the package,
-  which will be used instead of packagist. Can be either an HTTP URL pointing
-  to a `composer` repository, or a path to a local `packages.json` file.
-* **--stability (-s):** Minimum stability of package. Defaults to `stable`.
-* **--prefer-source:** Install packages from `source` when available.
-* **--prefer-dist:** Install packages from `dist` when available.
-* **--dev:** Install packages listed in `require-dev`.
-* **--no-install:** Disables installation of the vendors.
-* **--no-plugins:** Disables plugins.
-* **--no-scripts:** Disables the execution of the scripts defined in the root
-  package.
-* **--no-progress:** Removes the progress display that can mess with some
-  terminals or scripts which don't handle backspace characters.
-* **--keep-vcs:** Skip the deletion of the VCS metadata for the created
-  project. This is mostly useful if you run the command in non-interactive
-  mode.
-* **--ignore-platform-reqs:** ignore `php`, `hhvm`, `lib-*` and `ext-*`
-  requirements and force the installation even if the local machine does not
-  fulfill these.
+* **--repository-url:** 패키지 검색을 위한 사용자 저장소를 지정하며, 이는
+  packagist 대신에 사용됩니다. `composer` 저장소를 가리키는 HTTP URL 또는 로컬
+  `packages.json` 파일 경로 중 하나가 될 수 있습니다.
+* **--stability (-s):** 패키지의 최소 안전성. 기본값은 `stable`.
+* **--prefer-source:** 가능한 `source`로부터 패키지를 설치합니다.
+* **--prefer-dist:** 가능한 `dist`로부터 패키지를 설치합니다.
+* **--dev:** `require-dev` 내 열거 된 패키지를 설치합니다.
+* **--no-install:** 밴더의 설치를 금지합니다.
+* **--no-plugins:** 플러그인을 금지합니다.
+* **--no-scripts:** 루트 패키지에 정의된 스크립트들의 실행을 금지합니다.
+* **--no-progress:** 백스페이스 캐릭터를 다루지 않는 일부 터미널이나 스크립트를
+  어지럽히는 진행 표시를 제거합니다.
+* **--keep-vcs:** 생성된 프로젝에 관한 VCS 메타데이터의 삭제를 건너뜁니다.
+  비대화식 모드에서 명령을 실행하는 경우에 유용합니다.
+* **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*`, `ext-*` 요구사항들을
+  무시하고, 로컬 머신이 이들을 충족하지 않은 경우에도 강제로 설치합니다.
 
 ## dump-autoload
 
-If you need to update the autoloader because of new classes in a classmap
-package for example, you can use "dump-autoload" to do that without having to
-go through an install or update.
+클래스맵 패키지 안의 새로운 클래스들 때문에 오토로더를 업데이트 할 필요가 있는
+경우, install 또는 update를 통하지 않고 "dump-autoload" 사용 할 수 있습니다.
 
-Additionally, it can dump an optimized autoloader that converts PSR-0/4 packages
-into classmap ones for performance reasons. In large applications with many
-classes, the autoloader can take up a substantial portion of every request's
-time. Using classmaps for everything is less convenient in development, but
-using this option you can still use PSR-0/4 for convenience and classmaps for
-performance.
+또한, 성능상의 이유로 classmap에 PSR-0/4 패키지를 변환한 최적화 된 오토로더를
+덤프 할 수 있습니다. 많은 클래스를 가진 커다란 애플리케이션에서 오토로더는 매
+요청 시간의 상당 부분을 차지 할 수 있습니다. 모든 클래스에 대해 클래스맵을
+사용하는 것은 개발 중에 편리함이 적습니다. 하지만 이 옵션을 사용하면 편리함을
+위한 PSR-0/4와 성능을 위한 클래스맵을 여전히 사용 할 수 있습니다.
 
-### Options
+### 옵션
 
-* **--optimize (-o):** Convert PSR-0/4 autoloading to classmap to get a faster
-  autoloader. This is recommended especially for production, but can take
-  a bit of time to run so it is currently not done by default.
-* **--no-dev:** Disables autoload-dev rules.
+* **--optimize (-o):** 빠른 오토로더를 얻기 위해 클래스맵으로 PSR-0/4
+  오토로딩을 변환합니다. 이것을 특히 production을 위해 권장됩니다. 그러나
+  실행하는데 시간이 조금 걸릴 수 있기 때문에 현재 기본값으로 수행하진 않습니다.
+* **--no-dev:** autoload-dev 규칙을 금지합니다.
 
 ## clear-cache
 
-Deletes all content from Composer's cache directories.
+컴포져 캐쉬 디렉토리들 안의 모든 컨텐츠를 삭제합니다.
 
 ## licenses
 
-Lists the name, version and license of every package installed. Use
-`--format=json` to get machine readable output.
+설치 된 모든 패키지의 이름, 버전, 라이센스를 보여줍니다. 기계가 읽을 수 있는
+출력을 얻기 위해서는 `--format=json`을 사용합니다.
 
-### Options
+### 옵션
 
-* **--no-dev:** Remove dev dependencies from the output
-* **--format:** Format of the output: text or json (default: "text")
+* **--no-dev:** 출력에 dev 의존성을 제거합니다.
+* **--format:** 출력 포맷: text 또는 json (기본값: "text")
 
 ## run-script
 
-To run [scripts](articles/scripts.md) manually you can use this command,
-just give it the script name and optionally --no-dev to disable the dev mode.
+수동으로 [스크립트](articles/scripts.md)를 실행하기 위해 스크립트 이름과 개발 
+모드 해제할 경우 선택적으로 --no-dev를 주고 이 명령을 사용합니다.
 
 ## diagnose
 
