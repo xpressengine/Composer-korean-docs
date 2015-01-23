@@ -80,36 +80,52 @@ to omit it.
 
 The type of the package. It defaults to `library`.
 
+패키지의 타입을 정의합니다. 기본타입은 `library` 입니다.
+
 Package types are used for custom installation logic. If you have a package
 that needs some special logic, you can define a custom type. This could be a
 `symfony-bundle`, a `wordpress-plugin` or a `typo3-module`. These types will
 all be specific to certain projects, and they will need to provide an
 installer capable of installing packages of that type.
 
+패키지 타입은 커스텀 설치를 위해 사용됩니다. 당신의 패키지가 특별한 로직이 필요 하다면, 커스텀 타입을 선언해야 합니다.
+예를들면 `symfony-bundle`, `wordpress-plugin` 혹은 `typo3-module`등을 사용 할수 있습니다. 이 모든 타입들은 각각의 프로젝트 마다 다르게 사용됩니다. 그리고 그 타입들은 그 타입에 맞는 설치 가능한 설치 패키지를 제공해야 합니다.
+
 Out of the box, composer supports four types:
 
+composer 가 기본으로 지원하는 4가지 타입들 (설치 패키지가 필요하지 않음).
+
 - **library:** This is the default. It will simply copy the files to `vendor`.
+- **library:** `vendor`에 파일들을 복사 하는 기본 타입입니다. 
 - **project:** This denotes a project rather than a library. For example
   application shells like the [Symfony standard edition](https://github.com/symfony/symfony-standard),
-  CMSs like the [SilverStripe installer](https://github.com/silverstripe/silverstripe-installer)
-  or full fledged applications distributed as packages. This can for example
+    or full fledged applications distributed as packages. This can for example
   be used by IDEs to provide listings of projects to initialize when creating
   a new workspace.
+- **project:** 라이브러리 가 아닌 패키지를 의미합니다. 예를 들면  [Symfony standard edition](https://github.com/symfony/symfony-standard)와 같은 쉘 어플리케이션이 있으며
+  [SilverStripe installer](https://github.com/silverstripe/silverstripe-installer) 같은 CMS 프로젝트가 있습니다. 
+  혹은 패키지 처럼 완전히 분리되었을 때 사용합니다. 새로운 작업공간을 생성할때 초기설정 리스트를 제공하는 IDE들에 의해 사용되는 것을 예로 들수 있다.
 - **metapackage:** An empty package that contains requirements and will trigger
   their installation, but contains no files and will not write anything to the
   filesystem. As such, it does not require a dist or source key to be
   installable.
+ - **metapackage:** requirement가 포함된 비어있는 객체는 작동시 설치가 된다. 그러나 파일이 포함되어 있지 않으면 어떠한 내용도 파일시스템에 쓰지 않는다. 그러므로 설치시에 dist 혹은 source key 를 요구하지 않고 설치됩니다.
 - **composer-plugin:** A package of type `composer-plugin` may provide an
   installer for other packages that have a custom type. Read more in the
   [dedicated article](articles/custom-installers.md).
-
+- **composer-plugin:** `composer-plugin`타입의 패키지는 다른 커스텀 패키지들을 위해 인스톨러를 제공합니다. 자세한 내용은 [dedicated article](articles/custom-installers.md)에서 확인 할수 있습니다.
+  
 Only use a custom type if you need custom logic during installation. It is
 recommended to omit this field and have it just default to `library`.
+
+당신이 설치하는 동안에 커스텀 로직이 필요하면 커스텀 타입을 사용하면 됩니다. 그 외에는 타입 설정을 하지 않거나 `library` 기본 셋팅을 하는것을 추천한다.
 
 ### keywords
 
 An array of keywords that the package is related to. These can be used for
 searching and filtering.
+
+패키지와 관계가 있는 키워드가 배열 형태로 선언됩니다. 이것들은 검색과 필터링에 사용 됩니다.
 
 Examples:
 
@@ -121,25 +137,39 @@ Examples:
 
 Optional.
 
+(필수 입력 아님)
+
 ### homepage
 
 An URL to the website of the project.
 
+프로젝트의 웹사이트 URL 입니다.
+
 Optional.
 
+(필수 입력 아님)
 ### time
 
 Release date of the version.
 
+해당 버젼의 릴리즈 날짜입니다.
+
 Must be in `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS` format.
+
+`YYYY-MM-DD` 혹의 `YYYY-MM-DD HH:MM:SS` 의 형태로 반드시 사용해야 합니다.
 
 Optional.
 
+(필수 입력 아님)
 ### license
 
 The license of the package. This can be either a string or an array of strings.
 
+패키지의 라이센스를 정의 합니다. 문자 형태 혹은 배열 형태로 정의할 수 있습니다.
+
 The recommended notation for the most common licenses is (alphabetical):
+
+가장 일반적인 사용되어 지는 라이센스의 추천 항목들 입니다. (알파벳 순 정렬)
 
 - Apache-2.0
 - BSD-2-Clause
@@ -158,7 +188,11 @@ The recommended notation for the most common licenses is (alphabetical):
 Optional, but it is highly recommended to supply this. More identifiers are
 listed at the [SPDX Open Source License Registry](http://www.spdx.org/licenses/).
 
+필수 항목은 아니지만 라이센스를 정의하는 것을 매우 추천합니다. 라이센스들의 기타 항목들은 [SPDX Open Source License Registry](http://www.spdx.org/licenses/) 에서 확인 할수 있습니다.
+
 For closed-source software, you may use `"proprietary"` as the license identifier.
+
+더이상 제공하지 않는 소프트웨어에 대해서는 `"proprietary"` 로 설정 하면 됩니다.
 
 An Example:
 
@@ -171,7 +205,11 @@ An Example:
 For a package, when there is a choice between licenses ("disjunctive license"),
 multiple can be specified as array.
 
+배열 형태의 선언은 여러개의 라이센스 중 선택해서 사용해야 하는 패키지에 설정 할 수 있습니다.
+
 An Example for disjunctive licenses:
+
+분리된 라이센스의 예:
 
 ```json
 {
@@ -184,6 +222,8 @@ An Example for disjunctive licenses:
 
 Alternatively they can be separated with "or" and enclosed in parenthesis;
 
+or로 구분된 라이센스를 괄호로 묶어 선택하여 사용 할 수 있습니다.
+
 ```json
 {
     "license": "(LGPL-2.1 or GPL-3.0+)"
@@ -192,6 +232,9 @@ Alternatively they can be separated with "or" and enclosed in parenthesis;
 
 Similarly when multiple licenses need to be applied ("conjunctive license"),
 they should be separated with "and" and enclosed in parenthesis.
+
+비슷한 경우로 결합한 형태의 라이센스가 지원 되는 경우 위의 예시에서 "or" 대신 "and" 구분자를 사용하여 설정 할 수 있습니다.
+
 
 ### authors
 
