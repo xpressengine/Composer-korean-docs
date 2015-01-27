@@ -579,9 +579,18 @@ Example:
 
 ### include-path
 
+- legacy project : 오래된 프로젝트
+
+> **DEPRECATED**: 해당 항목은 오래된 프로젝트에서만 지원하며, 새로운 코드의 경우 오토로딩을 사용합시다.
+>  더이상 지원하진 않지만(deprecated) 컴포저에서 사라지지는 않을 것입니다.
+
 > **DEPRECATED**: This is only present to support legacy projects, and all new code
 > should preferably use autoloading. As such it is a deprecated practice, but the
 > feature itself will not likely disappear from Composer.
+
+PHP의 `include_path`에 추가되는 경로(paths)입니다.
+
+(역주: `include_path`에 추가된 경로는 프로젝트내에서 `include`, `require` 또는 `file_get_contents(.., true)` 사용시 상대경로나 절대경로를 적지 않아도 됩니다.)
 
 A list of paths which should get appended to PHP's `include_path`.
 
@@ -593,18 +602,28 @@ Example:
 }
 ```
 
+선택사항
+
 Optional.
 
 ### target-dir
+
+> **DEPRECATED**: 해당 항목은 기존의 PSR-0 스타일의 오토로딩에서 지원하며, 새로 작성하는 코드의 경우 target-dir를 사용하지 않는 PSR-4를 사용하는 편이 낫습니다. PHP 네임스페이스와 함께 PSR-0를 사용하는 프로젝트의 경우 PSR-4로 옮기는 것이 더 좋습니다.
 
 > **DEPRECATED**: This is only present to support legacy PSR-0 style autoloading,
 > and all new code should preferably use PSR-4 without target-dir and projects
 > using PSR-0 with PHP namespaces are encouraged to migrate to PSR-4 instead.
 
+모든 설치 경로(target)을 정의합니다.
+
 Defines the installation target.
+
+패키지의 기본폴더(root)가 네임스페이스 정의 보다 아래에 있다면, 오토로드하지 못할 것입니다. 이 문제를 해결하기 위해선 `target-dir`을 사용해야 합니다. (역주: PSR-0은 네임스페이스 중 하위 일부만 사용하더라도 기본 네임스페이스부터 모든 폴더를 생성해주어야 합니다.)
 
 In case the package root is below the namespace declaration you cannot
 autoload properly. `target-dir` solves this problem.
+
+예제는 Symfony에서 가져왔습니다. 컴포넌트를 위한 각각의 패키지가 있습니다. Yaml 컴포넌트는 `Symfony\Component\Yaml` 네임스페이스에 있습니다. 패키지의 기본폴더는 `Yaml` 디렉터리입니다. 오토로드 하려면 `vendor/symfony/yaml` 디렉터리가 아닌 `vendor/symfony/yaml/Symfony/Component/Yaml` 디렉터리에 설치되어야 합니다. 그래야 오토로더가 `vendors/symfony/yaml` 디렉터리를 로드할 수 있을 것입니다.
 
 An example is Symfony. There are individual packages for the components. The
 Yaml component is under `Symfony\Component\Yaml`. The package root is that
@@ -612,6 +631,8 @@ Yaml component is under `Symfony\Component\Yaml`. The package root is that
 is not installed into `vendor/symfony/yaml`, but instead into
 `vendor/symfony/yaml/Symfony/Component/Yaml`, so that the autoloader can load
 it from `vendor/symfony/yaml`.
+
+이렇게 하고자 할 때, `autoload`와 `target-dir`은 다음과 같이 정의하면 됩니다.
 
 To do that, `autoload` and `target-dir` are defined as follows:
 
@@ -624,13 +645,23 @@ To do that, `autoload` and `target-dir` are defined as follows:
 }
 ```
 
+선택사항
+
 Optional.
 
 ### minimum-stability <span>(root-only)</span>
 
+- stability : 안정성
+- requirement : 요구사항
+ 
+해당 옵션은 패키지에서 안정성을 필터링하기 위한 기본 행동을 정의합니다. 이것은 `stable`을 기본값으로 합니다. 그렇기 때문에 만약 당신이 `dev` 패키지에 의존해 있다면 당신은 어마어마한(!) 일을 피하기 위해서라도 당신의 파일에 해당(`composer.json`) 옵션을 적어주셔야 합니다.
+
 This defines the default behavior for filtering packages by stability. This
 defaults to `stable`, so if you rely on a `dev` package, you should specify
 it in your file to avoid surprises.
+
+각 패키지의 모든 버전은 이러한 안정성이 체크되는데, `minimum-stability`로 지정된 값보다 더 낮은 패키지들은 패키지들간의 의존성을 처리할 때 무시됩니다. 특정 패키지의 안정성 요구사항의 변경은  `require` 또는 `require_dev`를 통해 해결할 수 있습니다(함께보기 
+[package links](#package-links)).
 
 All versions of each package are checked for stability, and those that are less
 stable than the `minimum-stability` setting will be ignored when resolving
@@ -638,30 +669,49 @@ your project dependencies. Specific changes to the stability requirements of
 a given package can be done in `require` or `require-dev` (see
 [package links](#package-links)).
 
+사용가능한 옵션(앞에 있는 것일 수록 안정성이 낮습니다.)으로는 `dev`, `alpha`, `beta`, `RC`, `stable`이 있습니다.
+
 Available options (in order of stability) are `dev`, `alpha`, `beta`, `RC`,
 and `stable`.
 
 ### prefer-stable <span>(root-only)</span>
+
+해당 옵션을 사용하면 Composer는 사용가능한 안정적인 패키지를 찾을 수 있을 때, 더 안정적인 패키지를 선호하게 됩니다. 당신이 개발 버전을 요구하였거나 알파버전만이 사용가능하다면, 이것들은 최소 안정성(minimum-stability)에서 허락된 것 중 가능한 것을 선택할 것입니다.
 
 When this is enabled, Composer will prefer more stable packages over unstable
 ones when finding compatible stable packages is possible. If you require a
 dev version or only alphas are available for a package, those will still be
 selected granted that the minimum-stability allows for it.
 
+해당 옵션을 사용하기 위해서 `"prefer-stable": true`를 사용하면 됩니다.
+
 Use `"prefer-stable": true` to enable.
 
 ### repositories <span>(root-only)</span>
 
+추가로 사용하고자 하는 패키지 저장소를 설정할 때 사용합니다.
+
 Custom package repositories to use.
+
+Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 다른 곳(packagist를 제외한)에서 제공해주는 패키지를 사용하고자 한다면 해당 저장소들을 추가로 작성하시면 됩니다.
 
 By default composer just uses the packagist repository. By specifying
 repositories you can get packages from elsewhere.
+
+저장소는 재귀적으로 사용할 수 없습니다. 그래서 반드시 메인이 되는 `composer.json` 파일에만 해당 내용을 추가하셔서 사용하셔야 합니다. 의존되는 패키지의 (`vendor`안에 정의되어있는) `composer.json에서 저장소를 정의한다면 그것들은 무시됩니다.
 
 Repositories are not resolved recursively. You can only add them to your main
 `composer.json`. Repository declarations of dependencies' `composer.json`s are
 ignored.
 
+다음 저장소를 지원합니다.
+
 The following repository types are supported:
+
+* **composer:** Composer 저장소는 단순히 네트워크(HTTP, FTP, SSH)를 통해 제공되는 `packages.json`파일입니다. 그리고 이 파일은 `composer.json`의 리스트를 갖고 있습니다. 그리고 `composer.json`은 부가적으로 `dist`, 혹은 `source` 정보를 갖고 있습니다.
+* **vcs:** git, svn, hg와 같은 버전관리도구로 부터 패키지들을 가져올 수 있습니다.
+* **pear:** 해당값을 통해 pear 저장소를 프로젝트에 추가할 수 있습니다.
+* **package:** 만약 Composer를 지원하지 않는 프로젝트에 의존하고 싶다면, 무엇이든간에 당신은 `package` 저장소를 사용하는 패키지를 정의할 수 있습니다. 그저 단순하게 `composer.json` 객체를 나열하면 됩니다.
 
 * **composer:** A composer repository is simply a `packages.json` file served
   via the network (HTTP, FTP, SSH), that contains a list of `composer.json`
@@ -676,9 +726,11 @@ The following repository types are supported:
   composer whatsoever you can define the package inline using a `package`
   repository. You basically just inline the `composer.json` object.
 
+더 많은 정보를 얻고자 한다면 다음 링크를 참고하시면 됩니다. [Repositories](05-repositories.md)
+
 For more information on any of these, see [Repositories](05-repositories.md).
 
-Example:
+예제:
 
 ```json
 {
@@ -724,10 +776,14 @@ Example:
 }
 ```
 
+> **Note:** 해당 항목의 경우 순서가 중요합니다. 컴포저는 패키지를 찾을 때 먼저 정의한 저장소부터 뒤쪽으로 순차적으로 검색하며, 가장 먼저 발견되는 패키지를 가져옵니다. Packagist를 기본값으로 사용자 정의 저장소를 덮어씌우고 싶다면 Packagist를 맨 마지막에 추가하시면 됩니다.
+
 > **Note:** Order is significant here. When looking for a package, Composer
 will look from the first to the last repository, and pick the first match.
 By default Packagist is added last which means that custom repositories can
 override packages from it.
+
+
 
 ### config <span>(root-only)</span>
 
