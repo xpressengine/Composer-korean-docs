@@ -80,36 +80,52 @@ to omit it.
 
 The type of the package. It defaults to `library`.
 
+패키지의 타입을 정의합니다. 기본타입은 `library` 입니다.
+
 Package types are used for custom installation logic. If you have a package
 that needs some special logic, you can define a custom type. This could be a
 `symfony-bundle`, a `wordpress-plugin` or a `typo3-module`. These types will
 all be specific to certain projects, and they will need to provide an
 installer capable of installing packages of that type.
 
+패키지 타입은 커스텀 설치를 위해 사용됩니다. 당신의 패키지가 특별한 로직이 필요 하다면, 커스텀 타입을 선언해야 합니다.
+예를들면 `symfony-bundle`, `wordpress-plugin` 혹은 `typo3-module`등을 사용 할수 있습니다. 이 모든 타입들은 각각의 프로젝트 마다 다르게 사용됩니다. 그리고 그 타입들은 그 타입에 맞는 설치 가능한 설치 패키지를 제공해야 합니다.
+
 Out of the box, composer supports four types:
 
+composer 가 기본으로 지원하는 4가지 타입들 (설치 패키지가 필요하지 않음).
+
 - **library:** This is the default. It will simply copy the files to `vendor`.
+- **library:** `vendor`에 파일들을 복사 하는 기본 타입입니다. 
 - **project:** This denotes a project rather than a library. For example
   application shells like the [Symfony standard edition](https://github.com/symfony/symfony-standard),
-  CMSs like the [SilverStripe installer](https://github.com/silverstripe/silverstripe-installer)
-  or full fledged applications distributed as packages. This can for example
+    or full fledged applications distributed as packages. This can for example
   be used by IDEs to provide listings of projects to initialize when creating
   a new workspace.
+- **project:** 라이브러리 가 아닌 패키지를 의미합니다. 예를 들면  [Symfony standard edition](https://github.com/symfony/symfony-standard)와 같은 쉘 어플리케이션이 있으며
+  [SilverStripe installer](https://github.com/silverstripe/silverstripe-installer) 같은 CMS 프로젝트가 있습니다. 
+  혹은 패키지 처럼 완전히 분리되었을 때 사용합니다. 새로운 작업공간을 생성할때 초기설정 리스트를 제공하는 IDE들에 의해 사용되는 것을 예로 들수 있다.
 - **metapackage:** An empty package that contains requirements and will trigger
   their installation, but contains no files and will not write anything to the
   filesystem. As such, it does not require a dist or source key to be
   installable.
+ - **metapackage:** requirement가 포함된 비어있는 객체는 작동시 설치가 된다. 그러나 파일이 포함되어 있지 않으면 어떠한 내용도 파일시스템에 쓰지 않는다. 그러므로 설치시에 dist 혹은 source key 를 요구하지 않고 설치됩니다.
 - **composer-plugin:** A package of type `composer-plugin` may provide an
   installer for other packages that have a custom type. Read more in the
   [dedicated article](articles/custom-installers.md).
-
+- **composer-plugin:** `composer-plugin`타입의 패키지는 다른 커스텀 패키지들을 위해 인스톨러를 제공합니다. 자세한 내용은 [dedicated article](articles/custom-installers.md)에서 확인 할수 있습니다.
+  
 Only use a custom type if you need custom logic during installation. It is
 recommended to omit this field and have it just default to `library`.
+
+당신이 설치하는 동안에 커스텀 로직이 필요하면 커스텀 타입을 사용하면 됩니다. 그 외에는 타입 설정을 하지 않거나 `library` 기본 셋팅을 하는것을 추천한다.
 
 ### keywords
 
 An array of keywords that the package is related to. These can be used for
 searching and filtering.
+
+패키지와 관계가 있는 키워드가 배열 형태로 선언됩니다. 이것들은 검색과 필터링에 사용 됩니다.
 
 Examples:
 
@@ -121,25 +137,39 @@ Examples:
 
 Optional.
 
+(필수 입력 아님)
+
 ### homepage
 
 An URL to the website of the project.
 
+프로젝트의 웹사이트 URL 입니다.
+
 Optional.
 
+(필수 입력 아님)
 ### time
 
 Release date of the version.
 
+해당 버젼의 릴리즈 날짜입니다.
+
 Must be in `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS` format.
+
+`YYYY-MM-DD` 혹의 `YYYY-MM-DD HH:MM:SS` 의 형태로 반드시 사용해야 합니다.
 
 Optional.
 
+(필수 입력 아님)
 ### license
 
 The license of the package. This can be either a string or an array of strings.
 
+패키지의 라이센스를 정의 합니다. 문자 형태 혹은 배열 형태로 정의할 수 있습니다.
+
 The recommended notation for the most common licenses is (alphabetical):
+
+가장 일반적인 사용되어 지는 라이센스의 추천 항목들 입니다. (알파벳 순 정렬)
 
 - Apache-2.0
 - BSD-2-Clause
@@ -158,7 +188,11 @@ The recommended notation for the most common licenses is (alphabetical):
 Optional, but it is highly recommended to supply this. More identifiers are
 listed at the [SPDX Open Source License Registry](http://www.spdx.org/licenses/).
 
+필수 항목은 아니지만 라이센스를 정의하는 것을 매우 추천합니다. 라이센스들의 기타 항목들은 [SPDX Open Source License Registry](http://www.spdx.org/licenses/) 에서 확인 할수 있습니다.
+
 For closed-source software, you may use `"proprietary"` as the license identifier.
+
+더이상 제공하지 않는 소프트웨어에 대해서는 `"proprietary"` 로 설정 하면 됩니다.
 
 An Example:
 
@@ -171,7 +205,11 @@ An Example:
 For a package, when there is a choice between licenses ("disjunctive license"),
 multiple can be specified as array.
 
+배열 형태의 선언은 여러개의 라이센스 중 선택해서 사용해야 하는 패키지에 설정 할 수 있습니다.
+
 An Example for disjunctive licenses:
+
+분리된 라이센스의 예:
 
 ```json
 {
@@ -184,6 +222,8 @@ An Example for disjunctive licenses:
 
 Alternatively they can be separated with "or" and enclosed in parenthesis;
 
+or로 구분된 라이센스를 괄호로 묶어 선택하여 사용 할 수 있습니다.
+
 ```json
 {
     "license": "(LGPL-2.1 or GPL-3.0+)"
@@ -192,6 +232,9 @@ Alternatively they can be separated with "or" and enclosed in parenthesis;
 
 Similarly when multiple licenses need to be applied ("conjunctive license"),
 they should be separated with "and" and enclosed in parenthesis.
+
+비슷한 경우로 결합한 형태의 라이센스가 지원 되는 경우 위의 예시에서 "or" 대신 "and" 구분자를 사용하여 설정 할 수 있습니다.
+
 
 ### authors
 
@@ -731,79 +774,34 @@ override packages from it.
 
 ### config <span>(root-only)</span>
 
-A set of configuration options. It is only used for projects.
+설정을 변경합니다. 변경한 설정은 (현재) 프로젝트에만 적용됩니다. (--global 옵션을 붙여주면 전체에도 설정됩니다.)
 
-The following options are supported:
+아래 옵션들이 설정 변경을 지원합니다.
 
-* **process-timeout:** Defaults to `300`. The duration processes like git clones
-  can run before Composer assumes they died out. You may need to make this
-  higher if you have a slow connection or huge vendors.
-* **use-include-path:** Defaults to `false`. If true, the Composer autoloader
-  will also look for classes in the PHP include path.
-* **preferred-install:** Defaults to `auto` and can be any of `source`, `dist` or
-  `auto`. This option allows you to set the install method Composer will prefer to
-  use.
-* **store-auths:** What to do after prompting for authentication, one of:
-  `true` (always store), `false` (do not store) and `"prompt"` (ask every
-  time), defaults to `"prompt"`.
-* **github-protocols:** Defaults to `["git", "https", "ssh"]`. A list of protocols to
-  use when cloning from github.com, in priority order. You can reconfigure it to
-  for example prioritize the https protocol if you are behind a proxy or have somehow
-  bad performances with the git protocol.
-* **github-oauth:** A list of domain names and oauth keys. For example using
-  `{"github.com": "oauthtoken"}` as the value of this option will use `oauthtoken`
-  to access private repositories on github and to circumvent the low IP-based
-  rate limiting of their API.
-  [Read more](articles/troubleshooting.md#api-rate-limit-and-oauth-tokens)
-  on how to get an OAuth token for GitHub.
-* **http-basic:** A list of domain names and username/passwords to authenticate
-  against them. For example using
-  `{"example.org": {"username": "alice", "password": "foo"}` as the value of this
-  option will let composer authenticate against example.org.
-* **vendor-dir:** Defaults to `vendor`. You can install dependencies into a
-  different directory if you want to. `$HOME` and `~` will be replaced by your
-  home directory's path in vendor-dir and all `*-dir` options below.
-* **bin-dir:** Defaults to `vendor/bin`. If a project includes binaries, they
-  will be symlinked into this directory.
-* **cache-dir:** Defaults to `$COMPOSER_HOME/cache` on unix systems and
-  `C:\Users\<user>\AppData\Local\Composer` on Windows. Stores all the caches
-  used by composer. See also [COMPOSER_HOME](03-cli.md#composer-home).
-* **cache-files-dir:** Defaults to `$cache-dir/files`. Stores the zip archives
-  of packages.
-* **cache-repo-dir:** Defaults to `$cache-dir/repo`. Stores repository metadata
-  for the `composer` type and the VCS repos of type `svn`, `github` and `bitbucket`.
-* **cache-vcs-dir:** Defaults to `$cache-dir/vcs`. Stores VCS clones for
-  loading VCS repository metadata for the `git`/`hg` types and to speed up installs.
-* **cache-files-ttl:** Defaults to `15552000` (6 months). Composer caches all
-  dist (zip, tar, ..) packages that it downloads. Those are purged after six
-  months of being unused by default. This option allows you to tweak this
-  duration (in seconds) or disable it completely by setting it to 0.
-* **cache-files-maxsize:** Defaults to `300MiB`. Composer caches all
-  dist (zip, tar, ..) packages that it downloads. When the garbage collection
-  is periodically ran, this is the maximum size the cache will be able to use.
-  Older (less used) files will be removed first until the cache fits.
-* **prepend-autoloader:** Defaults to `true`. If false, the composer autoloader
-  will not be prepended to existing autoloaders. This is sometimes required to fix
-  interoperability issues with other autoloaders.
-* **autoloader-suffix:** Defaults to `null`. String to be used as a suffix for
-  the generated Composer autoloader. When null a random one will be generated.
-* **optimize-autoloader** Defaults to `false`. Always optimize when dumping
-  the autoloader.
-* **github-domains:** Defaults to `["github.com"]`. A list of domains to use in
-  github mode. This is used for GitHub Enterprise setups.
-* **github-expose-hostname:** Defaults to `true`. If set to false, the OAuth
-  tokens created to access the github API will have a date instead of the
-  machine hostname.
-* **notify-on-install:** Defaults to `true`. Composer allows repositories to
-  define a notification URL, so that they get notified whenever a package from
-  that repository is installed. This option allows you to disable that behaviour.
-* **discard-changes:** Defaults to `false` and can be any of `true`, `false` or
-  `"stash"`. This option allows you to set the default style of handling dirty
-  updates when in non-interactive mode. `true` will always discard changes in
-  vendors, while `"stash"` will try to stash and reapply. Use this for CI
-  servers or deploy scripts if you tend to have modified vendors.
+* **process-timeout:** 기본값은 `300`입니다. Composer가 실행하면서 'git clones'와 같은 일은 하면 프로세스가 죽을 수 있습니다. 그래서 연결 상태가 느리거나, vendors가 거대할 때, 기본값보다 높은 값이 필요합니다. 
+* **use-include-path:** 기본값은 `false`입니다. 값을 true로 해준다면, autoloader가 include path에 해당하는 클래스를 PHP에서 직접 찾습니다.
+* **preferred-install:** 기본값은 auto이고, source, dist, auto중 선택할 수 있습니다. 이 옵션으로 선호하는 방법을 선택해 설치할 수 있습니다. (source는 git clone과 같은 소스파일을 그대로 받는 방식, dist는 zip과같이 압축된 형태로 받는 방식, auto는 어떤것이든 상관없이 받는 방식입니다.)
+* **store-auths:** 사용자 인증을 위한 메세지 표시로, `true` (저장), `false` (저장 안함), `prompt` (항상 물음) 중 하나를 선택할 수 있습니다. 기본값은 `prompt` 입니다.
+* **github-protocols:** 기본값은 `["git", "https", "ssh"]`입니다. github.com 에서 cloning 하는 프로토콜의 우선순위로, 예를 들면 HTTPS 프로토콜 우선 순위를 프록시 뒤에, 또는, 효율성이 낮은 git protocol로 사용자가 아무렇게나 재구성할 수 있습니다.
+* **github-oauth:** 도메인 네임과 OAuth 키에 대한 목록입니다. 예를 들어 `{"github.com": "oauthtoken"}` 에서 value인 `oauthtoken`는 github 비밀 저장소 접근 가능케 해주며, 낮은 IP 기반의 속도제한이 있는 API에 대한 접근을 회피 할 수 있도록 해줍니다. github의 OAuth 토큰을 얻는 방법을 읽어보시기 바랍니다. [Read more](articles/troubleshooting.md#api-rate-limit-and-oauth-tokens)
+* **http-basic:** 인증에 사용되는 도메인 네임과 사용자이름/비밀번호 목록입니다.`{"example.org": {"username": "alice", "password": "foo"}` 위와 같은 방식으로 작성을 하면 `alice/foo` 값이 `example.org` 에 인증을 하게 됩니다.
+* **vendor-dir:** 기본값은 `vendor` 입니다. 사용자는 원한다면 다른 디렉토리에 의존성을 설치할 수 있습니다. `$HOME`과 `~`는 `vendor-dir` 와 `$-dir` 이하의 모든 사용자의 홈디렉토리 경로로 대체할 수 있습니다.
+* **bin-dir:** 기본값은 `vendor/bin` 입니다. 만약 프로젝트가 바이너리를 include했다면, `vendor/bin`에 해당하는 디렉토리에 심볼릭링크로 가리켜지게 됩니다.
+* **cache-dir:** UNIX 에서의 기본값은 `$COMPOSER_HOME/cache` 이고, Window 에서의 기본값은 `C:\Users\<user>\AppData\Local\Composer` 입니다. Composer에 의해 사용된 캐시가 모두 저장됩니다. 또한 03-CLI에서 [COMPOSER_HOME](03-cli.md#composer-home)를 참고하기 바랍니다.
+* **cache-files-dir:** 기본값은 `$cache-dir/files` 입니다. 캐시를 압축 패키지로 저장하는 경로입니다.
+* **cache-repo-dir:** 기본값은 `$cache-dir/repo` 입니다. `composer` 타입의 metadata 저장소와 `svn`, `github`, 그리고 `bitbucket` 타입의 VCS 저장소를 저장하는 경로입니다.
+* **cache-vcs-dir:** 기본값은 `$cache-dir/vcs` 입니다. VCS 저장소인 `git`/`hg` 의 metadata를 불러해서 빠른속도로 속도설치하는 VCS clones을 저장하는 경로입니다.
+* **cache-files-ttl:** 기본값은 `15552000` (6개월) 입니다. Composer caches가 모든 dist 패키지를 다운로드합니다. 기본값인 6개월동안 사용되지 않으면 제거합니다. 이 옵션의 기간은 사용자가 정할 수 있으며, 0으로 설정해 기능을 완전히 사용하지 않을 수 있습니다. 
+* **cache-files-maxsize:** 기본값은 `300MiB` 입니다. Composer caches가 모든 dist 패키지를 다운로드합니다. 가비지 콜렉션이 주기적으로 실행되는 경우, 캐시의 최대 사이즈로 실행됩니다. 캐시사이즈보다 클 경우, 가장 오래전에 사용됬던 파일부터 차례대로 지우기 시작합니다.
+* **prepend-autoloader:** 기본값은 `true` 입니다. 만약 false 라면, 이미 존재하는 autoloader 앞에 새로운 autoloader가 추가되지 않습니다. 하지만, 이런 경우가 다른 autoloader들과의 상호작용하는 문제를 해결하기 위해 필요하기도 합니다.
+* **autoloader-suffix:** 기본값은 `null` 입니다. autoloader에 접미사를 붙여줍니다.(autoloader-blahblah...) null 일때는 자동으로 `autoloader` 가 생성됩니다.
+* **optimize-autoloader** 기본값은 `false`. `autoloader`를 dump 할 경우 항상 최적화를 시켜줍니다.
+* **github-domains:** 기본값은 `["github.com"]` 입니다. 사용하는 github를 사용하는 도메인 목록입니다. github Enterprise  설정에서 사용됩니다.
+* **github-expose-hostname:** 기본값은 `true` 입니다. 만약 false로 설정하면, github의 API를 액세스하기 위해 만든 OAuth의 토큰은 날짜 대신 장비의 호스트 이름이됩니다.
+* **notify-on-install:** 기본값은 `true` 입니다. 저장소의 Notification URL을 정의할 수 있으며, 저장소에 패키지가 설치될 때 알려줍니다. 이 설정을 이용해 알림을 받지 않을 수 있습니다.
+* **discard-changes:** 이 설정을 사용하면 비-대화식 모드에서 더러운(..) 업데이트를 처리하는 기본 스타일을 설정할 수 있습니다. `true`는 항상 vendors 안의 변경사항을 취소하는 반면, `stash`는 항상 변경된 사항을 재적용 합니다. 수정된 vendors가 적을 경우, CI서버나 배포용 스크립트에서 사용하게 됩니다.(????)
 
-Example:
+예제:
 
 ```json
 {
@@ -813,53 +811,48 @@ Example:
 }
 ```
 
-> **Note:** Authentication-related config options like `http-basic` and
-> `github-oauth` can also be specified inside a `auth.json` file that goes
-> besides your `composer.json`. That way you can gitignore it and every
-> developer can place their own credentials in there.
+> **Note:** `http-basic`, `github-oauth` 와 같이 사용자 인증 관련 옵션은 `composer.json`외에 `auth.json` 파일 내에 지정할 수 있습니다. 이러한 방법은 .gitignore에 추가할 수 있고, 개발자는 자신의 자격 증명(?)이 가능합니다.
 
 ### scripts <span>(root-only)</span>
 
-Composer allows you to hook into various parts of the installation process
-through the use of scripts.
+설치 과정의 여러 부분을 스크립트로 후크 할 수 있습니다
 
-See [Scripts](articles/scripts.md) for events details and examples.
+여기를 보시면 [Scripts](articles/scripts.md) 자세한 설명과 예제가 있습니다.
 
 ### extra
 
-Arbitrary extra data for consumption by `scripts`.
+`scripts`로 사용하기 위한 임의의 데이터 입니다.
 
-This can be virtually anything. To access it from within a script event
-handler, you can do:
+사실상 뭐든지 할 수 있습니다. 스크립트 내에서 액세스 하기위한 이벤트 핸들러는
+아래와 같습니다:
 
 ```php
 $extra = $event->getComposer()->getPackage()->getExtra();
 ```
 
-Optional.
+선택적으로 사용 가능합니다.
 
 ### bin
 
-A set of files that should be treated as binaries and symlinked into the `bin-dir`
-(from config).
+설정 파일을 바이너리로 처리하고, `bin-dir`이라는 심볼릭 링크로 만듭니다.
 
-See [Vendor Binaries](articles/vendor-binaries.md) for more details.
+오른쪽 링크를 보시면 [Vendor Binaries](articles/vendor-binaries.md) 자세한 설명이 나옵니다.
 
-Optional.
+선택적으로 사용 가능합니다.
 
 ### archive
 
-A set of options for creating package archives.
+패키지로 저장하기 위한 옵션을 설정합니다.
 
-The following options are supported:
+아래와 같은 옵션들이 지원됩니다.
 
-* **exclude:** Allows configuring a list of patterns for excluded paths. The
-  pattern syntax matches .gitignore files. A leading exclamation mark (!) will
-  result in any matching files to be included even if a previous pattern
-  excluded them. A leading slash will only match at the beginning of the project
-  relative path. An asterisk will not expand to a directory separator.
+* **exclude:**  제외한 경로에 대한 패턴을 목록으로 구성됩니다.  
+이 패턴은 .gitignore 파일과 일치합니다.  
+	* 느낌표 ( ! ) : 일치하는 파일에 나타내는데, 이전에 exclude한 패턴에서도 나타납니다.
+	* 슬래쉬 ( / ) : 프로젝트 시작 시의 상대경로를 나타냅니다.
+	* 아스타 ( * ) : 디렉토리를 구분하는 구분자로 확장(사용)되지 않습니다.
 
-Example:
+예제:
 
 ```json
 {
@@ -869,9 +862,10 @@ Example:
 }
 ```
 
-The example will include `/dir/foo/bar/file`, `/foo/bar/baz`, `/file.php`,
-`/foo/my.test` but it will exclude `/foo/bar/any`, `/foo/baz`, and `/my.test`.
+위 예제는 `/dir/foo/bar/file`, `/foo/bar/baz`, `/file.php`,
+`/foo/my.test`, 4가지 경로를 include 하면, `/foo/bar/any`, `/foo/baz`, and `/my.test`, 3가지 경로를 exclude합니다.
 
-Optional.
+선택적으로 사용 가능합니다.
 
 &larr; [Command-line interface](03-cli.md)  |  [Repositories](05-repositories.md) &rarr;
+
