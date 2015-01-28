@@ -1,24 +1,33 @@
 # 저장소
 
-This chapter will explain the concept of packages and repositories, what kinds
-of repositories are available, and how they work.
+이번 챕터는 패키지와 저장소에 대한 개념, 어떤 종류의 저장소가 사용가능한지, 어떻게 동작하는지 설명할 것입니다.
 
-## Concepts
+## 개념
 
-Before we look at the different types of repositories that exist, we need to
-understand some of the basic concepts that composer is built on.
+Before we look at the different types of repositories that exist, we need to understand some of the basic concepts that composer is built on.
+실재하는 다양한 형태의 저장소를 살펴 보기에 앞서, 컴포저에 내장 된 기본 개념을 이해할 필요가 있습니다.
 
-### Package
+
+### 패키지
 
 Composer is a dependency manager. It installs packages locally. A package is
 essentially just a directory containing something. In this case it is PHP
 code, but in theory it could be anything. And it contains a package
 description which has a name and a version. The name and the version are used
 to identify the package.
+컴포저는 의존성 관리자 입니다.
+컴포저는 패키지들을 로컬공간에 설치합니다.
+본질적으로 패키지란 단순히 무언가를 담고 있는 디렉토리를 의미합니다.
+여기서는 PHP 코드를 의미하게 되겠지만, 이론상으로는 어떠한 것도 가능합니다. 
+그리고 이것은 이름과 버전이 포함된 패키지 설명을 수록하고 있습니다.
+이 이름과 버전은 패키지를 식별하는데 사용됩니다.
+
 
 In fact, internally composer sees every version as a separate package. While
 this distinction does not matter when you are using composer, it's quite
 important when you want to change it.
+사실, 컴포저는 내부적으로 모든 버전을 별도의 패키지로 간주합니다.
+
 
 In addition to the name and the version, there is useful metadata. The information
 most relevant for installation is the source definition, which describes where
