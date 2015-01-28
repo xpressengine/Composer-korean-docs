@@ -3,6 +3,8 @@
 This chapter will explain the concept of packages and repositories, what kinds
 of repositories are available, and how they work.
 
+이번 챕터는 패키지와 저장소에 대한 개념, 어떤 종류의 저장소가 사용가능한지, 어떻게 동작하는지 설명할 것이다.
+
 ## Concepts
 
 Before we look at the different types of repositories that exist, we need to
