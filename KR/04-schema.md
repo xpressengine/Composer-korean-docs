@@ -1,63 +1,46 @@
-# The composer.json Schema
+# composer.json의 구조
 
-This chapter will explain all of the fields available in `composer.json`.
+이 챕터에서는 `composer.json`에서 사용가능한 모든 항목에 대해서 설명하겠습니다.
 
-## JSON schema
+## JSON의 구조
 
-We have a [JSON schema](http://json-schema.org) that documents the format and
-can also be used to validate your `composer.json`. In fact, it is used by the
-`validate` command. You can find it at:
-[`res/composer-schema.json`](https://github.com/composer/composer/blob/master/res/composer-schema.json).
+[JSON의 구조](http://json-schema.org)는 문서화 형태로 포맷이 구성되어 있고, `composer.json`의 형태를 검증하는데도 사용할 수 있습니다. 실제로, 이것은 `validate` 명령어를 통해 사용됩니다. composer.json 의 형태는 다음과 같이 구성될 수 있습니다: [`res/composer-schema.json`](https://github.com/composer/composer/blob/master/res/composer-schema.json)
 
-## Root Package
+## Root 패키지
 
-The root package is the package defined by the `composer.json` at the root of
-your project. It is the main `composer.json` that defines your project
-requirements.
+ 루트 패키지는 프로젝트의 루트에 있는 `composer.json`에 의해 정의 된 패키지입니다. 그것은 프로젝트의 요구사항을 정의하는 메인 `composer.json`를 의미합니다.
 
-Certain fields only apply when in the root package context. One example of
-this is the `config` field. Only the root package can define configuration.
-The config of dependencies is ignored. This makes the `config` field
-`root-only`.
+일부 항목들은 루트 패키지의 문맥에서만 사용됩니다. `config` 항목이 그 예입니다. 오직 루트 패키지에서만 설정할 수 있습니다. 종속패키지의 설정들은 무시되어 집니다. 이러한 특징이 `config` 항목을 `root-only`로 만듭니다.
 
-If you clone one of those dependencies to work on it, then that package is the
-root package. The `composer.json` is identical, but the context is different.
+만약 그것에 쓰이고 있는 종속 패키지중 중 하나를 복제했다면, 이제 그 패키지가 루트 패키지입니다. `composer.json`은 같지만 문맥은 다른것을 확인할 수 있습니다.
 
-> **Note:** A package can be the root package or not, depending on the context.
-> For example, if your project depends on the `monolog` library, your project
-> is the root package. However, if you clone `monolog` from GitHub in order to
-> fix a bug in it, then `monolog` is the root package.
+> **참고:** 하나의 패키지는 문맥에 따라 루트 패키지가 될수도 있고 아닐수도 있습니다. 예를 들어, 만약 프로젝트가 `monolog` 라이브러리를 의존하고 있다면, 프로젝트가 루트 패키지 입니다. 하지만, 만약 Github로 부터 버그를 수정하기 위해 `monolog`를 복제한다면, `monolog`가 루트 패키지 입니다.
 
-## Properties
+## 속성
 
-### name
+### name - 이름
 
-The name of the package. It consists of vendor name and project name,
-separated by `/`.
+패키지의 이름입니다. 이것은 `/`로 나뉘는 벤더의 이름과 프로젝트의 이름으로 구성되어 있습니다.
 
-Examples:
+예제:
 
 * monolog/monolog
 * igorw/event-source
 
-Required for published packages (libraries).
+퍼블리시 된 패키지(라이브러리)의 경우 필수속성입니다.
 
-### description
+### description - 설명
 
-A short description of the package. Usually this is just one line long.
+패키지에 대한 짧은 설명입니다. 일반적으로 한줄 정도의 길이로 구성됩니다. 
+퍼블리시 된 패키지(라이브러리)의 경우 필수속성입니다.
 
-Required for published packages (libraries).
+### version - 버전
 
-### version
+패키지의 버전을 의미합니다. 대부분의 경우에 버전은 생략할 수 있으므로 필수사항은 아닙니다.(아래 참조)
 
-The version of the package. In most cases this is not required and should
-be omitted (see below).
+버전은 `X.Y.Z` 또는 `vX.Y.Z`의 포멧을 따라야 합니다. 선택적으로 `-dev`, `-patch`, `-alpha`, `-beta` 또는 `-RC`와 같은 접미사와 함께 쓸 수 있습니다. patch, alpha, beta 그리고 RC는 접미사로 숫자가 따라올 수 있습니다.
 
-This must follow the format of `X.Y.Z` or `vX.Y.Z` with an optional suffix
-of `-dev`, `-patch`, `-alpha`, `-beta` or `-RC`. The patch, alpha, beta and
-RC suffixes can also be followed by a number.
-
-Examples:
+사용예:
 
 - 1.0.0
 - 1.0.2
@@ -68,66 +51,39 @@ Examples:
 - 1.0.0-beta2
 - 1.0.0-RC5
 
-Optional if the package repository can infer the version from somewhere, such
-as the VCS tag name in the VCS repository. In that case it is also recommended
-to omit it.
+패키지 저장소가 VCS 저장소 안에 VCS 태그 이름과 같이 어딘가에서 버전을 유추할 수 있다면, 이러한 경우에도 생략하는 것이 좋습니다.
 
-> **Note:** Packagist uses VCS repositories, so the statement above is very
-> much true for Packagist as well. Specifying the version yourself will
-> most likely end up creating problems at some point due to human error.
+> **참고:** Packigist는 VCS 저장소를 사용합니다. 그래서 위의 문장은 Packigist에 대해서 아주 잘 나타내줍니다. 버전을 사용자가 직접 작성한다면 실수로 인해 언젠가 높은 확률로 문제가 발생할 소지가 있습니다. 
 
 ### type
 
-The type of the package. It defaults to `library`.
-
 패키지의 타입을 정의합니다. 기본타입은 `library` 입니다.
 
-Package types are used for custom installation logic. If you have a package
-that needs some special logic, you can define a custom type. This could be a
-`symfony-bundle`, a `wordpress-plugin` or a `typo3-module`. These types will
-all be specific to certain projects, and they will need to provide an
-installer capable of installing packages of that type.
-
-패키지 타입은 커스텀 설치를 위해 사용됩니다. 당신의 패키지가 특별한 로직이 필요 하다면, 커스텀 타입을 선언해야 합니다.
+패키지 타입은 커스텀 설치를 위해 사용됩니다. 당신의 패키지가 설치하기 위한 특별한 로직이 필요 하다면, 커스텀 타입을 선언해야 합니다.
 예를들면 `symfony-bundle`, `wordpress-plugin` 혹은 `typo3-module`등을 사용 할수 있습니다. 이 모든 타입들은 각각의 프로젝트 마다 다르게 사용됩니다. 그리고 그 타입들은 그 타입에 맞는 설치 가능한 설치 패키지를 제공해야 합니다.
-
-Out of the box, composer supports four types:
 
 composer 가 기본으로 지원하는 4가지 타입들 (설치 패키지가 필요하지 않음).
 
-- **library:** This is the default. It will simply copy the files to `vendor`.
 - **library:** `vendor`에 파일들을 복사 하는 기본 타입입니다. 
-- **project:** This denotes a project rather than a library. For example
-  application shells like the [Symfony standard edition](https://github.com/symfony/symfony-standard),
-    or full fledged applications distributed as packages. This can for example
-  be used by IDEs to provide listings of projects to initialize when creating
-  a new workspace.
-- **project:** 라이브러리 가 아닌 패키지를 의미합니다. 예를 들면  [Symfony standard edition](https://github.com/symfony/symfony-standard)와 같은 쉘 어플리케이션이 있으며
-  [SilverStripe installer](https://github.com/silverstripe/silverstripe-installer) 같은 CMS 프로젝트가 있습니다. 
-  혹은 패키지 처럼 완전히 분리되었을 때 사용합니다. 새로운 작업공간을 생성할때 초기설정 리스트를 제공하는 IDE들에 의해 사용되는 것을 예로 들수 있다.
+- **project:** 라이브러리 가 아닌 패키지를 의미합니다. 예를 들면  [Symfony standard edition](https://github.com/symfony/symfony-standard)와 같은 쉘 어플리케이션이 있으며 [SilverStripe installer](https://github.com/silverstripe/silverstripe-installer) 같은 CMS 프로젝트가 있습니다. 
+  혹은 패키지 처럼 완전히 분리되었을 때 사용합니다. 새로운 작업공간을 생성할때 초기설정 리스트를 제공하는 IDE들에 의해 사용되는 것을 예로 들수 있습니다.
 - **metapackage:** An empty package that contains requirements and will trigger
   their installation, but contains no files and will not write anything to the
   filesystem. As such, it does not require a dist or source key to be
   installable.
- - **metapackage:** requirement가 포함된 비어있는 객체는 작동시 설치가 된다. 그러나 파일이 포함되어 있지 않으면 어떠한 내용도 파일시스템에 쓰지 않는다. 그러므로 설치시에 dist 혹은 source key 를 요구하지 않고 설치됩니다.
-- **composer-plugin:** A package of type `composer-plugin` may provide an
-  installer for other packages that have a custom type. Read more in the
-  [dedicated article](articles/custom-installers.md).
+ - **metapackage:** requirement가 포함된 비어있는 패키지는 작동시 설치가 된다. 그러나 파일이 포함되어 있지 않으면 어떠한 내용도 파일시스템에 쓰지 않는다. 그러므로 설치시에 dist 혹은 source key 를 요구하지 않고 설치됩니다.
 - **composer-plugin:** `composer-plugin`타입의 패키지는 다른 커스텀 패키지들을 위해 인스톨러를 제공합니다. 자세한 내용은 [dedicated article](articles/custom-installers.md)에서 확인 할수 있습니다.
   
 Only use a custom type if you need custom logic during installation. It is
 recommended to omit this field and have it just default to `library`.
 
-당신이 설치하는 동안에 커스텀 로직이 필요하면 커스텀 타입을 사용하면 됩니다. 그 외에는 타입 설정을 하지 않거나 `library` 기본 셋팅을 하는것을 추천한다.
+패키지를 설치하는데 커스텀 로직이 필요하면 커스텀 타입을 사용하면 됩니다. 그 외에는 타입 설정을 하지 않거나 `library` 기본 셋팅을 하는것을 추천합니다.
 
 ### keywords
 
-An array of keywords that the package is related to. These can be used for
-searching and filtering.
-
 패키지와 관계가 있는 키워드가 배열 형태로 선언됩니다. 이것들은 검색과 필터링에 사용 됩니다.
 
-Examples:
+사용예:
 
 - logging
 - events
@@ -135,41 +91,26 @@ Examples:
 - redis
 - templating
 
-Optional.
-
-(필수 입력 아님)
+필수 항목이 아닙니다. 
 
 ### homepage
 
-An URL to the website of the project.
-
 프로젝트의 웹사이트 URL 입니다.
 
-Optional.
+필수 항목이 아닙니다. 
 
-(필수 입력 아님)
 ### time
 
-Release date of the version.
-
 해당 버젼의 릴리즈 날짜입니다.
+반드시 `YYYY-MM-DD` 혹의 `YYYY-MM-DD HH:MM:SS` 의 형태로 사용해야 합니다.
 
-Must be in `YYYY-MM-DD` or `YYYY-MM-DD HH:MM:SS` format.
+필수 항목이 아닙니다. 
 
-`YYYY-MM-DD` 혹의 `YYYY-MM-DD HH:MM:SS` 의 형태로 반드시 사용해야 합니다.
-
-Optional.
-
-(필수 입력 아님)
 ### license
-
-The license of the package. This can be either a string or an array of strings.
 
 패키지의 라이센스를 정의 합니다. 문자 형태 혹은 배열 형태로 정의할 수 있습니다.
 
-The recommended notation for the most common licenses is (alphabetical):
-
-가장 일반적인 사용되어 지는 라이센스의 추천 항목들 입니다. (알파벳 순 정렬)
+가장 일반적인 사용되어 지는 라이센스의 추천 항목들은 다음과 같습니다. (알파벳 순 정렬)
 
 - Apache-2.0
 - BSD-2-Clause
@@ -185,16 +126,11 @@ The recommended notation for the most common licenses is (alphabetical):
 - LGPL-3.0+
 - MIT
 
-Optional, but it is highly recommended to supply this. More identifiers are
-listed at the [SPDX Open Source License Registry](http://www.spdx.org/licenses/).
-
 필수 항목은 아니지만 라이센스를 정의하는 것을 매우 추천합니다. 라이센스들의 기타 항목들은 [SPDX Open Source License Registry](http://www.spdx.org/licenses/) 에서 확인 할수 있습니다.
-
-For closed-source software, you may use `"proprietary"` as the license identifier.
 
 더이상 제공하지 않는 소프트웨어에 대해서는 `"proprietary"` 로 설정 하면 됩니다.
 
-An Example:
+사용예:
 
 ```json
 {
@@ -202,14 +138,9 @@ An Example:
 }
 ```
 
-For a package, when there is a choice between licenses ("disjunctive license"),
-multiple can be specified as array.
+배열 형태의 선언은 여러개의 라이센스 중 선택해서 사용해야 하는 패키지에서 설정 할 수 있습니다.
 
-배열 형태의 선언은 여러개의 라이센스 중 선택해서 사용해야 하는 패키지에 설정 할 수 있습니다.
-
-An Example for disjunctive licenses:
-
-분리된 라이센스의 예:
+다른 라이센스의 예:
 
 ```json
 {
@@ -220,18 +151,13 @@ An Example for disjunctive licenses:
 }
 ```
 
-Alternatively they can be separated with "or" and enclosed in parenthesis;
-
-or로 구분된 라이센스를 괄호로 묶어 선택하여 사용 할 수 있습니다.
+위의 형태 대신에 or로 구분된 괄호로 묶은 형태로 라이센스를 표시 할 수도 있습니다.
 
 ```json
 {
     "license": "(LGPL-2.1 or GPL-3.0+)"
 }
 ```
-
-Similarly when multiple licenses need to be applied ("conjunctive license"),
-they should be separated with "and" and enclosed in parenthesis.
 
 비슷한 경우로 결합한 형태의 라이센스가 지원 되는 경우 위의 예시에서 "or" 대신 "and" 구분자를 사용하여 설정 할 수 있습니다.
 
@@ -429,7 +355,7 @@ aliases article](articles/aliases.md).
 Lists packages required by this package. The package will not be installed
 unless those requirements can be met.
 
-#### require-dev <span>(root-only)</span>
+#### require-dev (root-only)
 
 해당 패키지를 개발하거나 테스트를 수행하는 등에 필요한 패키지들입니다. 기본으로 최상위 패키지(root package)의 개발에 필요한 요구사항을 설치하게 됩니다. `install`과 `update`는 각각 `--no-dev`라는 옵션을 지원하는데, 이는 개발에 필요한 의존성 패키지들을 설치하지 않도록 합니다.
 
@@ -708,7 +634,7 @@ Example:
 }
 ```
 
-### autoload-dev <span>(root-only)</span>
+### autoload-dev (root-only)
 
 해당 항목은 개발을 목적으로한 오토로드 규칙을 정의하도록 해줍니다.
 
@@ -740,15 +666,20 @@ Example:
 }
 ```
 
+
+
+
 ### include-path
 
-> **DEPRECATED**: This is only present to support legacy projects, and all new code
-> should preferably use autoloading. As such it is a deprecated practice, but the
-> feature itself will not likely disappear from Composer.
+> **DEPRECATED**: 해당 항목은 오래된 프로젝트(레거시 프로젝트)에서만 지원하며, 새로운 코드의 경우 오토로딩을 사용해야 합니다.
+>  더이상 지원하진 않지만(deprecated) 컴포저에서 사라지지는 않을 것입니다.
 
-A list of paths which should get appended to PHP's `include_path`.
+PHP의 `include_path`에 추가되는 경로(paths)입니다.
 
-Example:
+(역주: `include_path`에 추가된 경로는 프로젝트내에서 `include`, `require` 또는 `file_get_contents(.., true)` 사용시 상대경로나 절대경로를 적지 않아도 됩니다.)
+
+
+사용예:
 
 ```json
 {
@@ -756,27 +687,20 @@ Example:
 }
 ```
 
-Optional.
+필수 항목이 아닙니다. 
 
 ### target-dir
 
-> **DEPRECATED**: This is only present to support legacy PSR-0 style autoloading,
-> and all new code should preferably use PSR-4 without target-dir and projects
-> using PSR-0 with PHP namespaces are encouraged to migrate to PSR-4 instead.
+> **DEPRECATED**: 해당 항목은 기존의 PSR-0 스타일의 오토로딩에서 지원하며, 새로 작성하는 코드의 경우 target-dir를 사용하지 않는 PSR-4를 사용하는 편이 낫습니다. PHP 네임스페이스와 함께 PSR-0를 사용하는 프로젝트의 경우 PSR-4로 옮기는 것이 더 좋습니다.
 
-Defines the installation target.
+모든 설치 경로(target)을 정의합니다.
 
-In case the package root is below the namespace declaration you cannot
-autoload properly. `target-dir` solves this problem.
+패키지의 기본폴더(root)가 네임스페이스 정의 보다 아래에 있다면, 오토로드하지 못할 것입니다. 이 문제를 해결하기 위해선 `target-dir`을 사용해야 합니다. (역주: PSR-0은 네임스페이스 중 하위 일부만 사용하더라도 기본 네임스페이스부터 모든 폴더를 생성해주어야 합니다.)
 
-An example is Symfony. There are individual packages for the components. The
-Yaml component is under `Symfony\Component\Yaml`. The package root is that
-`Yaml` directory. To make autoloading possible, we need to make sure that it
-is not installed into `vendor/symfony/yaml`, but instead into
-`vendor/symfony/yaml/Symfony/Component/Yaml`, so that the autoloader can load
-it from `vendor/symfony/yaml`.
+예제는 Symfony에서 가져왔습니다. 컴포넌트를 위한 각각의 패키지가 있습니다. Yaml 컴포넌트는 `Symfony\Component\Yaml` 네임스페이스에 있습니다. 패키지의 기본폴더는 `Yaml` 디렉터리입니다. 오토로드 하려면 `vendor/symfony/yaml` 디렉터리가 아닌 `vendor/symfony/yaml/Symfony/Component/Yaml` 디렉터리에 설치되어야 합니다. 그래야 오토로더가 `vendors/symfony/yaml` 디렉터리를 로드할 수 있을 것입니다.
 
-To do that, `autoload` and `target-dir` are defined as follows:
+이렇게 하고자 할 때, `autoload`와 `target-dir`은 다음과 같이 정의하면 됩니다.
+
 
 ```json
 {
@@ -787,61 +711,44 @@ To do that, `autoload` and `target-dir` are defined as follows:
 }
 ```
 
-Optional.
+필수 항목이 아닙니다. 
 
-### minimum-stability <span>(root-only)</span>
+### minimum-stability (root-only)
 
-This defines the default behavior for filtering packages by stability. This
-defaults to `stable`, so if you rely on a `dev` package, you should specify
-it in your file to avoid surprises.
+- stability : 안정성
+- requirement : 요구사항
+ 
+해당 옵션은 패키지에서 안정성을 통해서 패키지를 필터링하는 행동을 정의할 수 있습니다. 기본적으로 `stable`을 기본값으로 합니다. 그렇기 때문에 만약 당신이 `dev` 패키지에 의존해 있다면 당신은 충돌 또는 에러들을 피하기 위해서라도 당신의 파일에 해당(`composer.json`) 옵션을 적어주셔야 합니다.
 
-All versions of each package are checked for stability, and those that are less
-stable than the `minimum-stability` setting will be ignored when resolving
-your project dependencies. Specific changes to the stability requirements of
-a given package can be done in `require` or `require-dev` (see
+각 패키지의 모든 버전은 이러한 안정성이 체크되는데, `minimum-stability`로 지정된 값보다 더 낮은 패키지들은 패키지들간의 의존성을 처리할 때 무시됩니다. 특정 패키지의 안정성 요구사항의 변경은  `require` 또는 `require_dev`를 통해 해결할 수 있습니다(함께보기 
 [package links](#package-links)).
 
-Available options (in order of stability) are `dev`, `alpha`, `beta`, `RC`,
-and `stable`.
+사용가능한 옵션(앞에 있는 것일 수록 안정성이 낮습니다.)으로는 `dev`, `alpha`, `beta`, `RC`, `stable`이 있습니다.
 
-### prefer-stable <span>(root-only)</span>
+### prefer-stable (root-only)
 
-When this is enabled, Composer will prefer more stable packages over unstable
-ones when finding compatible stable packages is possible. If you require a
-dev version or only alphas are available for a package, those will still be
-selected granted that the minimum-stability allows for it.
+해당 옵션을 사용하면 Composer는 사용가능한 안정적인 패키지를 찾을 수 있을 때, 더 안정적인 패키지를 선호하게 됩니다. 당신이 개발 버전을 요구하였거나 알파버전만이 사용가능하다면, 이것들은 최소 안정성(minimum-stability)에서 허락된 것 중 가능한 것을 선택할 것입니다.
 
-Use `"prefer-stable": true` to enable.
+해당 옵션을 사용하기 위해서 `"prefer-stable": true`를 사용하면 됩니다.
 
-### repositories <span>(root-only)</span>
+### repositories (root-only)
 
-Custom package repositories to use.
+추가로 사용하고자 하는 패키지 저장소를 설정할 때 사용합니다.
 
-By default composer just uses the packagist repository. By specifying
-repositories you can get packages from elsewhere.
+Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 다른 곳(packagist를 제외한)에서 제공해주는 패키지를 사용하고자 한다면 해당 저장소들을 추가로 작성하시면 됩니다.
 
-Repositories are not resolved recursively. You can only add them to your main
-`composer.json`. Repository declarations of dependencies' `composer.json`s are
-ignored.
+저장소는 재귀적으로 사용할 수 없습니다. 그래서 반드시 메인이 되는 `composer.json` 파일에만 해당 내용을 추가하셔서 사용하셔야 합니다. 의존되는 패키지들의 (`vendor`안에 정의되어있는) `composer.json에서 저장소를 정의한다면 그것들은 무시됩니다.
 
-The following repository types are supported:
+다음 형태의 저장소를 지원합니다.
 
-* **composer:** A composer repository is simply a `packages.json` file served
-  via the network (HTTP, FTP, SSH), that contains a list of `composer.json`
-  objects with additional `dist` and/or `source` information. The `packages.json`
-  file is loaded using a PHP stream. You can set extra options on that stream
-  using the `options` parameter.
-* **vcs:** The version control system repository can fetch packages from git,
-  svn and hg repositories.
-* **pear:** With this you can import any pear repository into your composer
-  project.
-* **package:** If you depend on a project that does not have any support for
-  composer whatsoever you can define the package inline using a `package`
-  repository. You basically just inline the `composer.json` object.
+* **composer:** Composer 저장소는 단순히 네트워크(HTTP, FTP, SSH)를 통해 제공되는 `packages.json`파일입니다. 그리고 이 파일은 `composer.json`의 리스트를 갖고 있습니다. 그리고 `composer.json`은 부가적으로 `dist`, 혹은 `source` 정보를 갖고 있습니다.
+* **vcs:** git, svn, hg와 같은 버전관리도구로 부터 패키지들을 가져올 수 있습니다.
+* **pear:** 해당값을 통해 pear 저장소를 프로젝트에 추가할 수 있습니다.
+* **package:** 만약 Composer를 지원하지 않는 프로젝트에 의존하고 싶다면, 무엇이든간에 당신은 `package` 저장소를 사용하는 패키지를 정의할 수 있습니다. 그저 단순하게 `composer.json` 객체를 나열하면 됩니다.
 
-For more information on any of these, see [Repositories](05-repositories.md).
+더 많은 정보를 얻고자 한다면 다음 링크를 참고하시면 됩니다. [Repositories](05-repositories.md)
 
-Example:
+사용예:
 
 ```json
 {
@@ -887,12 +794,9 @@ Example:
 }
 ```
 
-> **Note:** Order is significant here. When looking for a package, Composer
-will look from the first to the last repository, and pick the first match.
-By default Packagist is added last which means that custom repositories can
-override packages from it.
+> **주의:** 해당 항목의 경우 순서가 중요합니다. 컴포저는 패키지를 찾을 때 먼저 정의한 저장소부터 뒤쪽으로 순차적으로 검색하며, 가장 먼저 발견되는 패키지를 가져옵니다. Packagist를 기본값으로 사용자 정의 저장소를 덮어씌우고 싶다면 Packagist를 맨 마지막에 추가하시면 됩니다.
 
-### config <span>(root-only)</span>
+### config (root-only)
 
 설정을 변경합니다. 변경한 설정은 (현재) 프로젝트에만 적용됩니다. (--global 옵션을 붙여주면 전체에도 설정됩니다.)
 
@@ -921,7 +825,7 @@ override packages from it.
 * **notify-on-install:** 기본값은 `true` 입니다. 저장소의 Notification URL을 정의할 수 있으며, 저장소에 패키지가 설치될 때 알려줍니다. 이 설정을 이용해 알림을 받지 않을 수 있습니다.
 * **discard-changes:** 이 설정을 사용하면 비-대화식 모드에서 더러운(..) 업데이트를 처리하는 기본 스타일을 설정할 수 있습니다. `true`는 항상 vendors 안의 변경사항을 취소하는 반면, `stash`는 항상 변경된 사항을 재적용 합니다. 수정된 vendors가 적을 경우, CI서버나 배포용 스크립트에서 사용하게 됩니다.(????)
 
-예제:
+사용예:
 
 ```json
 {
@@ -931,17 +835,17 @@ override packages from it.
 }
 ```
 
-> **Note:** `http-basic`, `github-oauth` 와 같이 사용자 인증 관련 옵션은 `composer.json`외에 `auth.json` 파일 내에 지정할 수 있습니다. 이러한 방법은 .gitignore에 추가할 수 있고, 개발자는 자신의 자격 증명(?)이 가능합니다.
+> **주의:** `http-basic`, `github-oauth` 와 같이 사용자 인증 관련 옵션은 `composer.json`외에 `auth.json` 파일 내에 지정할 수 있습니다. 이러한 방법은 .gitignore에 추가할 수 있고, 개발자는 자신의 자격 증명(?)이 가능합니다.
 
-### scripts <span>(root-only)</span>
+### scripts (root-only)
 
-설치 과정의 여러 부분을 스크립트로 후크 할 수 있습니다
+설치 과정의 여러 부분들을 후킹하여 스크립트를 실행 할 수 있습니다
 
 여기를 보시면 [Scripts](articles/scripts.md) 자세한 설명과 예제가 있습니다.
 
 ### extra
 
-`scripts`로 사용하기 위한 임의의 데이터 입니다.
+`scripts`에서 사용하기 위한 임의의 데이터 입니다.
 
 사실상 뭐든지 할 수 있습니다. 스크립트 내에서 액세스 하기위한 이벤트 핸들러는
 아래와 같습니다:
@@ -962,7 +866,7 @@ $extra = $event->getComposer()->getPackage()->getExtra();
 
 ### archive
 
-패키지로 저장하기 위한 옵션을 설정합니다.
+패키지 압축으로 저장하기 위한 옵션을 설정합니다.
 
 아래와 같은 옵션들이 지원됩니다.
 
@@ -988,4 +892,3 @@ $extra = $event->getComposer()->getPackage()->getExtra();
 선택적으로 사용 가능합니다.
 
 &larr; [Command-line interface](03-cli.md)  |  [Repositories](05-repositories.md) &rarr;
-

@@ -296,7 +296,7 @@ vendor/seld/jsonlint:
 
 (역자주 - 의존성 패키지들을 source 에서 받으면 git 저장소에서 복제하는 형태로 파일을 가져오고 dist 에서 받으면 zip 파일과 같이(존재한다면) 압축되어 있는 파일을 받는 형태로 설치 또는 업데이트가 진행됩니다. 따라서 일반적으로 dist 를 통해서 설치 또는 업데이트를 하는 것이 속도가 더 빠릅니다. status 명령어는 source 에서 설치한 경우에 해당 패키지들을 임의로 수정한 경우, 원래의 내용과 내가 임의로 수정한 vendor 밑에 패키지의 변경상태가 어떠한지 비교해서 보여줍니다. )
 
-## self-update
+## self-update (컴포저 update)
 
 composer 자체를 최신의 버전으로 갱신하려면, `self-update` 명령을 실행하십시요. 이 명령은 `composer.phar`을 최신의 버전으로 교체합니다.
 
@@ -326,7 +326,7 @@ sudo composer self-update
 
 (역자주 - composer self-update 를 수행하면 컴포저 홈 디렉토리에 이전 버전의 컴포저 파일이 저장되어 지고, 롤백을 통해서 다시 복구하거나, 저장된 이전 버전의 컴포저 파일을 clean-backups 를 통해서 삭제할 수 있습니다.)
 
-## config
+## config - 설정
 
 `config` 명령어는 로컬 composer.json 파일 또는 글로벌 config.json 파일에 설정된 몇가지의 기본적인 컴포져 설정들을 편집할 수 있게 해줍니다.
 
@@ -364,7 +364,7 @@ setting-value 인자들이 허용됩니다.
 php composer.phar config repositories.foo vcs http://github.com/foo/bar
 ```
 
-## create-project
+## create-project (프로젝트 생성)
 
 컴포저를 이용하면 기존 패키지에서 새로운 프로젝트를 만들 수 있습니다. 이는 git
 clone/svn checkout 한 후 그 밴더의 컴포저를 설치(install)한 것과 같습니다.
@@ -410,7 +410,7 @@ php composer.phar create-project doctrine/orm path 2.2.*
 * **--ignore-platform-reqs:** `php`, `hhvm`, `lib-*`, `ext-*` 요구사항들을
   무시하고, 로컬 머신이 이들을 충족하지 않은 경우에도 강제로 설치합니다.
 
-## dump-autoload
+## dump-autoload (오토로드 덤프)
 
 클래스맵 패키지 안의 새로운 클래스들 때문에 오토로더를 업데이트 할 필요가 있는
 경우, install 또는 update를 통하지 않고 "dump-autoload" 사용 할 수 있습니다.
@@ -447,213 +447,77 @@ php composer.phar create-project doctrine/orm path 2.2.*
 수동으로 [스크립트](articles/scripts.md)를 실행하기 위해 스크립트 이름과 개발 
 모드 해제할 경우 선택적으로 --no-dev를 주고 이 명령을 사용합니다.
 
-## diagnose
+## diagnose - 진단하기
 
-## 진단
+만약 버그나 어떤 잘못된 부분을 찾은것 같다고 생각된다면 `diagnose`명령어를 통해서   여러 공통된 문제들에 대해서 자동으로 진단해 볼 수 있습니다.  
 
- 
-
-If you think you found a bug, or something is behaving strangely, you might
-
-want to run the `diagnose` command to perform automated checks for many common
-
-problems.
-
- 
-
-만일 버그나 뭔가 잘못된 부분을 발견하였다고 생각 되신다면, 이 많은 문제들에 대하여 자동으로 점검하는 'diagnose(진단)' 명령을 실행하기를 원할 것입니다.
-
- 
-
- 
 
 ```sh
-
 php composer.phar diagnose
-
 ```
 
- 
+(역자주 : diagnose 를 통해서 체크하는 부분들은 
+- composer.json 의 유효성
+- platform 셋팅
+- git 셋팅
+- http 접속상태
+- github oauth 접속 가능여부
+- disk 여유공간 점검
+- 최신 composer 버전 사용여부 입니다 )
 
-## archive
+## archive - 아카이브(압축파일)
 
-## 아카이브(압축파일)
-
- 
-
-This command is used to generate a zip/tar archive for a given package in a
-
-given version. It can also be used to archive your entire project without
-
-excluded/ignored files.
-
- 
-
-이 명령은 zip/tar 버젼별 패키지에 주어진 압축파일을 실행 하는데 사용되어 집니다. 
-
-또한 제외되거나 무시되어진 파일 없이 프로젝트 전체 압축파일에 사용되어질 수 있습니다.
-
- 
-
- 
+이 명령어는 패키지의 버전별 zip/tar 압축파일을 생성하는 용도로 사용됩니다. 또는 제외되거나 무시되는 파일 없이 프로젝트 전체를 압축파일로 하는데 사용될 수도 있습니다. 
 
 ```sh
-
 php composer.phar archive vendor/package 2.0.21 --format=zip
-
 ```
 
- 
+### 아카이브 - 옵션
 
-### Options
-
-### 옵션
-
- 
-
-* **--format (-f):** Format of the resulting archive: tar or zip (default:"tar")
-
- 
-
-* **--format (-f):** 압축파일 결과에 대한 포멧: tar or zip ( 기본: "tar")
-
- 
-
- 
-
-* **--dir:** Write the archive to this directory (default: ".")
-
+* **--format (-f):** 압축결과 파일의 포맷을 결정합니다: tar or zip (기본: "tar")
 * **--dir:** 현재 디렉토리에 압축파일 쓰기 (기본: ".")
-
  
+## help - 도움말
 
-## help
-
-## 도움말
-
- 
-
-To get more information about a certain command, just use `help`.
-
-임의 명령의 대하여 더 많은 정보 가져오기,  `help`를 사용하면 됩니다.
-
- 
+어떠한 명령어에 대한 더 많은 정보를 알고 싶다면 `help`를 입력하면 됩니다. 
 
 ```sh
-
 php composer.phar help install
-
 ```
 
- 
+## Environment variables - 환경변수
 
-## Environment variables
+컴포저에는 사용자가 설정을 변경할 수 있는 환경변수들이 존재합니다. 
+가능하다면 환경변수는 `composer.json`의 `config` 섹션에 설정하기를 권장합니다. 왜냐하면 이 환경변수들은  `composer.json`에 명시되어 있는 값들보다 우선하여 적용되기 때문입니다.  
 
-## 환경변수
+### COMPOSER - 컴포저
 
- 
-
-You can set a number of environment variables that override certain settings.
-
-Whenever possible it is recommended to specify these settings in the `config`
-
-section of `composer.json` instead. It is worth noting(오타->nothing) that the env vars will
-
-always take precedence over the values specified in `composer.json`.
-
- 
-
-재정의하여 임의로 셋팅한 환경변수들을 설정할 수 있다. 가능하면 환경변수를 'composer.json' 영역 대신에
-
-'config' 셋팅하기를 권합니다. 왜냐하면 이 환경변수들은 'composer.json'에 명시되어 있는 값들 보다 우선하여 실행되기 때문입니다.
-
- 
-
- 
-
- 
-
-### COMPOSER
-
-### 컴포져
-
- 
-
-By setting the `COMPOSER` env variable it is possible to set the filename of
-
-`composer.json` to something else.
-
- 
-
-'COMPOSER'의 환경설정을 셋팅함으로써, 다른 형태의 'composer.json'을 설정이 가능합니다.
-
- 
-
-For example:
+`COMPOSER`의 환경변수를 셋팅함으로써, 다른 형태의 'composer.json'을 설정이 가능합니다.
 
 예를 들어:
 
- 
-
 ```sh
-
 COMPOSER=composer-other.json php composer.phar install
-
 ```
+와 같이도 설정가능합니다.
 
  
+### COMPOSER_ROOT_VERSION - 컴포저 루트 버전
 
-### COMPOSER_ROOT_VERSION
+만약 VCS 정보로 부터 루트 패키지(root package)의 버전을 추측할 수 없고, `composer.json`에 존재하지 않는다면, 이 변수를 셋팅함으로써 루트 패키지의 버젼을 명시 할 수 있습니다. 
 
+
+### COMPOSER_VENDOR_DIR - 컴포저 벤더 디렉토리
+
+이 변수를 셋팅함으로써 컴포저가 `vendor`가 아닌 다른 디렉토리에 패키지들을 설치 할 수 있습니다. 
+
+### COMPOSER_BIN_DIR - 컴포저 바이너리 디렉토리
  
+이 변수를 셋팅함으로써 `vender/bin`의 `bin`([Vendor Binaries](articles/vendor-binaries.md)) 디렉토리를 다르게 지정할 수 있습니다.
 
-By setting this var you can specify the version of the root package, if it can
+### http_proxy or HTTP_PROXY - http 프록시
 
-not be guessed from VCS info and is not present in `composer.json`.
-
- 
-
-만약 VCS 정보로 부터 추측할 수 없고, 'composer.json'에 존재하지 않는다면,
-
-이 변수를 셋팅함으로써 루트 패키지의 버젼을 명시 할 수 있습니다. 
-
- 
-
- 
-
-### COMPOSER_VENDOR_DIR
-
- 
-
-By setting this var you can make composer install the dependencies into a
-
-directory other than `vendor`.
-
-이 변수를 셋팅함으로써 컴포져 'vendor'가 아닌 다른 디렉토리에 의존성 프로그램을 인스톨 할 수 있습니다.
-
- 
-
- 
-
-### COMPOSER_BIN_DIR
-
- 
-
-By setting this option you can change the `bin` ([Vendor Binaries](articles/vendor-binaries.md))
-
-directory to something other than `vendor/bin`.
-
- 
-
-이 변수를 셋팅함으로써 "vender/bin"의 "bin" 디렉토리를 바꿀 수 있습니다.
-
- 
-
- 
-
-### http_proxy or HTTP_PROXY
-
- 
 
 If you are using composer from behind an HTTP proxy, you can use the standard
 
@@ -661,83 +525,28 @@ If you are using composer from behind an HTTP proxy, you can use the standard
 
 Many operating systems already set this variable for you.
 
-만약 HTTP proxy를 배후에 컴포저를 사용하고 싶다면 `http_proxy` 또는  `HTTP_PROXY` 환경변수를 기본으로 사용할 수 있습니다.
+만약 HTTP proxy를 통해서 컴포저를 사용하고 싶다면 `http_proxy` 또는  `HTTP_PROXY` 환경변수를 설정하여 프록시를 통한 URL 을 사용할 수 있습니다. 이미 많은 OS에서 이 옵션을 지원하고 있습니다. 
 
- 
-
- 
-
-Using `http_proxy` (lowercased) or even defining both might be preferable since
-
-some tools like git or curl will only use the lower-cased `http_proxy` version.
-
-Alternatively you can also define the git proxy using
+소문자로 표시된 `http_proxy` 또는 대소문자 두가지 모두 정의하는 것은 git이나 curl과 같이 `http_proxy` 소문자만 사용하는 툴들 때문이라도 권장 할만합니다.
+그렇지 않다면 git proxy에서 사용하여 정의한 것처럼 사용할 수도 있습니다.
 
 `git config --global http.proxy <proxy url>`.
-
- 
-
-`http_proxy`(소문자) 또는  두가지 다 정의하는 것은 git이나 curl과 같이 `http_proxy`소문자를 사용하는 도구들 때문이라도 바람직할 수 있습니다.
-
- git proxy에서 사용하여 정의한 것처럼 양자 택일하여 사용할 수 있습니다.
-
-`git config --global http.proxy <proxy url>`.
-
  
 
 ### no_proxy
-
  
+프록시를 사용하고 있는 중에 특정 도메인에서 프록시를 사용하지 않기를 원한다면 `no_proxy` 변수를 사용하면 됩니다. 프록시를 사용하지 않기를 워하는 도메인을 콤마로 구분하여 셋팅하면 됩니다. 
 
-If you are behind a proxy and would like to disable it for certain domains, you
-
-can use the `no_proxy` env var. Simply set it to a comma separated list of
-
-domains the proxy should *not* be used for.
-
-proxy를 배후에 사용하고 어떤 도메인을 사용하지 않기를 원한다면 'no_proxy' 변수를 사용할 수 있다.
-
-도메인은 콤마로 구분하여 간단히 셋팅해보십시오 proxy는 사용하시면 안됩니다.
-
- 
-
- 
-
-The env var accepts domains, IP addresses, and IP address blocks in CIDR
-
-notation. You can restrict the filter to a particular port (e.g. `:80`). You
-
-can also set it to `*` to ignore the proxy for all HTTP requests.
-
-환경변수는 도메인과 ip주소를 받아 들이고, ip주소 CIDR 표기법으로 차단합니다.
-
-80포터 부분은 필터를 통해 차단할 수 있습니다. 
-
-모든 HTTP request의 proxy를 무시하거나 '*'를 셋팅 할 수도 있습니다.
-
- 
+설정값은 도메인, IP 어드레스 또는 CIDR 형식의 IP 어드레스를 사용할 수 있습니다. 또한 포트에 따라서 필터링을 적용해 차단할 수도 있습니다.(예를 들어 `:80`과 같은)
+만약 전체 HTTP 요청에서 프록시 사용을 하지 않기를(무시하기를) 원한다면 `*`과 같이 설정할 수도 있습니다.  
 
 ### HTTP_PROXY_REQUEST_FULLURI
 
- 
+If you use a proxy but it does not support the request_fulluri flag, then you should set this env var to `false` or `0` to prevent composer from setting the request_fulluri option.
 
-If you use a proxy but it does not support the request_fulluri flag, then you
+프록시를 사용하지만 request_fullurl flag를 지원하지 않는다면 이 환경변수를 `false` 또는 `0`으로 설정하여 컴포저가 request_fulluri 옵션을 설정하는 것을 방지할 수 있습니다. 
 
-should set this env var to `false` or `0` to prevent composer from setting the
-
-request_fulluri option.
-
-proxy를 사용한다면 request_fulluri flag를 지원하지 않지만, 이 환경변수를 'false' 또는 0
-
-을 셋팅하여 request_fulluri 옵션으로부터 컴포져를 예방할 수 있습니다.
-
- 
-
- 
-
-### COMPOSER_HOME
-
- 
+### COMPOSER_HOME 컴포저 홈 디렉토리
 
 The `COMPOSER_HOME` var allows you to change the composer home directory. This
 
@@ -745,118 +554,40 @@ is a hidden, global (per-user on the machine) directory that is shared between
 
 all projects.
 
-`COMPOSER_HOME`변수는 컴포져의 home 디렉토리를 변경할 수 있게 합니다. 이것은 숨겨져 있습니다.
+`COMPOSER_HOME` 변수는 컴포져의 home 디렉토리를 변경할 수 있게 해줍니다. 이것은 숨겨져 있는데, 모든 프로젝트에서 공유 되는 전역(머신의 사용자) 디렉토리입니다.  
 
-모든 프로젝트 사이에서 공유 되는 전역변수(머신에서 사용자) 디렉토리는 숨김입니다.
-
- 
-
-By default it points to `/home/<user>/.composer` on \*nix,
-
-`/Users/<user>/.composer` on OSX and
-
-`C:\Users\<user>\AppData\Roaming\Composer` on Windows.
-
+기본적으로 \*nix 에서는 `/home/<user>/.composer`, OSX 에서는 `/Users/<user>/.composer` 그리고 윈도우 에서는 `C:\Users\<user>\AppData\Roaming\Composer` 입니다.
  
 
 #### COMPOSER_HOME/config.json
 
- 
+`COMPOSER_HOME`의 위치에 `config.json` 파일을 생성해 놓는다면 컴포저는 `install` 과 `update` 명령을 실행할때 당신의 프로젝트의 `composer.json` 파일과 이 파일을 합쳐서 명령을 수행합니다. 
 
-You may put a `config.json` file into the location which `COMPOSER_HOME` points
+이 파일은 당신의 프로젝트에서 [configuration](04-schema.md#config)와 [repositories](05-repositories.md)를 설정하는 것을 가능하게 합니다.
 
-to. Composer will merge this configuration with your project's `composer.json`
-
-when you run the `install` and `update` commands.
-
-`COMPOSER_HOME` 위치에 `config.json`파일을 입력할 수 있습니다. 컴포저는 `install` 과 `update` 명령을 
-
-실행할때 당신의 프로젝트와 함께 이 configuration과 합성되어 집니다.
-
- 
-
-This file allows you to set [configuration](04-schema.md#config) and
-
-[repositories](05-repositories.md) for the user's projects.
-
-이 파일은 당신의 프로젝트의 [configuration](04-schema.md#config)와 [repositories](05-repositories.md)를
-
-설정하는 것을 허락합니다. 
-
- 
-
-In case global configuration matches _local_ configuration, the _local_
-
-configuration in the project's `composer.json` always wins.
-
-이 경우 전역의 설정은  _local_ 설정과 일치하며, _local_설정은 그 프로젝트의 `composer.json`안에서 
-
-항상 우선입니다.  
-
- 
-
- 
+만약 글로벌 설정이 _local_ 설정과 다른경우 프로젝트의 `composer.json` 안에서 설정한 _local_ 값이 항상 우선하도록 동작합니다.
 
 ### COMPOSER_CACHE_DIR
 
+`COMPOSER_CACHE_DIR` 변수는 [`cache-dir`](04-schema.md#config) 옵션을 설정하는 경우와 같이 컴포저의 캐시 디렉토리를 변경하는 설정입니다. 
+
+기본적으로 \*nix 와 OSC 에서는 `$COMPOSER_HOME/cache` 그리고 윈도우 에서는 `C:\Users\<user>\AppData\Local\Composer` (또는  `%LOCALAPPDATA%/Composer`) 를 가리킵니다.
  
 
-The `COMPOSER_CACHE_DIR` var allows you to change the composer cache directory,
+### COMPOSER_PROCESS_TIMEOUT 컴포저 대기 시간 제한 
 
-which is also configurable via the [`cache-dir`](04-schema.md#config) option.
+This env var controls the time composer waits for commands (such as git commands) to finish executing. The default value is 300 seconds (5 minutes).
 
-`COMPOSER_CACHE_DIR`
-
-`COMPOSER_CACHE_DIR` 변수는 [`cache-dir`](04-schema.md#config) 옵션을 경우하는 설정 또한 
-
-캐쉬 디렉토리 컴포져 변경을 가능하게 합니다. 
-
- 
-
- 
-
-By default it points to $COMPOSER_HOME/cache on \*nix and OSX, and
-
-`C:\Users\<user>\AppData\Local\Composer` (or `%LOCALAPPDATA%/Composer`) on Windows.
-
- 
-
-### COMPOSER_PROCESS_TIMEOUT
-
- 
-
-This env var controls the time composer waits for commands (such as git
-
-commands) to finish executing. The default value is 300 seconds (5 minutes).
-
-이 환경변수는 시간을 컨트롤하는데 예를 들어 컴포져는 마지막 실행 명령(git과 같은)을 기다립니다.
-
-기본값은 300초(5분)입니다.
-
- 
-
- 
+이 환경변수는 예를 들어 (git 명령어와 같은) 명령어가 종료되기 까지의 대기 시간제한을 설정합니다. 기본값은 300초(5분)입니다.
 
 ### COMPOSER_DISCARD_CHANGES
 
- 
-
-This env var controls the discard-changes [config option](04-schema.md#config).
-
 이 환경변수는 [config option](04-schema.md#config)와 같은 변경사항 취소를 컨트롤 합니다.
-
  
 
 ### COMPOSER_NO_INTERACTION
 
- 
-
-If set to 1, this env var will make composer behave as if you passed the
-
-`--no-interaction` flag to every command. This can be set on build boxes/CI.
-
-만일 1로 설정하면, 이 환경변수는 모든 명령에서 `--no-interaction` flag를 패스하려는 동작을 컴포져는 설정하게 될 것이다.
-
+이 설정을 1로 설정하면, 모든 명령에서 `--no-interaction`를 사용한 것과 같이 동작하게 됩니다. 주로 빌드 스크립트나 CI 상에서 사용됩니다. 
  
 
 &larr; [Libraries](02-libraries.md)  |  [Schema](04-schema.md) &rarr;

@@ -80,47 +80,31 @@ php composer.phar install
 
 ## `composer.lock` - 잠금 설정 파일
 
-After installing the dependencies, Composer writes the list of the exact
-versions it installed into a `composer.lock` file. This locks the project
-to those specific versions.
+의존성 패키지들을 설치한 뒤에 컴포저는 `composer.lock`파일에 설치한 패키지들의 정확한 버전 목록을 저장합니다. 이 잠금설정들이 프로젝트가 필요로 하는 특정 버전들을 의미합니다. 
 
-**Commit your application's `composer.lock` (along with `composer.json`) into version control.**
+**어플리케이션의 `composer.lock`파일을 (`composer.json`파일과 함께) VCS 플 통해서 커밋하십시오. **
 
-This is important because the `install` command checks if a lock file is present,
-and if it is, it downloads the versions specified there (regardless of what `composer.json`
-says).
+`install`명령어는 이 잠금파일이 디렉토리에 존재하는지 확인하고 만약 그렇다면 (`composer.json`에 관계없이) 잠금설정된 버전의 패키지들을 다운받습니다. 
 
-This means that anyone who sets up the project will download the exact
-same version of the dependencies. Your CI server, production machines, other
-developers in your team, everything and everyone runs on the same dependencies, which
-mitigates the potential for bugs affecting only some parts of the deployments. Even if you
-develop alone, in six months when reinstalling the project you can feel confident the
-dependencies installed are still working even if your dependencies released
-many new versions since then.
+이것이 의미하는 것은 프로젝트를 셋업하고 의존성 패키지들을 다운로드 하려고 하는 그 어떤 누구라도 동일한 버전의 의존 패키지들을 다운로드 한다는 것을 의미합니다. CI서버, 실제의 제품 서버, 같은 팀내의 다른 개발자 모두가 동일한 의존성기반하에 프로젝트를 구동한 다는 것은 배포를 비롯한 일부 패키지들에 영향을 미치는 버그에 대한 가능성을 완화시켜 준다는 것을 의미합니다. 혹시나 혼자서 개발할지라도 6개월만에 다시 인스톨해야하는 프로젝트의 경우 그동안 의존성 패키지들의 새로운 버전이 나왔더라도 동일하게 작동하는 의존 패키지들을 다운로드 받을 수 있다는 것을 말합니다. 
 
-If no `composer.lock` file exists, Composer will read the dependencies and
-versions from `composer.json` and  create the lock file after executing the `update` or the `install`
-command.
+만약 `composer.lock` 파일이 존재하지 않는다면 컴포저는 `composer.json`의로 부터 의존성과 버전 정보를 읽어 들여 `update` 명령어나 `install`명령이 실행된 이후에 lock 파일을 생성합니다. 
 
-This means that if any of the dependencies get a new version, you won't get the updates
-automatically. To update to the new version, use `update` command. This will fetch
-the latest matching versions (according to your `composer.json` file) and also update
-the lock file with the new version.
+이 말은 어떤 새로운 의존성 패키지가 새롭게 업데이트 되더라도 자동으로 업데이트 할 수 없다는 것을 의미합니다. 새로운 버전으로 업데이트 받기 위해서는  `update` 명령어를 사용합니다. 그렇게 하면 버전에 알맞는(`composer.json` 파일에 맞는) 최신의 패키지를 업데이트 하고 lock 파일을 새롭게 생성하게 됩니다. 
 
 ```sh
 php composer.phar update
 ```
-> **Note:** Composer will display a Warning when executing an `install` command if 
- `composer.lock` and `composer.json` are not synchronized.
+> **주의:** 컴포저는 `composer.lock` 파일과 `composer.json` 파일의 정보가 동기화 되어 있지 않다면 `install`명령어 수행시 경고를 표시합니다. 
  
-If you only want to install or update one dependency, you can whitelist them:
+만약 하나의 의존 패키지들을 설치하거나 업데이트 하고자 한다면 다음처럼 각각의 패키지들을 나열하여 실행할 수 있습니다. 
 
 ```sh
 php composer.phar update monolog/monolog [...]
 ```
 
-> **Note:** For libraries it is not necessarily recommended to commit the lock file,
-> see also: [Libraries - Lock file](02-libraries.md#lock-file).
+> **주의:** 라이브러리에는 lock 파일을 커밋하는 것이 불필요 합니다 .
+> 보다 자세한 사항은: [Libraries - Lock file](02-libraries.md#lock-file)을 참고하십시오.
 
 ## Packagist
 
