@@ -1,4 +1,4 @@
-# Repositories
+# 저장소
 
 This chapter will explain the concept of packages and repositories, what kinds
 of repositories are available, and how they work.
