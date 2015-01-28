@@ -489,7 +489,7 @@ php composer.phar help install
 ## Environment variables - 환경변수
 
 컴포저에는 사용자가 설정을 변경할 수 있는 환경변수들이 존재합니다. 
-가능하다면 환경변수는 `composer.json`의 `config` 섹션에 설정하기를 권장합니다. 왜냐하면 이 환경변수들은  `composer.json`에 명시되어 있는 값들보다 우선하여 적용되기 때문입니다.  
+가능하다면 환경변수는 `composer.json`의 `config` 섹션에 설정하기를 권장합니다. 이 환경변수들은  `composer.json`에 명시되어 있는 값들보다 우선하여 적용된다는 것에 주목하십시오.
 
 ### COMPOSER - 컴포저
 
