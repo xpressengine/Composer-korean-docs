@@ -106,44 +106,31 @@ php composer.phar update monolog/monolog [...]
 > **주의:** 라이브러리에는 lock 파일을 커밋하는 것이 불필요 합니다 .
 > 보다 자세한 사항은: [Libraries - Lock file](02-libraries.md#lock-file)을 참고하십시오.
 
-## Packagist
+## Packagist - 패키지스트
 
-[Packagist](https://packagist.org/) is the main Composer repository. A Composer
-repository is basically a package source: a place where you can get packages
-from. Packagist aims to be the central repository that everybody uses. This
-means that you can automatically `require` any package that is available
-there.
+[Packagist](https://packagist.org/)는 주요한 컴포저 저장소입니다. 컴포저 저장소란 기본적으로 패키지를 얻을 수 있는 곳을 의미합니다. 패키지스트는 모두가 사용할 수 있는 중앙저장소가 되는 것을 목표로 하고 있는데, 이 말은 즉 패키지스트에 올라와 있는 모든 패키지들은 `require` 할 수 있다는 것을 의미합니다.
 
-If you go to the [packagist website](https://packagist.org/) (packagist.org),
-you can browse and search for packages.
+[패키지스트 웹사이트](https://packagist.org/) (packagist.org)에 접속하면, 패키지들에 대해서 검색하고 상세한 정보를 확인할 수 있습니다. 
 
-Any open source project using Composer should publish their packages on
-packagist. A library doesn't need to be on packagist to be used by Composer,
-but it makes life quite a bit simpler.
+컴포저를 사용하는 오픈소스 프로젝트라면 컴포저를 통해서 프로젝트를 패키지스트에 게시하는 것이 좋습니다. 라이브러리 타입의 경우에는 꼭 패키지스트에 있을 필요는 없지만 그렇게 하는 것이 좀 더 사용을 쉽게 할 수 있습니다. 
 
-## Autoloading
+## Autoloading - 오토로딩
 
-For libraries that specify autoload information, Composer generates a
-`vendor/autoload.php` file. You can simply include this file and you
-will get autoloading for free.
+컴포저는 라이브러리들에 대한 오토로딩 정보를 `vendor/autoload.php` 파일에 저장합니다. 이 파일을 include 함으로써 오도로딩을 손쉽게 적용할 수 있습니다. 
 
 ```php
 require 'vendor/autoload.php';
 ```
 
-This makes it really easy to use third party code. For example: If your
-project depends on monolog, you can just start using classes from it, and they
-will be autoloaded.
+이렇게 함으로써 서드파티의 코드를를 사용하는 것을 아주 쉽게 만들어 줍니다. 예를 들어 : 작성하고 있는 프로젝트가 monolog 에 의존성을 가지고 있을 때 오토로딩을 사용하면 바로 해당 클래스를 사용할 수 있다는 것을 의미합니다. 
 
 ```php
 $log = new Monolog\Logger('name');
 $log->pushHandler(new Monolog\Handler\StreamHandler('app.log', Monolog\Logger::WARNING));
-
 $log->addWarning('Foo');
 ```
 
-You can even add your own code to the autoloader by adding an `autoload` field
-to `composer.json`.
+오토로딩의 설정은 `composer.json` 의 `autoload` 설정을 통해서도 할 수 있습니다. 
 
 ```json
 {
@@ -153,31 +140,19 @@ to `composer.json`.
 }
 ```
 
-Composer will register a [PSR-4](http://www.php-fig.org/psr/psr-4/) autoloader
-for the `Acme` namespace.
+위의 경우 컴포저는 `Acme` 네임스페이스를 [PSR-4](http://www.php-fig.org/psr/psr-4/)에 따라서 오토로딩을 설정합니다. 오토로딩은 네임스페이스에 대한 디렉토리 매핑을 정의합니다. `src` 디렉토리는 `vendor` 디렉토리와 마찬가지로 프로젝트 루트 디렉토리에 존재합니다. 예를 들어 `src/Foo.php` 파일은 `Acme\Foo` 클래스를 의미합니다. 
 
-You define a mapping from namespaces to directories. The `src` directory would
-be in your project root, on the same level as `vendor` directory is. An example
-filename would be `src/Foo.php` containing an `Acme\Foo` class.
+`autolod` 항목을 추가한 뒤에는 `dump-autoload` 명령어를 실행하여 `vendor/autoload.php` 파일을 재생성 해주어야 합니다. 
 
-After adding the `autoload` field, you have to re-run `install` to re-generate
-the `vendor/autoload.php` file.
-
-Including that file will also return the autoloader instance, so you can store
-the return value of the include call in a variable and add more namespaces.
-This can be useful for autoloading classes in a test suite, for example.
+autoload.php 파일을 include 하게 되면 오토로더 인스턴스를 리턴 받을 수 있습니다. 이 리턴받은 인스턴스를 통해서 추가적인 네임스페이스를 지정할 수도 있습니다. 테스트가 필요한 경우 다음 예제처럼 유용하게 사용할 수 있습니다. 
 
 ```php
 $loader = require 'vendor/autoload.php';
 $loader->add('Acme\\Test\\', __DIR__);
 ```
 
-In addition to PSR-4 autoloading, classmap is also supported. This allows
-classes to be autoloaded even if they do not conform to PSR-4. See the
-[autoload reference](04-schema.md#autoload) for more details.
+PSR-4 오토로딩 이외에도 classmap 형태의 오토로딩도 지원합니다. 이 경우 PSR-4 형식에 맞지 않더라도 클래스를 오토로딩할 수 있습니다. 보다 자세한 정보는 [autoload reference](04-schema.md#autoload)을 참고하십시오. 
 
-> **Note:** Composer provides its own autoloader. If you don't want to use
-that one, you can just include `vendor/composer/autoload_*.php` files,
-which return associative arrays allowing you to configure your own autoloader.
+> **주의:** 컴포저는 자체적인 오토로더를 제공합니다. 컴포저의 자체적인 오토로더를 사용하지 않는 경우 연관된 배열을 리턴하게끔 구성된 `vendor/composer/autoload_*.php` 파일들을 include 하여 고유한 오토로더를 구성할 수 도 있습니다. 
 
 &larr; [Intro](00-intro.md)  |  [Libraries](02-libraries.md) &rarr;
