@@ -194,7 +194,7 @@ recommended to omit this field and have it just default to `library`.
 }
 ```
 
-필수 입력 사항은 아니자만, 가급적 입력하기를 권장합니다. 
+필수 입력 사항은 아니지만, 가급적 입력하기를 권장합니다. 
 
 ### support - 지원정보
 
