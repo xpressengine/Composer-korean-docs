@@ -80,86 +80,57 @@ php composer.phar install
 
 ## `composer.lock` - 잠금 설정 파일
 
-After installing the dependencies, Composer writes the list of the exact
-versions it installed into a `composer.lock` file. This locks the project
-to those specific versions.
+의존성 패키지들을 설치한 뒤에 컴포저는 `composer.lock`파일에 설치한 패키지들의 정확한 버전 목록을 저장합니다. 이 잠금설정들이 프로젝트가 필요로 하는 특정 버전들을 의미합니다. 
 
-**Commit your application's `composer.lock` (along with `composer.json`) into version control.**
+**어플리케이션의 `composer.lock`파일을 (`composer.json`파일과 함께) VCS 플 통해서 커밋하십시오. **
 
-This is important because the `install` command checks if a lock file is present,
-and if it is, it downloads the versions specified there (regardless of what `composer.json`
-says).
+`install`명령어는 이 잠금파일이 디렉토리에 존재하는지 확인하고 만약 그렇다면 (`composer.json`에 관계없이) 잠금설정된 버전의 패키지들을 다운받습니다. 
 
-This means that anyone who sets up the project will download the exact
-same version of the dependencies. Your CI server, production machines, other
-developers in your team, everything and everyone runs on the same dependencies, which
-mitigates the potential for bugs affecting only some parts of the deployments. Even if you
-develop alone, in six months when reinstalling the project you can feel confident the
-dependencies installed are still working even if your dependencies released
-many new versions since then.
+이것이 의미하는 것은 프로젝트를 셋업하고 의존성 패키지들을 다운로드 하려고 하는 그 어떤 누구라도 동일한 버전의 의존 패키지들을 다운로드 한다는 것을 의미합니다. CI서버, 실제의 제품 서버, 같은 팀내의 다른 개발자 모두가 동일한 의존성기반하에 프로젝트를 구동한 다는 것은 배포를 비롯한 일부 패키지들에 영향을 미치는 버그에 대한 가능성을 완화시켜 준다는 것을 의미합니다. 혹시나 혼자서 개발할지라도 6개월만에 다시 인스톨해야하는 프로젝트의 경우 그동안 의존성 패키지들의 새로운 버전이 나왔더라도 동일하게 작동하는 의존 패키지들을 다운로드 받을 수 있다는 것을 말합니다. 
 
-If no `composer.lock` file exists, Composer will read the dependencies and
-versions from `composer.json` and  create the lock file after executing the `update` or the `install`
-command.
+만약 `composer.lock` 파일이 존재하지 않는다면 컴포저는 `composer.json`의로 부터 의존성과 버전 정보를 읽어 들여 `update` 명령어나 `install`명령이 실행된 이후에 lock 파일을 생성합니다. 
 
-This means that if any of the dependencies get a new version, you won't get the updates
-automatically. To update to the new version, use `update` command. This will fetch
-the latest matching versions (according to your `composer.json` file) and also update
-the lock file with the new version.
+이 말은 어떤 새로운 의존성 패키지가 새롭게 업데이트 되더라도 자동으로 업데이트 할 수 없다는 것을 의미합니다. 새로운 버전으로 업데이트 받기 위해서는  `update` 명령어를 사용합니다. 그렇게 하면 버전에 알맞는(`composer.json` 파일에 맞는) 최신의 패키지를 업데이트 하고 lock 파일을 새롭게 생성하게 됩니다. 
 
 ```sh
 php composer.phar update
 ```
-> **Note:** Composer will display a Warning when executing an `install` command if 
- `composer.lock` and `composer.json` are not synchronized.
+> **주의:** 컴포저는 `composer.lock` 파일과 `composer.json` 파일의 정보가 동기화 되어 있지 않다면 `install`명령어 수행시 경고를 표시합니다. 
  
-If you only want to install or update one dependency, you can whitelist them:
+만약 하나의 의존 패키지들을 설치하거나 업데이트 하고자 한다면 다음처럼 각각의 패키지들을 나열하여 실행할 수 있습니다. 
 
 ```sh
 php composer.phar update monolog/monolog [...]
 ```
 
-> **Note:** For libraries it is not necessarily recommended to commit the lock file,
-> see also: [Libraries - Lock file](02-libraries.md#lock-file).
+> **주의:** 라이브러리에는 lock 파일을 커밋하는 것이 불필요 합니다 .
+> 보다 자세한 사항은: [Libraries - Lock file](02-libraries.md#lock-file)을 참고하십시오.
 
-## Packagist
+## Packagist - 패키지스트
 
-[Packagist](https://packagist.org/) is the main Composer repository. A Composer
-repository is basically a package source: a place where you can get packages
-from. Packagist aims to be the central repository that everybody uses. This
-means that you can automatically `require` any package that is available
-there.
+[Packagist](https://packagist.org/)는 주요한 컴포저 저장소입니다. 컴포저 저장소란 기본적으로 패키지를 얻을 수 있는 곳을 의미합니다. 패키지스트는 모두가 사용할 수 있는 중앙저장소가 되는 것을 목표로 하고 있는데, 이 말은 즉 패키지스트에 올라와 있는 모든 패키지들은 `require` 할 수 있다는 것을 의미합니다.
 
-If you go to the [packagist website](https://packagist.org/) (packagist.org),
-you can browse and search for packages.
+[패키지스트 웹사이트](https://packagist.org/) (packagist.org)에 접속하면, 패키지들에 대해서 검색하고 상세한 정보를 확인할 수 있습니다. 
 
-Any open source project using Composer should publish their packages on
-packagist. A library doesn't need to be on packagist to be used by Composer,
-but it makes life quite a bit simpler.
+컴포저를 사용하는 오픈소스 프로젝트라면 컴포저를 통해서 프로젝트를 패키지스트에 게시하는 것이 좋습니다. 라이브러리 타입의 경우에는 꼭 패키지스트에 있을 필요는 없지만 그렇게 하는 것이 좀 더 사용을 쉽게 할 수 있습니다. 
 
-## Autoloading
+## Autoloading - 오토로딩
 
-For libraries that specify autoload information, Composer generates a
-`vendor/autoload.php` file. You can simply include this file and you
-will get autoloading for free.
+컴포저는 라이브러리들에 대한 오토로딩 정보를 `vendor/autoload.php` 파일에 저장합니다. 이 파일을 include 함으로써 오도로딩을 손쉽게 적용할 수 있습니다. 
 
 ```php
 require 'vendor/autoload.php';
 ```
 
-This makes it really easy to use third party code. For example: If your
-project depends on monolog, you can just start using classes from it, and they
-will be autoloaded.
+이렇게 함으로써 서드파티의 코드를를 사용하는 것을 아주 쉽게 만들어 줍니다. 예를 들어 : 작성하고 있는 프로젝트가 monolog 에 의존성을 가지고 있을 때 오토로딩을 사용하면 바로 해당 클래스를 사용할 수 있다는 것을 의미합니다. 
 
 ```php
 $log = new Monolog\Logger('name');
 $log->pushHandler(new Monolog\Handler\StreamHandler('app.log', Monolog\Logger::WARNING));
-
 $log->addWarning('Foo');
 ```
 
-You can even add your own code to the autoloader by adding an `autoload` field
-to `composer.json`.
+오토로딩의 설정은 `composer.json` 의 `autoload` 설정을 통해서도 할 수 있습니다. 
 
 ```json
 {
@@ -169,31 +140,19 @@ to `composer.json`.
 }
 ```
 
-Composer will register a [PSR-4](http://www.php-fig.org/psr/psr-4/) autoloader
-for the `Acme` namespace.
+위의 경우 컴포저는 `Acme` 네임스페이스를 [PSR-4](http://www.php-fig.org/psr/psr-4/)에 따라서 오토로딩을 설정합니다. 오토로딩은 네임스페이스에 대한 디렉토리 매핑을 정의합니다. `src` 디렉토리는 `vendor` 디렉토리와 마찬가지로 프로젝트 루트 디렉토리에 존재합니다. 예를 들어 `src/Foo.php` 파일은 `Acme\Foo` 클래스를 의미합니다. 
 
-You define a mapping from namespaces to directories. The `src` directory would
-be in your project root, on the same level as `vendor` directory is. An example
-filename would be `src/Foo.php` containing an `Acme\Foo` class.
+`autolod` 항목을 추가한 뒤에는 `dump-autoload` 명령어를 실행하여 `vendor/autoload.php` 파일을 재생성 해주어야 합니다. 
 
-After adding the `autoload` field, you have to re-run `install` to re-generate
-the `vendor/autoload.php` file.
-
-Including that file will also return the autoloader instance, so you can store
-the return value of the include call in a variable and add more namespaces.
-This can be useful for autoloading classes in a test suite, for example.
+autoload.php 파일을 include 하게 되면 오토로더 인스턴스를 리턴 받을 수 있습니다. 이 리턴받은 인스턴스를 통해서 추가적인 네임스페이스를 지정할 수도 있습니다. 테스트가 필요한 경우 다음 예제처럼 유용하게 사용할 수 있습니다. 
 
 ```php
 $loader = require 'vendor/autoload.php';
 $loader->add('Acme\\Test\\', __DIR__);
 ```
 
-In addition to PSR-4 autoloading, classmap is also supported. This allows
-classes to be autoloaded even if they do not conform to PSR-4. See the
-[autoload reference](04-schema.md#autoload) for more details.
+PSR-4 오토로딩 이외에도 classmap 형태의 오토로딩도 지원합니다. 이 경우 PSR-4 형식에 맞지 않더라도 클래스를 오토로딩할 수 있습니다. 보다 자세한 정보는 [autoload reference](04-schema.md#autoload)을 참고하십시오. 
 
-> **Note:** Composer provides its own autoloader. If you don't want to use
-that one, you can just include `vendor/composer/autoload_*.php` files,
-which return associative arrays allowing you to configure your own autoloader.
+> **주의:** 컴포저는 자체적인 오토로더를 제공합니다. 컴포저의 자체적인 오토로더를 사용하지 않는 경우 연관된 배열을 리턴하게끔 구성된 `vendor/composer/autoload_*.php` 파일들을 include 하여 고유한 오토로더를 구성할 수 도 있습니다. 
 
 &larr; [Intro](00-intro.md)  |  [Libraries](02-libraries.md) &rarr;

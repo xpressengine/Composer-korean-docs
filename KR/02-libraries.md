@@ -4,7 +4,7 @@
 
 ## 모든 프로젝트는 패키지입니다
 
-디렉토리에 `composer.json`가 존재하면 그 디렉토리는 패키지라는 것을 의미합니다. 프로젝트 컴포저에 `require`를 추가하게 되면 다른 패키지들에 의존성이 있는 패키지를 만들수 있습니다. 프로젝트와 라이브러리들의 차이는 단지 프로젝트는
+디렉토리에 `composer.json`이 존재하면 그 디렉토리는 패키지라는 것을 의미합니다. 프로젝트 컴포저에 `require`를 추가하게 되면 다른 패키지들에 의존성이 있는 패키지를 만들수 있습니다. 프로젝트와 라이브러리들의 차이는 단지 프로젝트는
 이름을 가지지 않은 패키지라는것 뿐입니다.
 
 
@@ -87,51 +87,23 @@ vendor name. Supplying a vendor name is mandatory.
 > **주의:** 개발 버전을 설치할 때에는 패키지를 자동으로 `source`에서 내려받습니다.
 > 더 자세한 사항은 [`설치`](03-cli.md#install) 명령어에 대해서 참고하십시오.
 
-### Aliases- 앨리어스
+### Aliases - 앨리어스
 
-It is possible to alias branch names to versions. For example, you could alias
-`dev-master` to `1.0.x-dev`, which would allow you to require `1.0.x-dev` in all
-the packages.
-
-See [Aliases](articles/aliases.md) for more information.
-
-브랜치 이름을 버전으로 앨리아스 할 수 있다. 예를 들면 `dev-master` 에서 `1.0.x-dev`로 앨리어스하면 모든 패키지에서 `1.0.x-dev`를 require한다. 앨리어스에관한 추가정보는 [Aliases](articles/aliases.md) 를 보라.
-
+브랜치 이름을 버전으로하는 별칭을 지정 할 수 있습니다. 예를 들면 `1.0.x-dev`를 필요로 하는 모든 패키지들에서 사용하기 위해서 `dev-master` 에서 `1.0.x-dev`로 별칭을 지정(alias)할 수 있습니다. 별칭-Aliases에 관한 추가정보는 [Aliases](articles/aliases.md)부분을 참고하십시오.
 
 ## Lock file
 
-For your library you may commit the `composer.lock` file if you want to. This
-can help your team to always test against the same dependency versions.
-However, this lock file will not have any effect on other projects that depend
-on it. It only has an effect on the main project.
+함께 협업하는 팀 모두가 항상 같은 의존성 버전으로 테스팅 할 수 있게 해주기 위해 필요한 경우에 `composer.lock` 파일을 포함하여 커밋할 수 있습니다. lock 파일은 다른 프로젝트에는 형상을 주지 않고 해당 프로젝트에만 적용됩니다.
 
-`composer.lock` 을 커밋할 수 있다. 같이 일하는 팀이 항상 같은 의존성 버전으로 테스트 할 수 있게 해준다.
-그러나 이 lock file은 다른 프로젝트에 어떤 영향도 없을 것이고 단지 주 프로젝트에만 영향이 있을것이다. 
+만약 lock file을 커밋하기를 원치 않고 현재 git을 사용하고 있다면 `.gitignore`에 lock 파일을 추가하면 됩니다.
 
-If you do not want to commit the lock file and you are using git, add it to
-the `.gitignore`.
+## 버전관리도구로 퍼블리싱하기
 
-만약 lock file을 커밋하기 원치 않고 git을 사용하고 있다면 `.gitignore`에 추가해라.
+이미 VCS 저장소를 보유하고 있고(버전관리 시스템 예를들어 git) `composer.json` 파일을 보유하고 있다면 해당 라이브러리는 컴포저로 설치가 가능해집니다. 
 
-## Publishing to a VCS
+다음 예에서 github의 `github.com/username/hello-world`에 라이브러리 `acme/hello-world`를 퍼블리싱 하는 것을 보여드리겠습니다. 
 
-## 버전관리도구로 퍼블리쉬하기
-
-Once you have a vcs repository (version control system, e.g. git) containing a
-`composer.json` file, your library is already composer-installable. In this
-example we will publish the `acme/hello-world` library on GitHub under
-`github.com/username/hello-world`.
-
-버전관리도구 저장소에`composer.json` 파일이 있다면 이미 그 라이브러리는 이미 컴포저로 설치가 가능하다. 
-이 예에서 우리는 github의 `github.com/username/hello-world`에 라이브러리 `acme/hello-world`를 퍼블리시 할것이다.  
-
-Now, to test installing the `acme/hello-world` package, we create a new
-project locally. We will call it `acme/blog`. This blog will depend on
-`acme/hello-world`, which in turn depends on `monolog/monolog`. We can
-accomplish this by creating a new `blog` directory somewhere, containing a
-`composer.json`:
-
-지금 `acme/hello-world`패키지 설치를 테스트 하기 위해 우리는 로컬로 새 프로젝트를 만든다. 이를 `acme/blog`라고 하자. 이 블로그는 `acme/hello-world`에 의존할것이고 결국 `monolog/monolog`에 의존한다. `composer.json`이 있는 디렉토리 어디에든 새로운 `blog`를 만들어 완성 할 수 있다. 
+먼저 `acme/hello-world` 패키지를 인스톨하는것을 테스트 하기 위해서 로컬 환경에 새로운 프로젝트를 만듭니다. 이 패키지를 `acme/blog`라고 합시다. 이 블로그는 `monolog/monolog`에 의존성을 가지고 있는 `acme/hello-world`에 대한 의존성을 가지고 있습니다. 이 디렉토리에 다음과 같이 `composer.json`을 생성합니다. 
 
 ```json
 {
@@ -142,17 +114,9 @@ accomplish this by creating a new `blog` directory somewhere, containing a
 }
 ```
 
-The name is not needed in this case, since we don't want to publish the blog
-as a library. It is added here to clarify which `composer.json` is being
-described.
+이 블로그 라이브러리를 퍼블리싱-배포하지 않는다면 name 필드가 꼭 필요하지는 않지만 앞서 이야기한 `composer.json`에 대한 설명을 보여주기 위해서 추가해놓았습니다.  
 
-블로그를 라이브러리로 배포하지 않는 다면 이번 사례에서 이름은 필요없다. `composer.json`에 설명한것을 여기서 첨언하겠다.
-
-Now we need to tell the blog app where to find the `hello-world` dependency.
-We do this by adding a package repository specification to the blog's
-
-지금 우리는 블로그앱에 `hello-world`의존성을 어디서 찾을지 알려줄 필요가 있다.
-블로그에 패키지 repository 스펙을 추가해서 (의존성을 어디서 찾을지 알려줄) 수 있다.
+이제 이 블로그 라이브러리가 어디에서 `hello-world`에 대한 의존성 패키지를 찾을 수 있는지 알려주어야 합니다. 다음처럼 repository에 대한 스펙을 추가하여 어디에서 찾을 수 있는지 알려줄 수 있습니다. 
 
 `composer.json`:
 
@@ -170,54 +134,25 @@ We do this by adding a package repository specification to the blog's
     }
 }
 ```
+레파지토리-저장소가 어떻게 작동하고 사용 할 수 있는 자세한 사항들에 대해서는  [Repositories](05-repositories.md)챕터를 참고하십시오.
 
-For more details on how package repositories work and what other types are
-available, see [Repositories](05-repositories.md).
+자 이제 다 됬습니다. 이제 컴포저의 `install` 명령어를 통해서 의존 패키지들을 다운로드 할 수 있습니다. 
 
-어떻게 패키지 repositories가 작동하고 사용할수 있는 다른것들은 무엇이 있는지 더 알고자 한다면 [Repositories](05-repositories.md)을 보라. 
+**요약:** 어떠한 git/svn/hg 저장소라도 `composer.json`파일을 포함하고 있다면 프로젝트에서 필요로 하는 패키지들을 저장소 스펙에 맞게 추가하는 것만으로도 의존성 관리를 할 수 있습니다. 
 
-That's all. You can now install the dependencies by running Composer's
-`install` command!
+## 패키지스트(packagist)로 퍼블리싱하기
 
-이것이 전부다. 지금 컴포저의 `install`명령어를 실행해서 의존성들을 설치할 수 있다.
+이제 패키지들을 퍼블리싱 할 수 있게 되었습니다. 하지만 매번 VCS 저장소를 추가하는 것은 매우 어려운 일입니다. 그리고 실제로 매번 이렇게 할 필요는 없습니다. 
 
-**Recap:** Any git/svn/hg repository containing a `composer.json` can be added
-to your project by specifying the package repository and declaring the
-dependency in the `require` field.
+생각해 보면 `monolog/monolog`는 패키지 저장소를 따로 지정해주지 않았지만 정상적으로 작동했습니다. 어떻게 이러한일이 가능했을 까요? 정답은 바로 패키지스트(packagist)입니다. 
 
-`composer.json`가 있는 어떤 git/svn/hg 저장소도 패키지 repository에 명시하고 `require` 필드에 의존성을 선언해서 당신의 프로젝트에 추가 할 수 있다.
-
-## Publishing to packagist
-
-## 패키지스트로 퍼블리시하기
-
-Alright, so now you can publish packages. But specifying the vcs repository
-every time is cumbersome. You don't want to force all your users to do that.
-
-이제 당신은 패키지를 퍼블리시 할 수 있다. 하지만 버전관리도구 저장소를 매번 지정하는것은 어렵다. 당신은 모든 사용자들에게 그모든것을 하도록 강요하길 원하지 않을것이다.
-
-The other thing that you may have noticed is that we did not specify a package
-repository for `monolog/monolog`. How did that work? The answer is packagist.
-
-`monolog/monolog`패키지 저장소를 정해주지 않았는데 어떻게 작동한것일까? 정답은 패키지스트이다.
-
-[Packagist](https://packagist.org/) is the main package repository for
-Composer, and it is enabled by default. Anything that is published on
-packagist is available automatically through Composer. Since monolog
-[is on packagist](https://packagist.org/packages/monolog/monolog), we can depend
-on it without having to specify any additional repositories.
-
-[Packagist](https://packagist.org/)는 컴포저용 주요 패키지 저장소이며 기본으로 설정돼 있다.패키지스트에 퍼블리시된것들은 자동으로 컴포저로 사용할 수 있다. 추가로 저장소에대한 정보없이 monolog [is on packagist](https://packagist.org/packages/monolog/monolog)를 사용할 수 있다. 
+[Packagist](https://packagist.org/)는 컴포저용 주요 패키지 저장소를 말하며 컴포저에 기본으로 설정돼 있습니다. 패키지스트에 퍼블리싱된 것들은 자동으로 컴포저로 사용할 수 있습니다. 따라서 추가적으로 저장소에 대한 정보없이도 monolog [패키지스트에서 보기](https://packagist.org/packages/monolog/monolog)를 사용할 수 있는 것입니다. 
 
 If we wanted to share `hello-world` with the world, we would publish it on
 packagist as well. Doing so is really easy.
 
-만약 우리가 `hello-world`를 공유하기 원한다면 또한 패키지스트에 퍼블리시해라. 정말 쉽다.
+만약 우리가 `hello-world`를 공유하기 원한다면 이 또한 패키지스트에 올리면 됩니다(퍼블리싱). 이 또한 아주 쉽게 가능합니다. 
 
-You simply hit the big "Submit Package" button and sign up. Then you submit
-the URL to your VCS repository, at which point packagist will start crawling
-it. Once it is done, your package will be available to anyone.
+간단하게 말해서 "Submit Package" 버튼을 클릭하고 가입을 한 뒤에 보유한 버전관리도구 저장소의 URL을 입력하면 패키지스트가 알아서 크롤링을 하게 됩니다. 이것이 전부이며 이제 패키지스트를 통해서 퍼블리싱한 패키지를 누구나 사용할 수 있게 됩니다. 
 
-간단하게 "Submit Package"버튼을 누르고 sign up해라. 그리고 당신의 버전관리도구 저장소의 URL을 제출하면 패키지스트가 크롤링하게된다. 이것이 다고 너의 패키지는 누구나 사용할 수 있게된다.
-
-&larr; [Basic usage](01-basic-usage.md) |  [Command-line interface](03-cli.md) &rarr;
+&larr; [기본 사용법](01-basic-usage.md) |  [커맨드라인 인터페이스 / 명령어](03-cli.md) &rarr;
