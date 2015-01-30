@@ -42,29 +42,27 @@ Packages can supply either of these, or even both. Depending on certain factors,
 
 저장소란, 패키지 소스 입니다. 패키지들/버전들 의 목록입니다. 컴포저는 프로젝트에서 필요로 하는 패키지를 찾기 위해 당신의 모든 저장소를 조사할 것입니다.
 
-컴포저에는 Packagist 저장소만 기본 등록되어 있습니다.
+컴포저에 기본으로 등록되어 있는 저장소는 Packagist 밖에 없습니다.
 `composer.json`에 선언하면 프로젝트에 저장소를 더 추가할 수 있습니다.
 
-Repositories are only available to the root package and the repositories defined in your dependencies will not be loaded.
-저장소는 are only available to 최상위 패키지 and the repositories defined in your dependencies will not be loaded.
-Read the [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) if you want to learn why.
+repositories 는 root 패키지에서만 유효하며, 하위 종속 관계에 정의된 저장소는 로드 되지 않을 것입니다.
+이유가 궁금하다면 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
 
-## Types
+## 타입
 
 ### Composer
 
-The main repository type is the `composer` repository. It uses a single
-`packages.json` file that contains all of the package metadata.
+주 저장소 타입은 `composer` 저장소 입니다.
+전체 패키지 메타데이터를 담고있는 하나의 `packages.json` 파일을 사용합니다.
 
-This is also the repository type that packagist uses. To reference a
-`composer` repository, just supply the path before the `packages.json` file.
-In case of packagist, that file is located at `/packages.json`, so the URL of
-the repository would be `packagist.org`. For `example.org/packages.json` the
-repository URL would be `example.org`.
+또한, packagist가 사용하는 저장소 타입입니다.
+`composer` 저장소를 참조하려면, `packages.json` 파일 이전에 경로를 적용하기만 하면 됩니다.
+packagist의 경우, `/packages.json` 위치에 파일이 있고, 저장소 URL은 `packagist.org` 입니다.
+`example.org/packages.json`의 저장소 URL은 `example.org`가 될 것입니다.
 
 #### packages
 
-The only required field is `packages`. The JSON structure is as follows:
+필수 필드는 `packages` 밖에 없습니다. JSON 구조는 아래와 같습니다.
 
 ```json
 {
@@ -79,14 +77,13 @@ The only required field is `packages`. The JSON structure is as follows:
 }
 ```
 
-The `@composer.json` marker would be the contents of the `composer.json` from
-that package version including as a minimum:
+`@composer.json` 표시는  아래와 같은 최소한의 패키지 버전을 담고 있는 `composer.json`의 내용이 됩니다.
 
 * name
 * version
-* dist or source
+* dist 혹은 source
 
-Here is a minimal package definition:
+최소 패키지는 아래와 같습니다.
 
 ```json
 {
@@ -99,15 +96,14 @@ Here is a minimal package definition:
 }
 ```
 
-It may include any of the other fields specified in the [schema](04-schema.md).
+여기에 [schema](04-schema.md)에 있는  다른 필드 정보도 명시할 수도 있습니다.
 
 #### notify-batch
 
-The `notify-batch` field allows you to specify an URL that will be called
-every time a user installs a package. The URL can be either an absolute path
-(that will use the same domain as the repository) or a fully qualified URL.
+`notify-batch` 필드는 사용자가 패키지를 설치할 때 매번 호출하게 될 URL을 지정할 수 있습니다.
+URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)나 절대 표기 방식의 URL이 될 수 있습니다.
 
-An example value:
+예제:
 
 ```json
 {
@@ -119,6 +115,8 @@ For `example.org/packages.json` containing a `monolog/monolog` package, this
 would send a `POST` request to `example.org/downloads/` with following
 JSON request body:
 
+`monolog/monolog` 패키지가 들어있는 `example.org/packages.json`이 있다고 하면,  `example.org/downloads/`로 아래와 같은 JSON 요청 body를 담아 `POST` 요청을 하게 될 것입니다.
+
 ```json
 {
     "downloads": [
@@ -127,18 +125,16 @@ JSON request body:
 }
 ```
 
-The version field will contain the normalized representation of the version
-number.
+`version` 필드는 정규 표현 방식의 버전 넘버를 따릅니다.
 
-This field is optional.
+이 필드는 선택사항 입니다.
 
 #### includes
 
-For larger repositories it is possible to split the `packages.json` into
-multiple files. The `includes` field allows you to reference these additional
-files.
+규모가 큰 저장소를 위해 `packages.json`을 여러개의 파일로 분리하는 기능을 제공합니다.
+`includes` 필드를 사용하면  참조할 파일을 추가할 수 있습니다.
 
-An example:
+예제:
 
 ```json
 {
@@ -156,13 +152,16 @@ An example:
 }
 ```
 
-The SHA-1 sum of the file allows it to be cached and only re-requested if the
-hash changed.
+파일의 `SHA-1 sum`은 캐시되어 있다가 해시가 변경될 경우에만 재요청 하게 됩니다.
 
-This field is optional. You probably don't need it for your own custom
-repository.
 
-#### provider-includes and providers-url
+
+This field is optional. You probably don't need it for your own custom repository.
+
+###[검수필]
+이 필드는 선택사항 입니다. 별도로 구축한 저장소를 사용한다면 아마 필요하지 않을 것입니다.
+
+#### provider-includes 와 providers-url
 
 For very large repositories like packagist.org using the so-called provider
 files is the preferred method. The `provider-includes` field allows you to
@@ -209,6 +208,12 @@ repository, by loading the file referenced by `providers-url`, replacing
 `%package%` by the package name and `%hash%` by the sha256 field. Those files
 themselves just contain package definitions as described [above](#packages).
 
+위에 선언한 파일은 
+ [above](#packages)
+ 
+This field is optional. You probably don't need it for your own custom
+repository.
+###[검수필]
 이 필드는 선택사항 입니다. 별도로 구축한 저장소를 사용한다면 아마 필요하지 않을 것입니다.
 
 #### stream options
