@@ -2,12 +2,12 @@
 
 이번 챕터에서는 패키지와 저장소에 대한 개념, 어떤 종류의 저장소가 사용가능한지 그리고 이것들이 어떻게 동작하는지 설명하겠습니다.
 
-## 개념
+## Concepts
 
 먼저 실제의 다양한 형태의 저장소를 살펴 보기에 앞서, 컴포저에 내장 된 기본 개념들을 이해할 필요가 있습니다.
 
 
-### 패키지
+### Package
 
 컴포저는 의존성 관리자로 패키지들을 로컬 공간에 설치합니다. 원래 패키지라는 것은 단순히 무언가를 담고 있는 디렉토리를 의미합니다. 여기에서는 PHP 코드를 의미하게 되겠지만, 이론상으로는 그 어떠한 것도 담을 수 있습니다. 그리고 패키지는 이름과 버전이 포함된 설명을 수록하고 있습니다. 이 이름과 버전은 패키지를 식별하는데 사용됩니다.
 
@@ -16,36 +16,28 @@
 이름과 버전 외에도 유용한 메타데이터가 있습니다. source 정의는 대부분 설치에 관련된 정보들 입니다. 설치와 밀접하게 관련된 정보는 source 정의이고, 패키지 컨텐츠가 어디 있는지 서술하고 있습니다. 패키지 데이터는 패키지의 컨텐츠를 가리킵니다.
 그리고 dist 와 source 라는 두가지의 옵션이 있습니다. 
 
-**Dist:** dist 는 패키지 데이터를 묶은 버전을 말합니다. 통상적으로 릴리즈 버전, stable 릴리즈 라고도 합니다.
+**Dist:** dist 는 패키지 데이터를 압축한 묶음 버전을 말합니다. 통상적으로 릴리즈 버전, stable 릴리즈 라고도 합니다.
 
-**Source:**  source 는 개발용으로 사용됩니다. 보통 git과 같은 소스코드 저장소로부터 가져오게 됩니다. 내려받은 패키지를 수정하고 싶을 때에는 fetch 할 수도 있습니다.
+**Source:**  source 는 주로 개발용으로 사용됩니다. 보통 git과 같은 소스코드 저장소로부터 가져오게 되는데, 내려받은 패키지를 수정하고 싶을 때에는 fetch 할 수도 있습니다.
 
-Packages can supply either of these, or even both. Depending on certain factors, such as user-supplied options and stability of the package, one will be preferred.
+각각의 패키지는 이중 하나의 또는 두개의 옵션 모두를 지원할 수 있습니다.
+사용자 제공 옵션(user-supplied options)이나 패키지 안정성과 같은 특정한 요소에 의해서 선호되는 방식으로 결정됩니다.
 
-[검수필]
-패키지는 이중 하나의 옵션을 지원하거나 둘 다 지원할 수도 있습니다.
-사용자 제공 옵션(user-supplied options)이나 패키지 안정성과 같은 특정한 목적에 한해 선호될 것입니다.
+### Repository
 
-### 저장소
+저장소란, 패키지 소스를 말하며, 패키지들/버전들 의 목록을 의미합니다. 컴포저는 프로젝트에서 필요로 하는 패키지를 찾기 위해 설정된 모든 저장소를 조사할 것입니다.
 
-저장소란, 패키지 소스 입니다. 패키지들/버전들 의 목록입니다. 컴포저는 프로젝트에서 필요로 하는 패키지를 찾기 위해 당신의 모든 저장소를 조사할 것입니다.
+컴포저가 기본적으로 확인하는 저장소는 Packagist 밖에 없습니다. `composer.json`를 통해서 저장소를 선언하면 프로젝트에 필요한 저장소를 더 추가할 수 있습니다.
 
-컴포저에 기본으로 등록되어 있는 저장소는 Packagist 밖에 없습니다.
-`composer.json`에 선언하면 프로젝트에 저장소를 더 추가할 수 있습니다.
+repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키지에 정의된 저장소는 로드 되지 않을 것입니다. 그 이유에 대해서는 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
 
-repositories 는 root 패키지에서만 유효하며, 하위 종속 관계에 정의된 저장소는 로드 되지 않을 것입니다.
-이유가 궁금하다면 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
-
-## 타입
+## Types
 
 ### Composer
 
-주 저장소 타입은 `composer` 저장소 입니다.
-전체 패키지 메타데이터를 담고있는 하나의 `packages.json` 파일을 사용합니다.
+주요 저장소 타입은 `composer` 저장소를 일컫습니다. 이 저장소 타입은 전체 패키지 메타데이터를 담고있는 하나의 `packages.json` 파일을 사용합니다.
 
-또한, packagist가 사용하는 저장소 타입입니다.
-`composer` 저장소를 참조하려면, `packages.json` 파일 이전에 경로를 적용하기만 하면 됩니다.
-packagist의 경우, `/packages.json` 위치에 파일이 있고, 저장소 URL은 `packagist.org` 입니다.
+이 타입은 또한, packagist가 사용하는 저장소 타입입니다. `composer` 저장소를 참조하기 위해서는, `packages.json` 파일 이전에 경로를 적용하기만 하면 됩니다. packagist의 경우, `/packages.json` 위치에 파일이 있고, 저장소 URL은 `packagist.org` 입니다.
 `example.org/packages.json`의 저장소 URL은 `example.org`가 될 것입니다.
 
 #### packages
@@ -99,10 +91,6 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
 }
 ```
 
-For `example.org/packages.json` containing a `monolog/monolog` package, this
-would send a `POST` request to `example.org/downloads/` with following
-JSON request body:
-
 `monolog/monolog` 패키지가 들어있는 `example.org/packages.json`이 있다고 하면,  `example.org/downloads/`로 아래와 같은 JSON 요청 body를 담아 `POST` 요청을 하게 될 것입니다.
 
 ```json
@@ -142,24 +130,16 @@ JSON request body:
 
 파일의 `SHA-1 sum`은 캐시되어 있다가 해시가 변경될 경우에만 재요청 하게 됩니다.
 
-
-
-This field is optional. You probably don't need it for your own custom repository.
-
-###[검수필]
 이 필드는 선택사항 입니다. 별도로 구축한 저장소를 사용한다면 아마 필요하지 않을 것입니다.
 
 #### provider-includes 와 providers-url
 
-For very large repositories like packagist.org using the so-called provider
-files is the preferred method. The `provider-includes` field allows you to
-list a set of files that list package names provided by this repository. The
-hash should be a sha256 of the files in this case.
+`provider files`라고 부르는 방식은 `packagist.org`처럼 아주 큰 저장소를 사용하는 경우에 가장 선호되는 방법입니다.
+`provider-includes` 필드는 현재 저장소에서 제공하는 패키지 이름이 담긴 파일 정보를 나열할 수 있습니다.
 
-The `providers-url` describes how provider files are found on the server. It
-is an absolute path from the repository root.
+`providers-url` 필드는 서버에서 `provider files`를 찾는 방법을 제시합니다. 이 내용은 저장소 root에서 시작하는 절대 경로가 됩니다.
 
-An example:
+예제 :
 
 ```json
 {
@@ -175,8 +155,9 @@ An example:
 }
 ```
 
-Those files contain lists of package names and hashes to verify the file
-integrity, for example:
+여기에 나오는 파일들의 내용은 아래 예제 처럼, 패키지명과 파일 무결성 검증을 위한 해시를 나열하고 있습니다.
+
+예제 :
 
 ```json
 {
@@ -191,28 +172,18 @@ integrity, for example:
 }
 ```
 
-The file above declares that acme/foo and acme/bar can be found in this
-repository, by loading the file referenced by `providers-url`, replacing
-`%package%` by the package name and `%hash%` by the sha256 field. Those files
-themselves just contain package definitions as described [above](#packages).
+위 파일은 해당 저장소에서 `providers-url`을 조회한 파일을 참조하여, `%package%`는  패키지명으로, `%hash%`는 sha256 필드로 치환한 후,  acme/foo 와 acme/bar 를 찾을 수 있음을 선언하고 있습니다.
+이파일들은 자체적으로 [위에서 설명](#packages)한 패키지 정의로 구성되어 있습니다.
 
-위에 선언한 파일은 
- [above](#packages)
- 
-This field is optional. You probably don't need it for your own custom
-repository.
-###[검수필]
 이 필드는 선택사항 입니다. 별도로 구축한 저장소를 사용한다면 아마 필요하지 않을 것입니다.
 
 #### stream options
 
-`packages.json` 파일은 PHP stream을 통해 적재됩니다.
-`options` 파라미터를 통해 stream에 추가 옵션을 설정할 수 있습니다.
+`packages.json` 파일은 PHP stream을 통해 로드됩니다.
+stream에 추가 옵션을 설정하려면 `options` 파라미터를 사용합니다.
 PHP stream context 옵션 이라면 어떤 것이든 설정할 수 있습니다.
-추가 정보를 얻으려면 [컨택스트 옵션과 인수](http://php.net/manual/kr/context.php)을 확인하세요.
+[컨택스트 옵션과 인수](http://php.net/manual/kr/context.php)에서 더 많은 정보를 얻을 수 있습니다.
 
-
-# XXX: ------------ 여기까지 ---------------------
 
 ### VCS
 
