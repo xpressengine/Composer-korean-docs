@@ -4,13 +4,9 @@
 
 # HTTP basic authentication
 
-Your [Satis or Toran Proxy](handling-private-packages-with-satis.md) server
-could be secured with http basic authentication. In order to allow your project
-to have access to these packages you will have to tell composer how to
-authenticate with your credentials.
+당신의 [Satis or Toran Proxy](handling-private-packages-with-satis.md) 서버는 http basic authentication(http 기본 인증)을 얻을 수 있습니다. 물론 당신의 프로젝트가 패키지에 접근할 수 있도록 자격을 인증하는 것은 composer로 해야합니다.
 
-The simplest way to provide your credentials is providing your set
-of credentials inline with the repository specification such as:
+아래와 같이 당신의 자격 증명을 저장소 설명으로 간단하게 해줍니다. :
 
 ```json
 {
@@ -23,20 +19,14 @@ of credentials inline with the repository specification such as:
 }
 ```
 
-This will basically teach composer how to authenticate automatically
-when reading packages from the provided composer repository.
+이것은 제공된 composer 저장소에서 패키지를 읽어올 때 composer로 자동으로 자격을 증명하는 기본적인 가르침이다.
 
-This does not work for everybody especially when you don't want to
-hard code your credentials into your composer.json. There is a second
-way to provide these details and it is via interaction. If you don't
-provide the authentication credentials composer will prompt you upon
-connection to enter the username and password.
+당신의 composer.json에 자격 증명을 하지 않으면, 모두에게 작동하지 않습니다. 거기에 정보를 제공하고, 상호 작용을 하는 두번째 방법은 composer가 사용자 연결 시 사용자 이름과 비밀번호를 입력받는 방식입니다.
 
-The third way if you want to pre-configure it is via an `auth.json` file
-located in your `COMPOSER_HOME` or besides your `composer.json`.
+당신이 사전 구성을 원한 때의 세 번째 방법은 `COMPOSER_HOME`또는 `composer.json`
+외에 `auth.json`파일을 이용하는 것이다.
 
-The file should contain a set of hostnames followed each with their own
-username/password pairs, for example:
+이 파일은 hostnames 설정을 따르는 각각의 사용자 이름 / 패스워드 세트를 포함한다. 예시 : 
 
 ```json
 {
@@ -53,7 +43,4 @@ username/password pairs, for example:
 }
 ```
 
-The main advantage of the auth.json file is that it can be gitignored so
-that every developer in your team can place their own credentials in there,
-which makes revokation of credentials much easier than if you all share the
-same.
+auth.json 파일의 주된 장점은 gitignore 할 수 있다는 것이다 그래서 팀의 모든 개발자가 자격 증명을 배치할 수 있으며, 모두가 공유할 때 보다 인증의 취소도 쉽게 할 수 있다.
