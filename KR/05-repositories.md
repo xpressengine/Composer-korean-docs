@@ -184,12 +184,17 @@ PHP stream context 옵션 이라면 어떤 것이든 설정할 수 있습니다.
 
 
 ### VCS
+### 버전컨트롤시스템(VCS)
 
 VCS stands for version control system. This includes versioning systems like
 git, svn or hg. Composer has a repository type for installing packages from
 these systems.
 
+VCS는 버전컨트롤시스템을 의미합니다. 이는 git, svn 또는 hg와 같은 버전시스템들을 포함합니다.
+컴포저는 이 시스템들로부터 패키지를 설치하기 위한 저장소 타입을 가지고 있습니다.
+
 #### Loading a package from a VCS repository
+#### VCS 저장소에서 패키지 불러오기
 
 There are a few use cases for this. The most common one is maintaining your
 own fork of a third party library. If you are using a certain library for your
@@ -201,7 +206,18 @@ to do is add your fork as a repository and update the version constraint to
 point to your custom branch. For version constraint naming conventions see
 [Libraries](02-libraries.md) for more information.
 
+사용사례가 많지는 않습니다. 가장 보편적인 사례는 써드파티 라이브러리를 포크(fork)하여 유지보수하는 경우입니다.
+당신의 프로젝트에 특정 라이브러리를 사용 중이고 그 라이브러리의 일부를 변경하고자 한다면, 
+당신은 프로젝트가 패치(patch)된 버전을 사용하게 되길 원할 것입니다.
+그 라이브러리가 GitHub에 있다면(대부분 이 경우겠죠), 당신은 간단히 그것을 포크(fork)하여 변경사항을 푸시(push)할 수 있습니다.
+그리고 나서 프로젝트의 `composer.json`을 갱신합니다.
+당신이 해야할 일은 당신의 포크(fork)를 저장소로 추가하고 버전 제약이 당신의 별도 브랜치를 가르키도록 갱신하는 것 뿐입니다.
+버전 제약 명명 방식에 대한 더 많은 정보는 [Libraries](02-libraries.md)에서 볼 수 있습니다.
+
 Example assuming you patched monolog to fix a bug in the `bugfix` branch:
+
+다음 예시는 버그를 수정하기 위해 `bugfix` 브랜치에서 monolog를 패치했다고 간주합니다:
+~~보끼아노 대장님 밀어주기~~
 
 ```json
 {
@@ -217,8 +233,13 @@ Example assuming you patched monolog to fix a bug in the `bugfix` branch:
 }
 ```
 
+~~이고르는 모노로그를 포크한 적도 없음~~ ~~낚시왕~~
+
 When you run `php composer.phar update`, you should get your modified version
 of `monolog/monolog` instead of the one from packagist.
+
+`php composer.phar update`를 실행하면, 패키지스트(packagist)의 `monolog/monolog` 대신에 
+당신이 수정한 버전을 가져오게 됩니다.
 
 Note that you should not rename the package unless you really intend to fork
 it in the long term, and completely move away from the original package.
@@ -227,14 +248,27 @@ custom repository has priority over packagist. If you want to rename the
 package, you should do so in the default (often master) branch and not in a
 feature branch, since the package name is taken from the default branch.
 
+오랜 기간 동안 포크(fork)를 유지하고 원본 패키지에서 완전히 이전하려고 진짜로 의도하지 않는 한~~stereolog/stereolog~~, 
+패키지의 이름을 변경해서는 안된다는 걸 유의해야 합니다. 
+별도의 저장소는 패키지스트(packagist)보다 우선권을 가지기 때문에 컴포저는 원본이 아닌 당신의 패키지를 정확하게 골라낼 것입니다.
+패키지 이름을 변경하길 원한다면, feature 브랜치가 아닌 기본(흔히 master) 브랜치에서 변경해야 합니다.
+패키지 이름은 기본 브랜치에서 가져오기 때문입니다.
+
 If other dependencies rely on the package you forked, it is possible to
 inline-alias it so that it matches a constraint that it otherwise would not.
 For more information [see the aliases article](articles/aliases.md).
 
+다른 의존성이 당신이 포크(fork)한 패키지에 의존한다면,  
+(버전)제약에 맞는 패키지를 찾거나 또는 찾지 않도록 inline-alias 하는 것이 가능합니다.
+더 많은 정보는 [see the aliases article](articles/aliases.md)에서 볼 수 있습니다.
+
 #### Using private repositories
+#### 사설 저장소 사용하기
 
 Exactly the same solution allows you to work with your private repositories at
 GitHub and BitBucket:
+
+공용 저장소와 완전히 동일한 방식으로 GitHub과 BitBucket의 사설 저장소를 사용하는 것이 가능합니다.
 
 ```json
 {
@@ -252,10 +286,16 @@ GitHub and BitBucket:
 
 The only requirement is the installation of SSH keys for a git client.
 
+필요한 건 git 클라이언트를 위한 SSH 키를 설치하는 것 뿐입니다. ~~말은 쉽지~~
+
 #### Git alternatives
+#### Git 대신 사용가능한 것들
 
 Git is not the only version control system supported by the VCS repository.
 The following are supported:
+
+Git은 VCS 저장소로써 지원되는 유일한 버전컨트롤시스템이 아닙니다.
+다음과 같은 저장소들이 지원되고 있습니다:
 
 * **Git:** [git-scm.com](http://git-scm.com)
 * **Subversion:** [subversion.apache.org](http://subversion.apache.org)
@@ -267,6 +307,12 @@ support for GitHub and BitBucket that use the APIs provided by these sites, to
 fetch the packages without having to install the version control system. The
 VCS repository provides `dist`s for them that fetch the packages as zips.
 
+이들 시스템에서 패키지를 가져오기 위해서는 각각에 해당하는 클라이언트가 설치되어 있어야 합니다.
+그건 좀 불편할 수도 있지요.
+이러한 이유로 GitHub과 BitBucket에 대해서는 해당 사이트에서 제공되는 API를 사용하도록 별도로~~스페셜~~ 지원하여,
+버전컨트롤시스템을 설치할 필요 없이 패키지를 가져올 수 있습니다. 
+이 VCS 저장소들은 패키지를 압축파일(zip)으로 가져갈 수 있도록 `dist`를 제공합니다.
+
 * **GitHub:** [github.com](https://github.com) (Git)
 * **BitBucket:** [bitbucket.org](https://bitbucket.org) (Git and Mercurial)
 
@@ -274,18 +320,34 @@ The VCS driver to be used is detected automatically based on the URL. However,
 should you need to specify one for whatever reason, you can use `git`, `svn` or
 `hg` as the repository type instead of `vcs`.
 
+사용될 VCS 드라이버는 URL에 기반하여 자동으로 선택됩니다.
+하지만 어떤 이유가 있어서 특정 드라이버를 명시할 필요가 있다면,
+저장소 타입으로 `vcs` 대신 `git`, `svn` 또는 `hg`를 사용할 수 있습니다.
+
 If you set the `no-api` key to `true` on a github repository it will clone the
 repository as it would with any other git repository instead of using the
 GitHub API. But unlike using the `git` driver directly, composer will still
 attempt to use github's zip files.
 
+GitHub 저장소에서 `no-api` 키를 `true`로 설정한다면
+컴포저는 GitHub API를 사용하지 않고 다른 git 저장소와 마찬가지로 저장소를 복제(clone)할 것입니다.
+그러나 `git` 드라이버를 직접 사용하는 것과는 달리,
+컴포저는 여전히 GitHub의 압축파일(zip)을 사용하려고 시도할 것입니다.
+~~이게 무슨 소리요 컴포저 양반~~
+
 #### Subversion Options
+#### Subversion 옵션들
 
 Since Subversion has no native concept of branches and tags, Composer assumes
 by default that code is located in `$url/trunk`, `$url/branches` and
 `$url/tags`. If your repository has a different layout you can change those
 values. For example if you used capitalized names you could configure the
 repository like this:
+
+Subversion은 브랜치(branches)와 태그(tags) 개념을 내재하고 있지 않기 때문에,
+컴포저는 기본적으로 코드가 `$url/trunk`, `$url/branches` 그리고 `$url/tags` 내에 존재한다고 간주합니다.
+당신의 저장소가 다른 디렉토리 구조를 가지고 있다면 해당 값들을 변경할 수 있습니다.
+예를 들어 첫자가 대문자인 디렉토리명을 사용한다면 ~~왜 이런 짓을~~ 다음과 같이 저장소를 설정할 수 있습니다:
 
 ```json
 {
@@ -304,13 +366,24 @@ repository like this:
 If you have no branches or tags directory you can disable them entirely by
 setting the `branches-path` or `tags-path` to `false`.
 
+branches 또는 tags 디렉토리를 가지고 있지 않다면
+`branches-path` 또는 `tags-path` 항목을 `false`로 설정하여 완전히 사용불가능하도록 할 수 있습니다.
+
 If the package is in a sub-directory, e.g. `/trunk/foo/bar/composer.json` and
 `/tags/1.0/foo/bar/composer.json`, then you can make composer access it by
 setting the `"package-path"` option to the sub-directory, in this example it
 would be `"package-path": "foo/bar/"`.
 
+패키지가 예를 들어
+`/trunk/foo/bar/composer.json`과 `/tags/1.0/foo/bar/composer.json`처럼 서브디렉토리 내에 존재한다면,
+`"package-path"` 옵션을 설정함으로써 컴포저가 해당 서브디렉토리에 접근하도록 만들 수 있습니다.
+이번 예의 경우 `"package-path": "foo/bar/"`이 될 것입니다.
+
 If you have a private Subversion repository you can save credentials in the
 http-basic section of your config (See [Schema](04-schema.md)):
+
+사설 Subversion 저장소를 가지고 있다면
+설정([Schema](04-schema.md) 참조) 내의 http-basic 섹션에서 자격증명(credential) 정보를 저장할 수 있습니다:
 
 ```json
 {
@@ -328,6 +401,10 @@ credentials will be saved for the current user and existing saved credentials
 for this server will be overwritten. To change this behavior by setting the
 `"svn-cache-credentials"` option in your repository configuration:
 
+Subversion 클라이언트가 기본적으로 자격증명(credential)을 저장하도록 설정되어 있다면
+이 자격증명(credential) 정보는 현재 사용자로 저장될 것이고 기존에 저장된 자격증명(credential) 정보는 덮어쓰여질 것입니다. 
+저장소 설정에서 `"svn-cache-credentials"` 옵션을 설정함으로써 이러한 행동을 변경할 수 있습니다:
+
 ```json
 {
     "repositories": [
@@ -339,6 +416,8 @@ for this server will be overwritten. To change this behavior by setting the
     ]
 }
 ```
+
+~~쓰지 마~~
 
 ### PEAR
 
