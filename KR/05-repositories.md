@@ -259,8 +259,8 @@ inline-alias it so that it matches a constraint that it otherwise would not.
 For more information [see the aliases article](articles/aliases.md).
 
 다른 의존성이 당신이 포크(fork)한 패키지에 의존한다면,  
-(버전)제약에 맞는 패키지를 찾거나 또는 찾지 않도록 inline-alias 하는 것이 가능합니다.
-더 많은 정보는 [see the aliases article](articles/aliases.md)에서 볼 수 있습니다.
+버전 제약에 맞는 패키지를 찾거나 또는 찾지 않도록 inline-alias 하는 것이 가능합니다.
+더 많은 정보는 [aliases](articles/aliases.md) 문서에서 볼 수 있습니다.
 
 #### Using private repositories
 #### 사설 저장소 사용하기
