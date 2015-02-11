@@ -4,14 +4,14 @@
 
 ## Concepts
 
-먼저 실제의 다양한 형태의 저장소를 살펴 보기에 앞서, 컴포저에 내장 된 기본 개념들을 이해할 필요가 있습니다.
+먼저 실제의 다양한 형태의 저장소를 살펴 보기에 앞서, composer에 내장 된 기본 개념들을 이해할 필요가 있습니다.
 
 
 ### Package
 
-컴포저는 의존성 관리자로 패키지들을 로컬 공간에 설치합니다. 원래 패키지라는 것은 단순히 무언가를 담고 있는 디렉토리를 의미합니다. 여기에서는 PHP 코드를 의미하게 되겠지만, 이론상으로는 그 어떠한 것도 담을 수 있습니다. 그리고 패키지는 이름과 버전이 포함된 설명을 수록하고 있습니다. 이 이름과 버전은 패키지를 식별하는데 사용됩니다.
+composer는 의존성 관리자로 패키지들을 로컬 공간에 설치합니다. 원래 패키지라는 것은 단순히 무언가를 담고 있는 디렉토리를 의미합니다. 여기에서는 PHP 코드를 의미하게 되겠지만, 이론상으로는 그 어떠한 것도 담을 수 있습니다. 그리고 패키지는 이름과 버전이 포함된 설명을 수록하고 있습니다. 이 이름과 버전은 패키지를 식별하는데 사용됩니다.
 
-사실, 컴포저는 내부적으로 패키지의 모든 버전들을 별도의 패키지로 간주합니다. 이러한 특징은 여러분이 컴포저를 사용하는 동안에는 상관 없지만, 패키지를 변경하려고 할 때는 매우 중요한 요소가 됩니다.
+사실, composer는 내부적으로 패키지의 모든 버전들을 별도의 패키지로 간주합니다. 이러한 특징은 여러분이 composer를 사용하는 동안에는 상관 없지만, 패키지를 변경하려고 할 때는 매우 중요한 요소가 됩니다.
 
 이름과 버전 외에도 유용한 메타데이터가 있습니다. source 정의는 대부분 설치에 관련된 정보들 입니다. 설치와 밀접하게 관련된 정보는 source 정의이고, 패키지 컨텐츠가 어디 있는지 서술하고 있습니다. 패키지 데이터는 패키지의 컨텐츠를 가리킵니다.
 그리고 dist 와 source 라는 두가지의 옵션이 있습니다. 
@@ -24,9 +24,9 @@
 
 ### Repository
 
-저장소란, 패키지 소스를 말하며, 패키지들/버전들 의 목록을 의미합니다. 컴포저는 프로젝트에서 필요로 하는 패키지를 찾기 위해 설정된 모든 저장소를 조사할 것입니다.
+저장소란, 패키지 소스를 말하며, 패키지들/버전들 의 목록을 의미합니다. composer는 프로젝트에서 필요로 하는 패키지를 찾기 위해 설정된 모든 저장소를 조사할 것입니다.
 
-컴포저가 기본적으로 확인하는 저장소는 Packagist 밖에 없습니다. `composer.json`를 통해서 저장소를 선언하면 프로젝트에 필요한 저장소를 더 추가할 수 있습니다.
+composer가 기본적으로 확인하는 저장소는 Packagist 밖에 없습니다. `composer.json`를 통해서 저장소를 선언하면 프로젝트에 필요한 저장소를 더 추가할 수 있습니다.
 
 repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키지에 정의된 저장소는 로드 되지 않을 것입니다. 그 이유에 대해서는 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
 
@@ -342,11 +342,9 @@ for this server will be overwritten. To change this behavior by setting the
 
 ### PEAR
 
-It is possible to install packages from any PEAR channel by using the `pear`
-repository. Composer will prefix all package names with `pear-{channelName}/` to
-avoid conflicts. All packages are also aliased with prefix `pear-{channelAlias}/`
+이것은 PEAR 저장소를 이용하여 특정 PEAR 채널에서 패키지들을 설치할 수 있게 해줍니다. composer는 접두사 `pear-{channelName}/`를 가진 모든 패키지의 충돌을 회피 할 것입니다. 모든 패키지는 `pear-{channelAlias}/`로 별명을 달아줄 수 있습니다.
 
-Example using `pear2.php.net`:
+예제 `pear2.php.net` 사용:
 
 ```json
 {
@@ -362,47 +360,41 @@ Example using `pear2.php.net`:
     }
 }
 ```
+이 경우에 채널의 단축 이름은 `pear2`입니다.  그래서 `PEAR2_HTTP_Request` 패키지 이름은 `pear-pear2/PEAR2_HTTP_Request`에서 온 것입니다.
 
-In this case the short name of the channel is `pear2`, so the
-`PEAR2_HTTP_Request` package name becomes `pear-pear2/PEAR2_HTTP_Request`.
-
-> **Note:** The `pear` repository requires doing quite a few requests per
-> package, so this may considerably slow down the installation process.
+> **참고:** `pear` 저장소는 패키지당 많은 요청을 필요로합니다.
+> 이때문에 설치과정을 상당히 느려지게 할 수 있습니다.
 
 #### Custom vendor alias
 
-It is possible to alias PEAR channel packages with a custom vendor name.
+PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
 
-Example:
+예제:
 
-Suppose you have a private PEAR repository and wish to use Composer to
-incorporate dependencies from a VCS. Your PEAR repository contains the
-following packages:
+만약 당신이 개인적인 PEAR 저장소가 있고, 그것을 VCS에 종속시키려면  composer를 이용하십시요. 당신의 PEAR 저장소는 이 패키지들을 포함합니다:
+
+
 
  * `BasePackage`
  * `IntermediatePackage`, which depends on `BasePackage`
  * `TopLevelPackage1` and `TopLevelPackage2` which both depend on `IntermediatePackage`
 
-Without a vendor alias, Composer will use the PEAR channel name as the
-vendor portion of the package name:
+공급자의 별명이 없으면, composer는 임의의 제공자 이름으로써 PEAR 채널명을 사용합니다:
 
  * `pear-pear.foobar.repo/BasePackage`
  * `pear-pear.foobar.repo/IntermediatePackage`
  * `pear-pear.foobar.repo/TopLevelPackage1`
  * `pear-pear.foobar.repo/TopLevelPackage2`
 
-Suppose at a later time you wish to migrate your PEAR packages to a
-Composer repository and naming scheme, and adopt the vendor name of `foobar`.
-Projects using your PEAR packages would not see the updated packages, since
-they have a different vendor name (`foobar/IntermediatePackage` vs
+향 후 당신의 PEAR패키지를 composer 저장소와 이름 구조로 이전할 계획이라면, 'foobar'제공자 이름을 채택합니다.
+프로젝트가 당신의 PEAR 패키지를 사용하면 업데이트 된 패키지들이 보이지 않을 것입니다. 것들은 다른 제공자 이름을 가지고 있기 때문입니다.(`foobar/IntermediatePackage` vs
 `pear-pear.foobar.repo/IntermediatePackage`).
 
-By specifying `vendor-alias` for the PEAR repository from the start, you can
-avoid this scenario and future-proof your package names.
+처음 PEAR 저장소가 시작할때 '제공자-별명'을 명기하면 당신은 이 문제를 피할 수 있고, 당신의 패키지 이름이 미래지향적이게 됩니다.
 
-To illustrate, the following example would get the `BasePackage`,
-`TopLevelPackage1`, and `TopLevelPackage2` packages from your PEAR repository
-and `IntermediatePackage` from a Github repository:
+설명하자면, 이 예제에서는 당신의 PEAR 저장소에서 `BasePackage`,
+`TopLevelPackage1`와 `TopLevelPackage2` 패키지들을 가져오고 `IntermediatePackage`는 Github저장소에서 가져옵니다:
+
 
 ```json
 {
@@ -426,16 +418,12 @@ and `IntermediatePackage` from a Github repository:
 
 ### Package
 
-If you want to use a project that does not support composer through any of the
-means above, you still can define the package yourself by using a `package`
-repository.
+만약 당신이 위에 나온 어떠한 방법으로도 composer를 지원하지 않는 프로젝트를 사용하여야 한다면, 직접 `package` 저장소를 사용하여 패키지를 정의할 수 있습니다.
 
-Basically, you define the same information that is included in the `composer`
-repository's `packages.json`, but only for a single package. Again, the
-minimum required fields are `name`, `version`, and either of `dist` or
-`source`.
+기본적으로, composer 저장소에 있는 `packages.json` 정보와 같이 정의해 줍니다. 하지만 단일 패키지에 대해서 만입니다. 또, 최소한으로 필요한 항목은  `name`, `version`, `dist` 혹은
+`source`입니다.
 
-Here is an example for the smarty template engine:
+여기 smarty 템플릿 엔진을 위한 예제가 있습니다:
 
 ```json
 {
@@ -466,72 +454,50 @@ Here is an example for the smarty template engine:
 }
 ```
 
-Typically you would leave the source part off, as you don't really need it.
+일반적으로 당신이 소스 부분에서 신경을 쓰고 싶지 않다면 이것을 필요로 하지 않을 것입니다.
 
-> **Note**: This repository type has a few limitations and should be avoided
-> whenever possible:
+> **주의**: 이 저장소 타입에는 몇가지 제약사항을 가지고 있으며, 이러한 사항들은 가급적 피해야 합니다:
 >
-> - Composer will not update the package unless you change the `version` field.
-> - Composer will not update the commit references, so if you use `master` as
->   reference you will have to delete the package to force an update, and will
->   have to deal with an unstable lock file.
+> - composer는 당신이 'version' 항목을 변경하지 않으면 패키지 업데이트 하지 않을것입니다.
+> - composer는 커밋된 사항을 업데이트 하지 않습니다. 만약 당신이 'master'를 참조할 경우 패키지를 삭제하여
+>   강제 업데이트를 하고, 불안정한 lock 파일에 대하여 대처 할 필요가 있습니다.
 
 ## Hosting your own
 
-While you will probably want to put your packages on packagist most of the time,
-there are some use cases for hosting your own repository.
+당신의 패키지를 packagist에 넣는데에 대부분의 시간을 쓰겠지만, 여기에 소유한 저장소에 호스팅할 수 있는 사례가 있습니다.
 
-* **Private company packages:** If you are part of a company that uses composer
-  for their packages internally, you might want to keep those packages private.
+* **Private company packages:** 만약 당신이 회사 내부적으로 composer를 사용하는 경우 당신의 개인 패키지를 유지 할 수 있습니다.
+* **Separate ecosystem:** 만약 당신의 프로젝트가 가진 생태계에서 그 패키지들이 훌륭한 PHP 커뮤니티에 의해서 재사용 될 수 없는 경우, 당신은 프로젝트를 packagist에 각각 저장하고 싶을지도 모릅니다. 한 예로 워드프레스 플러그인을 들 수 있겠습니다.
 
-* **Separate ecosystem:** If you have a project which has its own ecosystem,
-  and the packages aren't really reusable by the greater PHP community, you
-  might want to keep them separate to packagist. An example of this would be
-  wordpress plugins.
+당신이 소유한 패키지를 호스팅할 때, 포함된 `composer` 저장소 기본 유형을 최상의 성능을 위해 추천하는 바입니다.
 
-For hosting your own packages, a native `composer` type of repository is
-recommended, which provides the best performance.
+그곳엔 `composer` 저장소를 만들기 위한 몇가지 도구들을 제공하고 있습니다.
 
-There are a few tools that can help you create a `composer` repository.
 
 ### Packagist
 
-The underlying application used by packagist is open source. This means that you
-can just install your own copy of packagist, re-brand, and use it. It's really
-quite straight-forward to do. However due to its size and complexity, for most
-small and medium sized companies willing to track a few packages will be better
-off using Satis.
+packagist는 기본적으로 오픈소스 사용을 지원합니다. 이 뜻은 당신이 packagist의 복사본을 설치 할 수 있고,
+re-brand 할 수 있으며 이것을 사용할 수 있다는 뜻입니다. 이것을 정말 손쉽게 할 수 있습니다. 그러나 소-중 규모의 회사에서 몇가지 패키지들을
+추적하기 위해서는 그 규모나 복잡성으로 인하여 Satis를 사용하는 것이 나을 것 입니다.
 
-Packagist is a Symfony2 application, and it is [available on
-GitHub](https://github.com/composer/packagist). It uses composer internally and
-acts as a proxy between VCS repositories and the composer users. It holds a list
-of all VCS packages, periodically re-crawls them, and exposes them as a composer
-repository.
+packagist는 Symfony2와 [available on
+GitHub](https://github.com/composer/packagist)을 지원합니다. 그것은 composer 내부적으로 VCS 저장소와 composer 사용자간의 프록시 역활을 합니다. 이것은 모든 VCS 패키지들 리스트들을 보유하고, 주기적으로 정보를 갱신하며, composer 저장소에 나타냅니다.
 
-To set your own copy, simply follow the instructions from the [packagist
-github repository](https://github.com/composer/packagist).
+당신이 소유한 복사본을 설정하려면, 간단히 [packagist
+github repository](https://github.com/composer/packagist에 있는 지침을 따르면 됩니다.
 
 ### Satis
 
-Satis is a static `composer` repository generator. It is a bit like an ultra-
-lightweight, static file-based version of packagist.
+Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 초경량 정적 파일기반 버전이라고 볼 수 있겠습니다.
 
-You give it a `composer.json` containing repositories, typically VCS and
-package repository definitions. It will fetch all the packages that are
-`require`d and dump a `packages.json` that is your `composer` repository.
+당신은 `composer.json`을 포함하는 저장소를 비롯하여 보통 VCS와 패키지 저장소 경로를 제공 받을 수 있습니다. 이것은 모든 패키지의 `required`와 `packages.json`의 덤프를 당신의 `composer` 저장소로 가져옵니다.
 
-Check [the satis GitHub repository](https://github.com/composer/satis) and
-the [Satis article](articles/handling-private-packages-with-satis.md) for more
-information.
+더 자세한 정보를 얻기 원하시면 [the satis GitHub repository](https://github.com/composer/satis) 혹은
+the [Satis article](articles/handling-private-packages-with-satis.md)에 방문하십시오.
 
 ### Artifact
 
-There are some cases, when there is no ability to have one of the previously
-mentioned repository types online, even the VCS one. Typical example could be
-cross-organisation library exchange through built artifacts. Of course, most
-of the times they are private. To simplify maintenance, one can simply use a
-repository of type `artifact` with a folder containing ZIP archives of those
-private packages:
+어떠한 경우에는, 예전에 언급된 온라인 타입의 저장소 혹은 VCS 하나도 소유할 능력이 없을때가 있습니다. 일반적인 예로 artifacts를 구축하여 조직간의 라이브러리 교환을 하려고 할때 입니다. 물론, 대부분 개인적으로 프로젝트를 수행하겠지만요. 유지 보수를 단순화 하기 위해서 개인적인 패키지 폴더를 하나의 간단한 ZIP 압축파일로 `artifact` 저장소 타입을 사용 할 수 있습니다:
 
 ```json
 {
@@ -549,7 +515,7 @@ private packages:
 }
 ```
 
-Each zip artifact is just a ZIP archive with `composer.json` in root folder:
+각각의 zip 파일들은 `composer.json`의 root 폴더를 압축한 것입니다:
 
 ```sh
 unzip -l acme-corp-parser-10.3.5.zip
@@ -558,15 +524,13 @@ composer.json
 ...
 ```
 
-If there are two archives with different versions of a package, they are both
-imported. When an archive with a newer version is added in the artifact folder
-and you run `update`, that version will be imported as well and Composer will
-update to the latest version.
+만약 그곳에 두개의 다른버전의 압축파일이 존재한다면, 그 두개 모두 가져오게됩니다. artifact 폴더에 새버전의 압축파일이 추가되고 당신이 `update`를 실행하게 되면, 그 버전도 가져오고 composer는 최신 버전으로 업데이트 할 것입니다.
+
 
 ## Disabling Packagist
 
-You can disable the default Packagist repository by adding this to your
-`composer.json`:
+당신의 `composer.json`에 이를 추가하여 기본 Packagist 저장소를 사용하지 않도록 설정 할 수 있습니다:
+
 
 ```json
 {
