@@ -184,7 +184,7 @@ PHP stream context 옵션 이라면 어떤 것이든 설정할 수 있습니다.
 
 
 ### VCS
-### 버전컨트롤시스템(VCS)
+### VCS - 버전컨트롤시스템
 
 VCS stands for version control system. This includes versioning systems like
 git, svn or hg. Composer has a repository type for installing packages from
@@ -208,11 +208,11 @@ point to your custom branch. For version constraint naming conventions see
 
 사용사례가 많지는 않습니다. 가장 보편적인 사례는 써드파티 라이브러리를 포크(fork)하여 유지보수하는 경우입니다.
 당신의 프로젝트에 특정 라이브러리를 사용 중이고 그 라이브러리의 일부를 변경하고자 한다면, 
-당신은 프로젝트가 패치(patch)된 버전을 사용하게 되길 원할 것입니다.
+당신은 이 프로젝트가 패치(patch)된 버전을 사용하게 되길 원할 것입니다.
 그 라이브러리가 GitHub에 있다면(대부분 이 경우겠죠), 당신은 간단히 그것을 포크(fork)하여 변경사항을 푸시(push)할 수 있습니다.
 그리고 나서 프로젝트의 `composer.json`을 갱신합니다.
 당신이 해야할 일은 당신의 포크(fork)를 저장소로 추가하고 버전 제약이 당신의 별도 브랜치를 가르키도록 갱신하는 것 뿐입니다.
-버전 제약 명명 방식에 대한 더 많은 정보는 [Libraries](02-libraries.md)에서 볼 수 있습니다.
+버전 제약 명명 방식에 대한 더 많은 정보는 [Libraries - 라이브러리](02-libraries.md)에서 볼 수 있습니다.
 
 Example assuming you patched monolog to fix a bug in the `bugfix` branch:
 
@@ -248,7 +248,7 @@ custom repository has priority over packagist. If you want to rename the
 package, you should do so in the default (often master) branch and not in a
 feature branch, since the package name is taken from the default branch.
 
-오랜 기간 동안 포크(fork)를 유지하고 원본 패키지에서 완전히 이전하려고 진짜로 의도하지 않는 한~~stereolog/stereolog~~, 
+오랜 기간 동안 포크(fork)를 유지하고 원본 패키지에서 완전히 이전하려고 실제로 의도하지 않는 한~~stereolog/stereolog~~, 
 패키지의 이름을 변경해서는 안된다는 걸 유의해야 합니다. 
 별도의 저장소는 패키지스트(packagist)보다 우선권을 가지기 때문에 컴포저는 원본이 아닌 당신의 패키지를 정확하게 골라낼 것입니다.
 패키지 이름을 변경하길 원한다면, feature 브랜치가 아닌 기본(흔히 master) 브랜치에서 변경해야 합니다.
@@ -258,9 +258,9 @@ If other dependencies rely on the package you forked, it is possible to
 inline-alias it so that it matches a constraint that it otherwise would not.
 For more information [see the aliases article](articles/aliases.md).
 
-다른 의존성이 당신이 포크(fork)한 패키지에 의존한다면,  
-버전 제약에 맞는 패키지를 찾거나 또는 찾지 않도록 inline-alias 하는 것이 가능합니다.
-더 많은 정보는 [aliases](articles/aliases.md) 문서에서 볼 수 있습니다.
+다른 의존성이 당신이 포크(fork)한 패키지를 필요로 한다면,  
+버전 제약을 그것에 맞추거나 또는 그러지 않도록 인라인-앨리어스(inline-alias)하는 것이 가능합니다.
+더 많은 정보는 [앨리어스 - aliases](articles/aliases.md) 문서에서 볼 수 있습니다.
 
 #### Using private repositories
 #### 사설 저장소 사용하기
@@ -383,7 +383,7 @@ If you have a private Subversion repository you can save credentials in the
 http-basic section of your config (See [Schema](04-schema.md)):
 
 사설 Subversion 저장소를 가지고 있다면
-설정([Schema](04-schema.md) 참조) 내의 http-basic 섹션에서 자격증명(credential) 정보를 저장할 수 있습니다:
+설정([Schema - 구조](04-schema.md) 참조) 내의 http-basic 섹션에서 자격증명(credential) 정보를 저장할 수 있습니다:
 
 ```json
 {
