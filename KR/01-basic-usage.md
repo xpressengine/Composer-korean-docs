@@ -142,7 +142,7 @@ $log->addWarning('Foo');
 
 위의 경우 컴포저는 `Acme` 네임스페이스를 [PSR-4](http://www.php-fig.org/psr/psr-4/)에 따라서 오토로딩을 설정합니다. 오토로딩은 네임스페이스에 대한 디렉토리 매핑을 정의합니다. `src` 디렉토리는 `vendor` 디렉토리와 마찬가지로 프로젝트 루트 디렉토리에 존재합니다. 예를 들어 `src/Foo.php` 파일은 `Acme\Foo` 클래스를 의미합니다. 
 
-`autolod` 항목을 추가한 뒤에는 `dump-autoload` 명령어를 실행하여 `vendor/autoload.php` 파일을 재생성 해주어야 합니다. 
+`autoload` 항목을 추가한 뒤에는 `dump-autoload` 명령어를 실행하여 `vendor/autoload.php` 파일을 재생성 해주어야 합니다. 
 
 autoload.php 파일을 include 하게 되면 오토로더 인스턴스를 리턴 받을 수 있습니다. 이 리턴받은 인스턴스를 통해서 추가적인 네임스페이스를 지정할 수도 있습니다. 테스트가 필요한 경우 다음 예제처럼 유용하게 사용할 수 있습니다. 
 
