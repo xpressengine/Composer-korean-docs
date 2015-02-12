@@ -183,7 +183,6 @@ PHP stream context 옵션 이라면 어떤 것이든 설정할 수 있습니다.
 [컨택스트 옵션과 인수](http://php.net/manual/kr/context.php)에서 더 많은 정보를 얻을 수 있습니다.
 
 
-### VCS
 ### VCS - 버전컨트롤시스템
 
 VCS stands for version control system. This includes versioning systems like
@@ -258,8 +257,7 @@ If other dependencies rely on the package you forked, it is possible to
 inline-alias it so that it matches a constraint that it otherwise would not.
 For more information [see the aliases article](articles/aliases.md).
 
-다른 의존성이 당신이 포크(fork)한 패키지를 필요로 한다면,  
-버전 제약을 그것에 맞추거나 또는 그러지 않도록 인라인-앨리어스(inline-alias)하는 것이 가능합니다.
+다른 의존 패키지들 중에 하나가 당신이 포크(fork)한 패키지를 필요로 한다면, 버전 제약을 그것에 맞추거나 또는 그러지 않도록 인라인-앨리어스(inline-alias)하는 것이 가능합니다. 
 더 많은 정보는 [앨리어스 - aliases](articles/aliases.md) 문서에서 볼 수 있습니다.
 
 #### Using private repositories
@@ -334,6 +332,7 @@ GitHub 저장소에서 `no-api` 키를 `true`로 설정한다면
 그러나 `git` 드라이버를 직접 사용하는 것과는 달리,
 컴포저는 여전히 GitHub의 압축파일(zip)을 사용하려고 시도할 것입니다.
 ~~이게 무슨 소리요 컴포저 양반~~
+( no-api 해봤는데 계속 API 에서 zip 파일 가져오려고 시도하더라....)
 
 #### Subversion Options
 #### Subversion 옵션들
@@ -348,6 +347,7 @@ Subversion은 브랜치(branches)와 태그(tags) 개념을 내재하고 있지 
 컴포저는 기본적으로 코드가 `$url/trunk`, `$url/branches` 그리고 `$url/tags` 내에 존재한다고 간주합니다.
 당신의 저장소가 다른 디렉토리 구조를 가지고 있다면 해당 값들을 변경할 수 있습니다.
 예를 들어 첫자가 대문자인 디렉토리명을 사용한다면 ~~왜 이런 짓을~~ 다음과 같이 저장소를 설정할 수 있습니다:
+(굳이 Trunk 폴더가 따로 있다면..)
 
 ```json
 {
