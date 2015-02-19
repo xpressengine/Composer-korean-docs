@@ -20,15 +20,15 @@ This is a list of common pitfalls on using Composer, and how to avoid them.
 
 ## Package not found : 패키지를 찾을 수 없을 경우
 
-1. Double-check you **don't have typos** in your `composer.json` or repository branches and tag names.
+1. `composer.json`에 **오타가 있는지**, 혹은 저장소(repository)의 branch 나 tag 이름이 올바른지 꼼꼼히 확인(doucle-check)하세요. // Double-check you **don't have typos** in your `composer.json` or repository branches and tag names.
 
-2. Be sure to **set the right [minimum-stability](../04-schema.md#minimum-stability)**. To get started or be sure this is no issue, set `minimum-stability` to "dev".
+2. **[minimum-stability](../04-schema.md#minimum-stability)를 올바르게 설정했는지** 확인해야 합니다. 문제가 없이 시작하기 위해서는(교정필요), "dev"에 있는 `minimum-stability`를 설정하세요. // Be sure to **set the right [minimum-stability](../04-schema.md#minimum-stability)**. To get started or be sure this is no issue, set `minimum-stability` to "dev".
 
-3. Packages **not coming from [Packagist](https://packagist.org/)** should always be **defined in the root package** (the package depending on all vendors).
+3. **[Packagist](https://packagist.org/)에 없는** 페키지들은 항상 **루트페키지 안에서 정의되어야** 합니다.(해당 페키지는 모든 벤더에 의존됩니다.) // Packages **not coming from [Packagist](https://packagist.org/)** should always be **defined in the root package** (the package depending on all vendors).
 
-4. Use the **same vendor and package name** throughout all branches and tags of your repository, especially when maintaining a third party fork and using `replace`.
+4. 당신의 프로젝트 저장소의 tag 와 branch들 모두 **같은 벤더 이름과 패키지 이름**을 사용하세요, 특히 `replace`를 사용하거나 서드파티의 패키지를 포크해서 유지보수 할 경우도요.  // Use the **same vendor and package name** throughout all branches and tags of your repository, especially when maintaining a third party fork and using `replace`.
 
-5. If you are updating to a recently published version of a package, be aware that Packagist has a delay of up to 1 minute before new packages are visible to Composer.
+5. 만약 최근에 출시된(발표된, 나온) 버전의 패키지로 업데이트를 한다면, 패키지스트(Packagist)의 패키지를 컴포져에서 보이는 데 최대 1분에시간이 걸린다는 것을 유념하고 있어야 합니다. // If you are updating to a recently published version of a package, be aware that Packagist has a delay of up to 1 minute before new packages are visible to Composer.
 
 ## Package not found on travis-ci.org : travis-ci.org에서 패키지를 찾을 수 없는 경우
 
