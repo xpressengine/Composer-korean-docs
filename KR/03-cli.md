@@ -449,7 +449,7 @@ php composer.phar create-project doctrine/orm path 2.2.*
 
 ## diagnose - 진단하기
 
-만약 버그나 어떤 잘못된 부분을 찾은것 같다고 생각된다면 `diagnose`명령어를 통해서   여러 공통된 문제들에 대해서 자동으로 진단해 볼 수 있습니다.  
+만약 버그나 어떤 잘못된 부분을 찾은것 같다고 생각된다면 `diagnose`명령어를 통해서 여러 공통된 문제들에 대해서 자동으로 진단해 볼 수 있습니다.  
 
 
 ```sh
@@ -518,17 +518,9 @@ COMPOSER=composer-other.json php composer.phar install
 
 ### http_proxy or HTTP_PROXY - http 프록시
 
+만약 HTTP proxy를 통해서 컴포저를 사용하고 싶다면 `http_proxy` 또는  `HTTP_PROXY` 환경변수를 설정하여 프록시를 통한 URL 을 사용할 수 있습니다. 많은 OS에서 이 옵션을 지원하고 있습니다. 
 
-If you are using composer from behind an HTTP proxy, you can use the standard
-
-`http_proxy` or `HTTP_PROXY` env vars. Simply set it to the URL of your proxy.
-
-Many operating systems already set this variable for you.
-
-만약 HTTP proxy를 통해서 컴포저를 사용하고 싶다면 `http_proxy` 또는  `HTTP_PROXY` 환경변수를 설정하여 프록시를 통한 URL 을 사용할 수 있습니다. 이미 많은 OS에서 이 옵션을 지원하고 있습니다. 
-
-소문자로 표시된 `http_proxy` 또는 대소문자 두가지 모두 정의하는 것은 git이나 curl과 같이 `http_proxy` 소문자만 사용하는 툴들 때문이라도 권장 할만합니다.
-그렇지 않다면 git proxy에서 사용하여 정의한 것처럼 사용할 수도 있습니다.
+소문자로 표시된 `http_proxy` 또는 대소문자 두가지 모두 정의하는 것은 git이나 curl과 같이 `http_proxy` 소문자만 사용하는 툴들 때문이라도 권장 할만합니다. 그렇지 않다면 git proxy에서 사용하여 정의한 것처럼 사용할 수도 있습니다.
 
 `git config --global http.proxy <proxy url>`.
  
@@ -540,19 +532,13 @@ Many operating systems already set this variable for you.
 설정값은 도메인, IP 어드레스 또는 CIDR 형식의 IP 어드레스를 사용할 수 있습니다. 또한 포트에 따라서 필터링을 적용해 차단할 수도 있습니다.(예를 들어 `:80`과 같은)
 만약 전체 HTTP 요청에서 프록시 사용을 하지 않기를(무시하기를) 원한다면 `*`과 같이 설정할 수도 있습니다.  
 
-### HTTP_PROXY_REQUEST_FULLURI
+(역자주 : CIDR 이란 123.123.10.* 와 같이 표현될 수 있는 형식을 의미합니다.)
 
-If you use a proxy but it does not support the request_fulluri flag, then you should set this env var to `false` or `0` to prevent composer from setting the request_fulluri option.
+### HTTP_PROXY_REQUEST_FULLURI
 
 프록시를 사용하지만 request_fullurl flag를 지원하지 않는다면 이 환경변수를 `false` 또는 `0`으로 설정하여 컴포저가 request_fulluri 옵션을 설정하는 것을 방지할 수 있습니다. 
 
 ### COMPOSER_HOME 컴포저 홈 디렉토리
-
-The `COMPOSER_HOME` var allows you to change the composer home directory. This
-
-is a hidden, global (per-user on the machine) directory that is shared between
-
-all projects.
 
 `COMPOSER_HOME` 변수는 컴포져의 home 디렉토리를 변경할 수 있게 해줍니다. 이것은 숨겨져 있는데, 모든 프로젝트에서 공유 되는 전역(머신의 사용자) 디렉토리입니다.  
 
@@ -575,8 +561,6 @@ all projects.
  
 
 ### COMPOSER_PROCESS_TIMEOUT 컴포저 대기 시간 제한 
-
-This env var controls the time composer waits for commands (such as git commands) to finish executing. The default value is 300 seconds (5 minutes).
 
 이 환경변수는 예를 들어 (git 명령어와 같은) 명령어가 종료되기 까지의 대기 시간제한을 설정합니다. 기본값은 300초(5분)입니다.
 

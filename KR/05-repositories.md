@@ -1,70 +1,47 @@
-# 저장소
+# Repositories - 저장소
 
-This chapter will explain the concept of packages and repositories, what kinds
-of repositories are available, and how they work.
+이번 챕터에서는 패키지와 저장소에 대한 개념, 어떤 종류의 저장소가 사용가능한지 그리고 이것들이 어떻게 동작하는지 설명하겠습니다.
 
 ## Concepts
 
-Before we look at the different types of repositories that exist, we need to
-understand some of the basic concepts that composer is built on.
+먼저 실제의 다양한 형태의 저장소를 살펴 보기에 앞서, composer에 내장 된 기본 개념들을 이해할 필요가 있습니다.
+
 
 ### Package
 
-Composer is a dependency manager. It installs packages locally. A package is
-essentially just a directory containing something. In this case it is PHP
-code, but in theory it could be anything. And it contains a package
-description which has a name and a version. The name and the version are used
-to identify the package.
+composer는 의존성 관리자로 패키지들을 로컬 공간에 설치합니다. 원래 패키지라는 것은 단순히 무언가를 담고 있는 디렉토리를 의미합니다. 여기에서는 PHP 코드를 의미하게 되겠지만, 이론상으로는 그 어떠한 것도 담을 수 있습니다. 그리고 패키지는 이름과 버전이 포함된 설명을 수록하고 있습니다. 이 이름과 버전은 패키지를 식별하는데 사용됩니다.
 
-In fact, internally composer sees every version as a separate package. While
-this distinction does not matter when you are using composer, it's quite
-important when you want to change it.
+사실, composer는 내부적으로 패키지의 모든 버전들을 별도의 패키지로 간주합니다. 이러한 특징은 여러분이 composer를 사용하는 동안에는 상관 없지만, 패키지를 변경하려고 할 때는 매우 중요한 요소가 됩니다.
 
-In addition to the name and the version, there is useful metadata. The information
-most relevant for installation is the source definition, which describes where
-to get the package contents. The package data points to the contents of the
-package. And there are two options here: dist and source.
+이름과 버전 외에도 유용한 메타데이터가 있습니다. source 정의는 대부분 설치에 관련된 정보들 입니다. 설치와 밀접하게 관련된 정보는 source 정의이고, 패키지 컨텐츠가 어디 있는지 서술하고 있습니다. 패키지 데이터는 패키지의 컨텐츠를 가리킵니다.
+그리고 dist 와 source 라는 두가지의 옵션이 있습니다. 
 
-**Dist:** The dist is a packaged version of the package data. Usually a
-released version, usually a stable release.
+**Dist:** dist 는 패키지 데이터를 압축한 묶음 버전을 말합니다. 통상적으로 릴리즈 버전, stable 릴리즈 라고도 합니다.
 
-**Source:** The source is used for development. This will usually originate
-from a source code repository, such as git. You can fetch this when you want
-to modify the downloaded package.
+**Source:**  source 는 주로 개발용으로 사용됩니다. 보통 git과 같은 소스코드 저장소로부터 가져오게 되는데, 내려받은 패키지를 수정하고 싶을 때에는 fetch 할 수도 있습니다.
 
-Packages can supply either of these, or even both. Depending on certain
-factors, such as user-supplied options and stability of the package, one will
-be preferred.
+각각의 패키지는 이중 하나의 또는 두개의 옵션 모두를 지원할 수 있습니다. 사용자 제공 옵션(user-supplied options)이나 패키지 안정성과 같은 특정한 요소에 의해서 선호되는 방식으로 결정됩니다.
 
 ### Repository
 
-A repository is a package source. It's a list of packages/versions. Composer
-will look in all your repositories to find the packages your project requires.
+저장소란, 패키지 소스를 말하며, 패키지들/버전들 의 목록을 의미합니다. composer는 프로젝트에서 필요로 하는 패키지를 찾기 위해 설정된 모든 저장소를 조사할 것입니다.
 
-By default only the Packagist repository is registered in Composer. You can
-add more repositories to your project by declaring them in `composer.json`.
+composer가 기본적으로 확인하는 저장소는 Packagist 밖에 없습니다. `composer.json`를 통해서 저장소를 선언하면 프로젝트에 필요한 저장소를 더 추가할 수 있습니다.
 
-Repositories are only available to the root package and the repositories
-defined in your dependencies will not be loaded. Read the
-[FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) if you
-want to learn why.
+repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키지에 정의된 저장소는 로드 되지 않을 것입니다. 그 이유에 대해서는 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
 
 ## Types
 
 ### Composer
 
-The main repository type is the `composer` repository. It uses a single
-`packages.json` file that contains all of the package metadata.
+주요 저장소 타입은 `composer` 저장소를 일컫습니다. 이 저장소 타입은 전체 패키지 메타데이터를 담고있는 하나의 `packages.json` 파일을 사용합니다.
 
-This is also the repository type that packagist uses. To reference a
-`composer` repository, just supply the path before the `packages.json` file.
-In case of packagist, that file is located at `/packages.json`, so the URL of
-the repository would be `packagist.org`. For `example.org/packages.json` the
-repository URL would be `example.org`.
+이 타입은 또한, packagist가 사용하는 저장소 타입입니다. `composer` 저장소를 참조하기 위해서는, `packages.json` 파일 이전에 경로를 적용하기만 하면 됩니다. packagist의 경우, `/packages.json` 위치에 파일이 있고, 저장소 URL은 `packagist.org` 입니다.
+`example.org/packages.json`의 저장소 URL은 `example.org`가 될 것입니다.
 
 #### packages
 
-The only required field is `packages`. The JSON structure is as follows:
+필수 필드는 `packages` 밖에 없습니다. JSON 구조는 아래와 같습니다.
 
 ```json
 {
@@ -79,14 +56,13 @@ The only required field is `packages`. The JSON structure is as follows:
 }
 ```
 
-The `@composer.json` marker would be the contents of the `composer.json` from
-that package version including as a minimum:
+`@composer.json` 표시는  아래와 같은 최소한의 패키지 버전을 담고 있는 `composer.json`의 내용이 됩니다.
 
 * name
 * version
-* dist or source
+* dist 혹은 source
 
-Here is a minimal package definition:
+최소 패키지는 아래와 같습니다.
 
 ```json
 {
@@ -99,15 +75,14 @@ Here is a minimal package definition:
 }
 ```
 
-It may include any of the other fields specified in the [schema](04-schema.md).
+여기에 [schema](04-schema.md)에 있는 다른 필드 정보도 명시할 수도 있습니다.
 
 #### notify-batch
 
-The `notify-batch` field allows you to specify an URL that will be called
-every time a user installs a package. The URL can be either an absolute path
-(that will use the same domain as the repository) or a fully qualified URL.
+`notify-batch` 필드는 사용자가 패키지를 설치할 때 매번 호출하게 될 URL을 지정할 수 있습니다.
+URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)나 절대 표기 방식의 URL이 될 수 있습니다.
 
-An example value:
+사용예:
 
 ```json
 {
@@ -115,9 +90,7 @@ An example value:
 }
 ```
 
-For `example.org/packages.json` containing a `monolog/monolog` package, this
-would send a `POST` request to `example.org/downloads/` with following
-JSON request body:
+`monolog/monolog` 패키지가 들어있는 `example.org/packages.json`이 있다고 하면,  `example.org/downloads/`로 아래와 같은 JSON 요청 body를 담아 `POST` 요청을 하게 될 것입니다.
 
 ```json
 {
@@ -127,18 +100,16 @@ JSON request body:
 }
 ```
 
-The version field will contain the normalized representation of the version
-number.
+`version` 필드는 정규 표현 방식의 버전 넘버를 따릅니다.
 
-This field is optional.
+이 필드는 선택사항 입니다.
 
 #### includes
 
-For larger repositories it is possible to split the `packages.json` into
-multiple files. The `includes` field allows you to reference these additional
-files.
+규모가 큰 저장소를 위해 `packages.json`을 여러개의 파일로 분리하는 기능을 제공합니다.
+`includes` 필드를 사용하면  참조할 파일을 추가할 수 있습니다.
 
-An example:
+예제:
 
 ```json
 {
@@ -156,23 +127,18 @@ An example:
 }
 ```
 
-The SHA-1 sum of the file allows it to be cached and only re-requested if the
-hash changed.
+파일의 `SHA-1 sum`은 캐시되어 있다가 해시가 변경될 경우에만 재요청 하게 됩니다.
 
-This field is optional. You probably don't need it for your own custom
-repository.
+이 필드는 선택사항 입니다. 별도로 구축한 저장소를 사용한다면 아마 필요하지 않을 것입니다.
 
-#### provider-includes and providers-url
+#### provider-includes 와 providers-url
 
-For very large repositories like packagist.org using the so-called provider
-files is the preferred method. The `provider-includes` field allows you to
-list a set of files that list package names provided by this repository. The
-hash should be a sha256 of the files in this case.
+`provider files`라고 부르는 방식은 `packagist.org`처럼 아주 큰 저장소를 사용하는 경우에 가장 선호되는 방법입니다.
+`provider-includes` 필드는 현재 저장소에서 제공하는 패키지 이름이 담긴 파일 정보를 나열할 수 있습니다.
 
-The `providers-url` describes how provider files are found on the server. It
-is an absolute path from the repository root.
+`providers-url` 필드는 서버에서 `provider files`를 찾는 방법을 제시합니다. 이 내용은 저장소 root에서 시작하는 절대 경로가 됩니다.
 
-An example:
+예제 :
 
 ```json
 {
@@ -188,8 +154,9 @@ An example:
 }
 ```
 
-Those files contain lists of package names and hashes to verify the file
-integrity, for example:
+여기에 나오는 파일들의 내용은 아래 예제 처럼, 패키지명과 파일 무결성 검증을 위한 해시를 나열하고 있습니다.
+
+예제 :
 
 ```json
 {
@@ -204,28 +171,29 @@ integrity, for example:
 }
 ```
 
-The file above declares that acme/foo and acme/bar can be found in this
-repository, by loading the file referenced by `providers-url`, replacing
-`%package%` by the package name and `%hash%` by the sha256 field. Those files
-themselves just contain package definitions as described [above](#packages).
+위 파일은 해당 저장소에서 `providers-url`을 조회한 파일을 참조하여, `%package%`는  패키지명으로, `%hash%`는 sha256 필드로 치환한 후,  acme/foo 와 acme/bar 를 찾을 수 있음을 선언하고 있습니다. 이파일들은 자체적으로 [위에서 설명](#packages)한 패키지 정의로 구성되어 있습니다.
 
-This field is optional. You probably don't need it for your own custom
-repository.
+이 필드는 선택사항 입니다. 별도로 구축한 저장소를 사용한다면 아마 필요하지 않을 것입니다.
 
 #### stream options
 
-The `packages.json` file is loaded using a PHP stream. You can set extra options
-on that stream using the `options` parameter. You can set any valid PHP stream
-context option. See [Context options and parameters](http://php.net/manual/en/context.php)
-for more information.
+`packages.json` 파일은 PHP stream을 통해 로드됩니다.
+stream에 추가 옵션을 설정하려면 `options` 파라미터를 사용합니다.
+PHP stream context 옵션 이라면 어떤 것이든 설정할 수 있습니다.
+[컨택스트 옵션과 인수](http://php.net/manual/kr/context.php)에서 더 많은 정보를 얻을 수 있습니다.
 
-### VCS
+
+### VCS - 버전컨트롤시스템
 
 VCS stands for version control system. This includes versioning systems like
 git, svn or hg. Composer has a repository type for installing packages from
 these systems.
 
+VCS는 버전컨트롤시스템을 의미합니다. 이는 git, svn 또는 hg와 같은 버전시스템들을 포함합니다.
+컴포저는 이 시스템들로부터 패키지를 설치하기 위한 저장소 타입을 가지고 있습니다.
+
 #### Loading a package from a VCS repository
+#### VCS 저장소에서 패키지 불러오기
 
 There are a few use cases for this. The most common one is maintaining your
 own fork of a third party library. If you are using a certain library for your
@@ -237,7 +205,18 @@ to do is add your fork as a repository and update the version constraint to
 point to your custom branch. For version constraint naming conventions see
 [Libraries](02-libraries.md) for more information.
 
+사용사례가 많지는 않습니다. 가장 보편적인 사례는 써드파티 라이브러리를 포크(fork)하여 유지보수하는 경우입니다.
+당신의 프로젝트에 특정 라이브러리를 사용 중이고 그 라이브러리의 일부를 변경하고자 한다면, 
+당신은 이 프로젝트가 패치(patch)된 버전을 사용하게 되길 원할 것입니다.
+그 라이브러리가 GitHub에 있다면(대부분 이 경우겠죠), 당신은 간단히 그것을 포크(fork)하여 변경사항을 푸시(push)할 수 있습니다.
+그리고 나서 프로젝트의 `composer.json`을 갱신합니다.
+당신이 해야할 일은 당신의 포크(fork)를 저장소로 추가하고 버전 제약이 당신의 별도 브랜치를 가르키도록 갱신하는 것 뿐입니다.
+버전 제약 명명 방식에 대한 더 많은 정보는 [Libraries - 라이브러리](02-libraries.md)에서 볼 수 있습니다.
+
 Example assuming you patched monolog to fix a bug in the `bugfix` branch:
+
+다음 예시는 버그를 수정하기 위해 `bugfix` 브랜치에서 monolog를 패치했다고 간주합니다:
+~~보끼아노 대장님 밀어주기~~
 
 ```json
 {
@@ -253,8 +232,13 @@ Example assuming you patched monolog to fix a bug in the `bugfix` branch:
 }
 ```
 
+~~이고르는 모노로그를 포크한 적도 없음~~ ~~낚시왕~~
+
 When you run `php composer.phar update`, you should get your modified version
 of `monolog/monolog` instead of the one from packagist.
+
+`php composer.phar update`를 실행하면, 패키지스트(packagist)의 `monolog/monolog` 대신에 
+당신이 수정한 버전을 가져오게 됩니다.
 
 Note that you should not rename the package unless you really intend to fork
 it in the long term, and completely move away from the original package.
@@ -263,14 +247,26 @@ custom repository has priority over packagist. If you want to rename the
 package, you should do so in the default (often master) branch and not in a
 feature branch, since the package name is taken from the default branch.
 
+오랜 기간 동안 포크(fork)를 유지하고 원본 패키지에서 완전히 이전하려고 실제로 의도하지 않는 한~~stereolog/stereolog~~, 
+패키지의 이름을 변경해서는 안된다는 걸 유의해야 합니다. 
+별도의 저장소는 패키지스트(packagist)보다 우선권을 가지기 때문에 컴포저는 원본이 아닌 당신의 패키지를 정확하게 골라낼 것입니다.
+패키지 이름을 변경하길 원한다면, feature 브랜치가 아닌 기본(흔히 master) 브랜치에서 변경해야 합니다.
+패키지 이름은 기본 브랜치에서 가져오기 때문입니다.
+
 If other dependencies rely on the package you forked, it is possible to
 inline-alias it so that it matches a constraint that it otherwise would not.
 For more information [see the aliases article](articles/aliases.md).
 
+다른 의존 패키지들 중에 하나가 당신이 포크(fork)한 패키지를 필요로 한다면, 버전 제약을 그것에 맞추거나 또는 그러지 않도록 인라인-앨리어스(inline-alias)하는 것이 가능합니다. 
+더 많은 정보는 [앨리어스 - aliases](articles/aliases.md) 문서에서 볼 수 있습니다.
+
 #### Using private repositories
+#### 사설 저장소 사용하기
 
 Exactly the same solution allows you to work with your private repositories at
 GitHub and BitBucket:
+
+공용 저장소와 완전히 동일한 방식으로 GitHub과 BitBucket의 사설 저장소를 사용하는 것이 가능합니다.
 
 ```json
 {
@@ -288,10 +284,16 @@ GitHub and BitBucket:
 
 The only requirement is the installation of SSH keys for a git client.
 
+필요한 건 git 클라이언트를 위한 SSH 키를 설치하는 것 뿐입니다. ~~말은 쉽지~~
+
 #### Git alternatives
+#### Git 대신 사용가능한 것들
 
 Git is not the only version control system supported by the VCS repository.
 The following are supported:
+
+Git은 VCS 저장소로써 지원되는 유일한 버전컨트롤시스템이 아닙니다.
+다음과 같은 저장소들이 지원되고 있습니다:
 
 * **Git:** [git-scm.com](http://git-scm.com)
 * **Subversion:** [subversion.apache.org](http://subversion.apache.org)
@@ -303,6 +305,12 @@ support for GitHub and BitBucket that use the APIs provided by these sites, to
 fetch the packages without having to install the version control system. The
 VCS repository provides `dist`s for them that fetch the packages as zips.
 
+이들 시스템에서 패키지를 가져오기 위해서는 각각에 해당하는 클라이언트가 설치되어 있어야 합니다.
+그건 좀 불편할 수도 있지요.
+이러한 이유로 GitHub과 BitBucket에 대해서는 해당 사이트에서 제공되는 API를 사용하도록 별도로~~스페셜~~ 지원하여,
+버전컨트롤시스템을 설치할 필요 없이 패키지를 가져올 수 있습니다. 
+이 VCS 저장소들은 패키지를 압축파일(zip)으로 가져갈 수 있도록 `dist`를 제공합니다.
+
 * **GitHub:** [github.com](https://github.com) (Git)
 * **BitBucket:** [bitbucket.org](https://bitbucket.org) (Git and Mercurial)
 
@@ -310,18 +318,36 @@ The VCS driver to be used is detected automatically based on the URL. However,
 should you need to specify one for whatever reason, you can use `git`, `svn` or
 `hg` as the repository type instead of `vcs`.
 
+사용될 VCS 드라이버는 URL에 기반하여 자동으로 선택됩니다.
+하지만 어떤 이유가 있어서 특정 드라이버를 명시할 필요가 있다면,
+저장소 타입으로 `vcs` 대신 `git`, `svn` 또는 `hg`를 사용할 수 있습니다.
+
 If you set the `no-api` key to `true` on a github repository it will clone the
 repository as it would with any other git repository instead of using the
 GitHub API. But unlike using the `git` driver directly, composer will still
 attempt to use github's zip files.
 
+GitHub 저장소에서 `no-api` 키를 `true`로 설정한다면
+컴포저는 GitHub API를 사용하지 않고 다른 git 저장소와 마찬가지로 저장소를 복제(clone)할 것입니다.
+그러나 `git` 드라이버를 직접 사용하는 것과는 달리,
+컴포저는 여전히 GitHub의 압축파일(zip)을 사용하려고 시도할 것입니다.
+~~이게 무슨 소리요 컴포저 양반~~
+( no-api 해봤는데 계속 API 에서 zip 파일 가져오려고 시도하더라....)
+
 #### Subversion Options
+#### Subversion 옵션들
 
 Since Subversion has no native concept of branches and tags, Composer assumes
 by default that code is located in `$url/trunk`, `$url/branches` and
 `$url/tags`. If your repository has a different layout you can change those
 values. For example if you used capitalized names you could configure the
 repository like this:
+
+Subversion은 브랜치(branches)와 태그(tags) 개념을 내재하고 있지 않기 때문에,
+컴포저는 기본적으로 코드가 `$url/trunk`, `$url/branches` 그리고 `$url/tags` 내에 존재한다고 간주합니다.
+당신의 저장소가 다른 디렉토리 구조를 가지고 있다면 해당 값들을 변경할 수 있습니다.
+예를 들어 첫자가 대문자인 디렉토리명을 사용한다면 ~~왜 이런 짓을~~ 다음과 같이 저장소를 설정할 수 있습니다:
+(굳이 Trunk 폴더가 따로 있다면..)
 
 ```json
 {
@@ -340,13 +366,24 @@ repository like this:
 If you have no branches or tags directory you can disable them entirely by
 setting the `branches-path` or `tags-path` to `false`.
 
+branches 또는 tags 디렉토리를 가지고 있지 않다면
+`branches-path` 또는 `tags-path` 항목을 `false`로 설정하여 완전히 사용불가능하도록 할 수 있습니다.
+
 If the package is in a sub-directory, e.g. `/trunk/foo/bar/composer.json` and
 `/tags/1.0/foo/bar/composer.json`, then you can make composer access it by
 setting the `"package-path"` option to the sub-directory, in this example it
 would be `"package-path": "foo/bar/"`.
 
+패키지가 예를 들어
+`/trunk/foo/bar/composer.json`과 `/tags/1.0/foo/bar/composer.json`처럼 서브디렉토리 내에 존재한다면,
+`"package-path"` 옵션을 설정함으로써 컴포저가 해당 서브디렉토리에 접근하도록 만들 수 있습니다.
+이번 예의 경우 `"package-path": "foo/bar/"`이 될 것입니다.
+
 If you have a private Subversion repository you can save credentials in the
 http-basic section of your config (See [Schema](04-schema.md)):
+
+사설 Subversion 저장소를 가지고 있다면
+설정([Schema - 구조](04-schema.md) 참조) 내의 http-basic 섹션에서 자격증명(credential) 정보를 저장할 수 있습니다:
 
 ```json
 {
@@ -364,6 +401,10 @@ credentials will be saved for the current user and existing saved credentials
 for this server will be overwritten. To change this behavior by setting the
 `"svn-cache-credentials"` option in your repository configuration:
 
+Subversion 클라이언트가 기본적으로 자격증명(credential)을 저장하도록 설정되어 있다면
+이 자격증명(credential) 정보는 현재 사용자로 저장될 것이고 기존에 저장된 자격증명(credential) 정보는 덮어쓰여질 것입니다. 
+저장소 설정에서 `"svn-cache-credentials"` 옵션을 설정함으로써 이러한 행동을 변경할 수 있습니다:
+
 ```json
 {
     "repositories": [
@@ -376,13 +417,13 @@ for this server will be overwritten. To change this behavior by setting the
 }
 ```
 
+~~쓰지 마~~
+
 ### PEAR
 
-It is possible to install packages from any PEAR channel by using the `pear`
-repository. Composer will prefix all package names with `pear-{channelName}/` to
-avoid conflicts. All packages are also aliased with prefix `pear-{channelAlias}/`
+이것은 PEAR 저장소를 이용하여 특정 PEAR 채널에서 패키지들을 설치할 수 있게 해줍니다. composer는 접두사 `pear-{channelName}/`를 가진 모든 패키지의 충돌을 회피 할 것입니다. 모든 패키지는 `pear-{channelAlias}/`로 별명을 달아줄 수 있습니다.
 
-Example using `pear2.php.net`:
+예제 `pear2.php.net` 사용:
 
 ```json
 {
@@ -398,47 +439,41 @@ Example using `pear2.php.net`:
     }
 }
 ```
+이 경우에 채널의 단축 이름은 `pear2`입니다.  그래서 `PEAR2_HTTP_Request` 패키지 이름은 `pear-pear2/PEAR2_HTTP_Request`에서 온 것입니다.
 
-In this case the short name of the channel is `pear2`, so the
-`PEAR2_HTTP_Request` package name becomes `pear-pear2/PEAR2_HTTP_Request`.
-
-> **Note:** The `pear` repository requires doing quite a few requests per
-> package, so this may considerably slow down the installation process.
+> **참고:** `pear` 저장소는 패키지당 많은 요청을 필요로합니다.
+> 이때문에 설치과정을 상당히 느려지게 할 수 있습니다.
 
 #### Custom vendor alias
 
-It is possible to alias PEAR channel packages with a custom vendor name.
+PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
 
-Example:
+예제:
 
-Suppose you have a private PEAR repository and wish to use Composer to
-incorporate dependencies from a VCS. Your PEAR repository contains the
-following packages:
+만약 당신이 개인적인 PEAR 저장소가 있고, 그것을 VCS에 종속시키려면  composer를 이용하십시요. 당신의 PEAR 저장소는 이 패키지들을 포함합니다:
+
+
 
  * `BasePackage`
  * `IntermediatePackage`, which depends on `BasePackage`
  * `TopLevelPackage1` and `TopLevelPackage2` which both depend on `IntermediatePackage`
 
-Without a vendor alias, Composer will use the PEAR channel name as the
-vendor portion of the package name:
+공급자의 별명이 없으면, composer는 임의의 제공자 이름으로써 PEAR 채널명을 사용합니다:
 
  * `pear-pear.foobar.repo/BasePackage`
  * `pear-pear.foobar.repo/IntermediatePackage`
  * `pear-pear.foobar.repo/TopLevelPackage1`
  * `pear-pear.foobar.repo/TopLevelPackage2`
 
-Suppose at a later time you wish to migrate your PEAR packages to a
-Composer repository and naming scheme, and adopt the vendor name of `foobar`.
-Projects using your PEAR packages would not see the updated packages, since
-they have a different vendor name (`foobar/IntermediatePackage` vs
+향 후 당신의 PEAR패키지를 composer 저장소와 이름 구조로 이전할 계획이라면, 'foobar'제공자 이름을 채택합니다.
+프로젝트가 당신의 PEAR 패키지를 사용하면 업데이트 된 패키지들이 보이지 않을 것입니다. 것들은 다른 제공자 이름을 가지고 있기 때문입니다.(`foobar/IntermediatePackage` vs
 `pear-pear.foobar.repo/IntermediatePackage`).
 
-By specifying `vendor-alias` for the PEAR repository from the start, you can
-avoid this scenario and future-proof your package names.
+처음 PEAR 저장소가 시작할때 '제공자-별명'을 명기하면 당신은 이 문제를 피할 수 있고, 당신의 패키지 이름이 미래지향적이게 됩니다.
 
-To illustrate, the following example would get the `BasePackage`,
-`TopLevelPackage1`, and `TopLevelPackage2` packages from your PEAR repository
-and `IntermediatePackage` from a Github repository:
+설명하자면, 이 예제에서는 당신의 PEAR 저장소에서 `BasePackage`,
+`TopLevelPackage1`와 `TopLevelPackage2` 패키지들을 가져오고 `IntermediatePackage`는 Github저장소에서 가져옵니다:
+
 
 ```json
 {
@@ -462,16 +497,12 @@ and `IntermediatePackage` from a Github repository:
 
 ### Package
 
-If you want to use a project that does not support composer through any of the
-means above, you still can define the package yourself by using a `package`
-repository.
+만약 당신이 위에 나온 어떠한 방법으로도 composer를 지원하지 않는 프로젝트를 사용하여야 한다면, 직접 `package` 저장소를 사용하여 패키지를 정의할 수 있습니다.
 
-Basically, you define the same information that is included in the `composer`
-repository's `packages.json`, but only for a single package. Again, the
-minimum required fields are `name`, `version`, and either of `dist` or
-`source`.
+기본적으로, composer 저장소에 있는 `packages.json` 정보와 같이 정의해 줍니다. 하지만 단일 패키지에 대해서 만입니다. 또, 최소한으로 필요한 항목은  `name`, `version`, `dist` 혹은
+`source`입니다.
 
-Here is an example for the smarty template engine:
+여기 smarty 템플릿 엔진을 위한 예제가 있습니다:
 
 ```json
 {
@@ -502,72 +533,50 @@ Here is an example for the smarty template engine:
 }
 ```
 
-Typically you would leave the source part off, as you don't really need it.
+일반적으로 당신이 소스 부분에서 신경을 쓰고 싶지 않다면 이것을 필요로 하지 않을 것입니다.
 
-> **Note**: This repository type has a few limitations and should be avoided
-> whenever possible:
+> **주의**: 이 저장소 타입에는 몇가지 제약사항을 가지고 있으며, 이러한 사항들은 가급적 피해야 합니다:
 >
-> - Composer will not update the package unless you change the `version` field.
-> - Composer will not update the commit references, so if you use `master` as
->   reference you will have to delete the package to force an update, and will
->   have to deal with an unstable lock file.
+> - composer는 당신이 'version' 항목을 변경하지 않으면 패키지 업데이트 하지 않을것입니다.
+> - composer는 커밋된 사항을 업데이트 하지 않습니다. 만약 당신이 'master'를 참조할 경우 패키지를 삭제하여
+>   강제 업데이트를 하고, 불안정한 lock 파일에 대하여 대처 할 필요가 있습니다.
 
 ## Hosting your own
 
-While you will probably want to put your packages on packagist most of the time,
-there are some use cases for hosting your own repository.
+당신의 패키지를 packagist에 넣는데에 대부분의 시간을 쓰겠지만, 여기에 소유한 저장소에 호스팅할 수 있는 사례가 있습니다.
 
-* **Private company packages:** If you are part of a company that uses composer
-  for their packages internally, you might want to keep those packages private.
+* **Private company packages:** 만약 당신이 회사 내부적으로 composer를 사용하는 경우 당신의 개인 패키지를 유지 할 수 있습니다.
+* **Separate ecosystem:** 만약 당신의 프로젝트가 가진 생태계에서 그 패키지들이 훌륭한 PHP 커뮤니티에 의해서 재사용 될 수 없는 경우, 당신은 프로젝트를 packagist에 각각 저장하고 싶을지도 모릅니다. 한 예로 워드프레스 플러그인을 들 수 있겠습니다.
 
-* **Separate ecosystem:** If you have a project which has its own ecosystem,
-  and the packages aren't really reusable by the greater PHP community, you
-  might want to keep them separate to packagist. An example of this would be
-  wordpress plugins.
+당신이 소유한 패키지를 호스팅할 때, 포함된 `composer` 저장소 기본 유형을 최상의 성능을 위해 추천하는 바입니다.
 
-For hosting your own packages, a native `composer` type of repository is
-recommended, which provides the best performance.
+그곳엔 `composer` 저장소를 만들기 위한 몇가지 도구들을 제공하고 있습니다.
 
-There are a few tools that can help you create a `composer` repository.
 
 ### Packagist
 
-The underlying application used by packagist is open source. This means that you
-can just install your own copy of packagist, re-brand, and use it. It's really
-quite straight-forward to do. However due to its size and complexity, for most
-small and medium sized companies willing to track a few packages will be better
-off using Satis.
+packagist는 기본적으로 오픈소스 사용을 지원합니다. 이 뜻은 당신이 packagist의 복사본을 설치 할 수 있고,
+re-brand 할 수 있으며 이것을 사용할 수 있다는 뜻입니다. 이것을 정말 손쉽게 할 수 있습니다. 그러나 소-중 규모의 회사에서 몇가지 패키지들을
+추적하기 위해서는 그 규모나 복잡성으로 인하여 Satis를 사용하는 것이 나을 것 입니다.
 
-Packagist is a Symfony2 application, and it is [available on
-GitHub](https://github.com/composer/packagist). It uses composer internally and
-acts as a proxy between VCS repositories and the composer users. It holds a list
-of all VCS packages, periodically re-crawls them, and exposes them as a composer
-repository.
+packagist는 Symfony2와 [available on
+GitHub](https://github.com/composer/packagist)을 지원합니다. 그것은 composer 내부적으로 VCS 저장소와 composer 사용자간의 프록시 역활을 합니다. 이것은 모든 VCS 패키지들 리스트들을 보유하고, 주기적으로 정보를 갱신하며, composer 저장소에 나타냅니다.
 
-To set your own copy, simply follow the instructions from the [packagist
-github repository](https://github.com/composer/packagist).
+당신이 소유한 복사본을 설정하려면, 간단히 [packagist
+github repository](https://github.com/composer/packagist에 있는 지침을 따르면 됩니다.
 
 ### Satis
 
-Satis is a static `composer` repository generator. It is a bit like an ultra-
-lightweight, static file-based version of packagist.
+Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 초경량 정적 파일기반 버전이라고 볼 수 있겠습니다.
 
-You give it a `composer.json` containing repositories, typically VCS and
-package repository definitions. It will fetch all the packages that are
-`require`d and dump a `packages.json` that is your `composer` repository.
+당신은 `composer.json`을 포함하는 저장소를 비롯하여 보통 VCS와 패키지 저장소 경로를 제공 받을 수 있습니다. 이것은 모든 패키지의 `required`와 `packages.json`의 덤프를 당신의 `composer` 저장소로 가져옵니다.
 
-Check [the satis GitHub repository](https://github.com/composer/satis) and
-the [Satis article](articles/handling-private-packages-with-satis.md) for more
-information.
+더 자세한 정보를 얻기 원하시면 [the satis GitHub repository](https://github.com/composer/satis) 혹은
+the [Satis article](articles/handling-private-packages-with-satis.md)에 방문하십시오.
 
 ### Artifact
 
-There are some cases, when there is no ability to have one of the previously
-mentioned repository types online, even the VCS one. Typical example could be
-cross-organisation library exchange through built artifacts. Of course, most
-of the times they are private. To simplify maintenance, one can simply use a
-repository of type `artifact` with a folder containing ZIP archives of those
-private packages:
+어떠한 경우에는, 예전에 언급된 온라인 타입의 저장소 혹은 VCS 하나도 소유할 능력이 없을때가 있습니다. 일반적인 예로 artifacts를 구축하여 조직간의 라이브러리 교환을 하려고 할때 입니다. 물론, 대부분 개인적으로 프로젝트를 수행하겠지만요. 유지 보수를 단순화 하기 위해서 개인적인 패키지 폴더를 하나의 간단한 ZIP 압축파일로 `artifact` 저장소 타입을 사용 할 수 있습니다:
 
 ```json
 {
@@ -585,7 +594,7 @@ private packages:
 }
 ```
 
-Each zip artifact is just a ZIP archive with `composer.json` in root folder:
+각각의 zip 파일들은 `composer.json`의 root 폴더를 압축한 것입니다:
 
 ```sh
 unzip -l acme-corp-parser-10.3.5.zip
@@ -594,15 +603,13 @@ composer.json
 ...
 ```
 
-If there are two archives with different versions of a package, they are both
-imported. When an archive with a newer version is added in the artifact folder
-and you run `update`, that version will be imported as well and Composer will
-update to the latest version.
+만약 그곳에 두개의 다른버전의 압축파일이 존재한다면, 그 두개 모두 가져오게됩니다. artifact 폴더에 새버전의 압축파일이 추가되고 당신이 `update`를 실행하게 되면, 그 버전도 가져오고 composer는 최신 버전으로 업데이트 할 것입니다.
+
 
 ## Disabling Packagist
 
-You can disable the default Packagist repository by adding this to your
-`composer.json`:
+당신의 `composer.json`에 이를 추가하여 기본 Packagist 저장소를 사용하지 않도록 설정 할 수 있습니다:
+
 
 ```json
 {
