@@ -42,9 +42,9 @@ This is a list of common pitfalls on using Composer, and how to avoid them.
 
 ## Need to override a package version : 패키지 버전을 덮어 씌우는 것이 필요할 경우 
 
-Let say your project depends on package A which in turn depends on a specific version of package B (say 0.1) and you need a different version of that package - version 0.11.
+예를 들면(let say) 당신의 프로젝트가 차래로 패키지 B의 특별한 버전을 의존하는(0.1 이라 하자.) 패키지 A에 의존하고 당신은 다른 버전의 패키지 B가 필요하다하면 - 버전 0.11  // Let say your project depends on package A which in turn depends on a specific version of package B (say 0.1) and you need a different version of that package - version 0.11.
 
-You can fix this by aliasing version 0.11 to 0.1:
+당신은 이름 바꾸기 기능을 이용하여 버전 0.11을 0.1로 고칠 수 있습니다. // You can fix this by aliasing version 0.11 to 0.1:
 
 composer.json:
 
@@ -56,61 +56,61 @@ composer.json:
     }
 }
 ```
-
-See [aliases](aliases.md) for more information.
+[aliases](aliases.md)에서 더 자세한 내용을 확인하세요. // See [aliases](aliases.md) for more information.
 
 ## Memory limit errors : 메모리 제한 오류의 경우
 
-If composer shows memory errors on some commands:
+만약 composer가 어떠한 명령어에서 메모리 에러를 보여준다면: // If composer shows memory errors on some commands:
 
 `PHP Fatal error:  Allowed memory size of XXXXXX bytes exhausted <...>`
 
-The PHP `memory_limit` should be increased.
+PHP의 `memory_limit` 부분을 올려주세요. // The PHP `memory_limit` should be increased.
 
+> **필기:** Composer에서 자체적으로 `memory_limit`를 `512M`만큼 올려줍니다.
+> 만약에 Composer를 사용하는 도중에 메모리 문제가 발생한다면, 부디  [문제 보고 만들기](https://github.com/composer/composer/issues)를 만들어주셔야 우리가 그 문제를 확인할 수 있습니다. 
 > **Note:** Composer internally increases the `memory_limit` to `512M`.
 > If you have memory issues when using composer, please consider [creating
 > an issue ticket](https://github.com/composer/composer/issues) so we can look into it.
 
-To get the current `memory_limit` value, run:
+현재 `memory_limit` 값을 얻기 위해서는, 아래와 같이 실행하세요: // To get the current `memory_limit` value, run:
 
 ```sh
 php -r "echo ini_get('memory_limit').PHP_EOL;"
 ```
 
-Try increasing the limit in your `php.ini` file (ex. `/etc/php5/cli/php.ini` for
-Debian-like systems):
+`php.ini` 파일을 수정하여 메모리 제한 값을 올리는 일을 하세요. (ex.  Debian계열의 시스템에서는 `/etc/php5/cli/php.ini` 입니다.): // Try increasing the limit in your `php.ini` file (ex. `/etc/php5/cli/php.ini` for Debian-like systems):
 
 ```ini
 ; Use -1 for unlimited or define an explicit value like 512M
 memory_limit = -1
 ```
 
-Or, you can increase the limit with a command-line argument:
+혹은 커맨드 라인 문법으로 제한을 올릴 수 있습니다: // Or, you can increase the limit with a command-line argument:
 
 ```sh
 php -d memory_limit=-1 composer.phar <...>
 ```
 
+
 ## "The system cannot find the path specified" (Windows) : 시스템이 명시된 경로를 찾을 수 없다고 하는 경우. (Windows만 해당.)
 
-1. Open regedit.
-2. Search for an `AutoRun` key inside `HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor`,
-   `HKEY_CURRENT_USER\Software\Microsoft\Command Processor`
-   or `HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Command Processor`.
-3. Check if it contains any path to non-existent file, if it's the case, just remove them.
+1. regedit을 실행합니다. (시작 -> 실행 : regedit 입력) // Open regedit.
+2. `HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor` 혹은 `HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Command Processor`안에 있는 `AutoRun`을 검색합니다. // Search for an `AutoRun` key inside `HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor`, `HKEY_CURRENT_USER\Software\Microsoft\Command Processor` or `HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Command Processor`.
+3. 만약 위의 것이 어떠한 경로에도 존재하지 않는 파일이라고 확인하고, 만약 그 경우라면 그냥 그것들을 삭제 하세요. // Check if it contains any path to non-existent file, if it's the case, just remove them.
 
-## API rate limit and OAuth tokens (API rate limit? 과 OAuth 토큰)
 
-Because of GitHub's rate limits on their API it can happen that Composer prompts for authentication asking your username and password so it can go ahead with its work.
+## API rate limit and OAuth tokens (API rate limit 과 OAuth 토큰)
 
-If you would prefer not to provide your GitHub credentials to Composer you can manually create a token using the following procedure:
+Github의 API에 대한 접근 횟수 제한 때문에 Composer가 인증을 위해 당신의 username(ID)와 passoword를 요구할 수 있습니다만 그대로 진행하시면 됩니다. // Because of GitHub's rate limits on their API it can happen that Composer prompts for authentication asking your username and password so it can go ahead with its work.
 
-1. [Create](https://github.com/settings/applications) an OAuth token on GitHub.
+만약에 Composer에서 당신의 Github 인증제공을 선호하지 않으시면 토큰을 이용하여 수동으로 인증하실 수 있습니다. 다음의 절차를 따라가세요. // If you would prefer not to provide your GitHub credentials to Composer you can manually create a token using the following procedure:
+
+1. GitHub에서 OAuth 토큰을 [생성](https://github.com/settings/applications)하세요. [여길](https://github.com/blog/1509-personal-api-tokens) 더 읽어보세요. // [Create](https://github.com/settings/applications) an OAuth token on GitHub.
 [Read more](https://github.com/blog/1509-personal-api-tokens) on this.
 
-2. Add it to the configuration running `composer config -g github-oauth.github.com <oauthtoken>`
+2. `composer config -g github-oauth.github.com <oauthtoken>`을 실행 해서 설정값에 OAuth 토큰을 추가하세요. // Add it to the configuration running `composer config -g github-oauth.github.com <oauthtoken>`
 
-Now Composer should install/update without asking for authentication.
+이제 Composer는 인증을 묻는 일 없이 설치와 업데이트가 진행 됩니다. // Now Composer should install/update without asking for authentication.
 
 ## proc_open(): fork failed errors - 포크 실패 에러
 If composer shows proc_open() fork failed on some commands:
