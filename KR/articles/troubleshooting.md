@@ -32,9 +32,11 @@ This is a list of common pitfalls on using Composer, and how to avoid them.
 
 ## Package not found on travis-ci.org : travis-ci.org에서 패키지를 찾을 수 없는 경우
 
-1. Check the ["Package not found"](#package-not-found) item above.
+1. 우선 위의 ["Package not found"](#package-not-found)의 항목을 확인하세요. // Check the ["Package not found"](#package-not-found) item above.
 
-2. If the package tested is a dependency of one of its dependencies (cyclic dependency), the problem might be that composer is not able to detect the version of the package properly. If it is a git clone it is generally alright and Composer will detect the version of the current branch, but travis does shallow clones so that process can fail when testing pull requests and feature branches in general.
+2. 만약 테스트 되어진 패키지가 해당 패키지의 의존분자 중 하나의 의존성일 경우(["순환 종속성"](http://en.wikipedia.org/wiki/Circular_dependency):서로가 서로를 의존하는 관계), 문제가 되는 것은 아마도 Composer가 패키지의 버전을 정확하게 찾아내지 못하게 되는 것입니다. 이것이 git clone이라면, 보통 올바르거나 Composer가 현재 버전을 잘 찾아낼 것이지만, travis는 얕은 복사를 하기 때문에 보통 pull request나 branch들을 구성하는 작업의 테스트를 진행할 경우 실패 할 수 있습니다. 
+    가장 좋은 방법은 당신이 COMPOSER_ROOT_VERSION라는 환경변수를 통해 버전을 정의하는 것입니다. 당신은 그것을 `dev-master`에서 설정할 수 있는데, 예를 들자면 루트 패키지의 버전을 `dev-master`로 정의할 수 있습니다. 
+    사용법 : `before_script: COMPOSER_ROOT_VERSION=dev-master composer install` Composer를 부르기 위한 변수를 보냅니다. // If the package tested is a dependency of one of its dependencies (cyclic dependency), the problem might be that composer is not able to detect the version of the package properly. If it is a git clone it is generally alright and Composer will detect the version of the current branch, but travis does shallow clones so that process can fail when testing pull requests and feature branches in general.
    The best solution is to define the version you are on via an environment variable called COMPOSER_ROOT_VERSION. You set it to `dev-master` for example to define the root package's version as `dev-master`.
    Use: `before_script: COMPOSER_ROOT_VERSION=dev-master composer install` to export the variable for the call to composer.
 
