@@ -113,11 +113,12 @@ Github의 API에 대한 접근 횟수 제한 때문에 Composer가 인증을 위
 이제 Composer는 인증을 묻는 일 없이 설치와 업데이트가 진행 됩니다. // Now Composer should install/update without asking for authentication.
 
 ## proc_open(): fork failed errors - 포크 실패 에러
-If composer shows proc_open() fork failed on some commands:
+
+ 만약 Composer가 다른 명령어를 사용 중 proc_open() fork failed을 보여줄 경우에는: // If composer shows proc_open() fork failed on some commands:
 
 `PHP Fatal error: Uncaught exception 'ErrorException' with message 'proc_open(): fork failed - Cannot allocate memory' in phar`
 
-This could be happening because the VPS runs out of memory and has no Swap space enabled.
+이 경우 VPS가 out of memony를 실행하면서 Swap 가능한 공간이 없기 때문에 발생할 수 있습니다. // This could be happening because the VPS runs out of memory and has no Swap space enabled.
 
 ```sh
 free -m
@@ -128,7 +129,7 @@ Mem: 2048 357 1690 0 0 237
 Swap: 0 0 0
 ```
 
-To enable the swap you can use for example:
+당신이 Swap (용량)을 사용 할 수 있도록 가능하게 하는 예제 입니다: // To enable the swap you can use for example:
 
 ```sh
 /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
