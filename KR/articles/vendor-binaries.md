@@ -31,12 +31,11 @@ Vendor binaries는 `composer.json`에 `bin` 항목을 추가하여 설정할 수
 패키지가 직접 지정하는 바이너리를 위해서는, 아무일도 일어나지 않습니다.
 
 
-## What happens when Composer is run on a composer.json that has dependencies with vendor binaries listed?
+## vendor binar가 설정된 composer.json 을 기반으로 컴포저가 구동될 때 어떤 일이 일어 나나요?
 
-Composer looks for the binaries defined in all of the dependencies. A
-symlink is created from each dependency's binaries to `vendor/bin`.
+컴포저는 모든 의존 패키지들에 정의 된 바이너리를 찾습니다. 그 후 `vendor/bin` 디렉토리에 각각의 의존 패키지들의 바이너리 에 연결되는 심볼릭 링크가 생성됩니다. 
 
-Say package `my-vendor/project-a` has binaries setup like this:
+`my-vendor/project-a` 패키지가 다음과 같은 바이너리를 가지고 있다고 해봅시다:
 
 ```json
 {
@@ -45,10 +44,10 @@ Say package `my-vendor/project-a` has binaries setup like this:
 }
 ```
 
-Running `composer install` for this `composer.json` will not do
-anything with `bin/project-a-bin`.
+이 `composer.json`을 기반으로 `composer install` 이 실행될 때에는 `bin/project-a-bin` 과 관련된 어떤 것도 싱행되지는 않을 것입니다. 
 
-Say project `my-vendor/project-b` has requirements setup like this:
+하지만 `my-vendor/project-b` 프로젝트가 다음과 같이 의존성을 가지고 있다고 해봅시다:
+
 
 ```json
 {
@@ -59,27 +58,21 @@ Say project `my-vendor/project-b` has requirements setup like this:
 }
 ```
 
-Running `composer install` for this `composer.json` will look at
-all of project-b's dependencies and install them to `vendor/bin`.
+이 `composer.json`을 기반으로 `composer install`이 실행 될 때에는 project-b의 의존성을 체크하고 `vendor/bin` 을 설치하게 됩니다. 
 
-In this case, Composer will make `vendor/my-vendor/project-a/bin/project-a-bin`
-available as `vendor/bin/project-a-bin`. On a Unix-like platform
-this is accomplished by creating a symlink.
+이 경우 컴포저는 `vendor/bin/project-a-bin`로 연결이 가능한 `vendor/my-vendor/project-a/bin/project-a-bin`를 생성합니다. 유닉스-like 플랫폼인 경우, 이 연결은 심폴릭 링크로 구성됩니다. 
 
 
 ## 윈도우와 .bat 확장자 파일의 경우는 어떻습니까?
 
-Packages managed entirely by Composer do not *need* to contain any
-`.bat` files for Windows compatibility. Composer handles installation
-of binaries in a special way when run in a Windows environment:
+패키지들은 컴포저에 의해서 전적으로 관리되며 윈도우에서의 호환성을 위해서 특별히 `.bat`확장자 파일을 *포함할 필요는 없습니다.* 컴포저는 윈도우 환경에서 구동되기 위해서 바이너리들의 설치를 특별한 방법으로 처리합니다. 
 
- * A `.bat` file is generated automatically to reference the binary
- * A Unix-style proxy file with the same name as the binary is generated
-   automatically (useful for Cygwin or Git Bash)
+ * 각 바이너리를 참조하기 위해서 `.bat` 파일이 자동으로 생성됩니다. 
+ * 바이너리와 동일한 이름을 가지는 유닉스 스타일의 프록시 파일이 생성됩니다. (Cygwin 또는 Git Bash 등에서 유용한)
+   
 
-Packages that need to support workflows that may not include Composer
-are welcome to maintain custom `.bat` files. In this case, the package
-should **not** list the `.bat` file as a binary as it is not needed.
+컴포저를 포함하지 않은 워크플로우를 지원해야 하는 패키지의 경우 커스텀 `.bat` 파일을 지원할 수도 있습니다. 
+이러한 경우 패키지는 바이너리의 표시로 `.bat` 파일을 지정하지 않아야 합니다. 
 
 
 ## vendor binaries를 vendor/bin 이외에 다른 곳에 설치가 가능한가요?
