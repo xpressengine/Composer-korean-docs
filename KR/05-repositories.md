@@ -539,9 +539,9 @@ Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 
 더 자세한 정보를 얻기 원하시면 [the satis GitHub repository](https://github.com/composer/satis) 혹은
 the [Satis article](articles/handling-private-packages-with-satis.md)에 방문하십시오.
 
-### Artifact
+### Artifact - 아티팩트
 
-어떠한 경우에는, 예전에 언급된 온라인 타입의 저장소 혹은 VCS 하나도 소유할 능력이 없을때가 있습니다. 일반적인 예로 artifacts를 구축하여 조직간의 라이브러리 교환을 하려고 할때 입니다. 물론, 대부분 개인적으로 프로젝트를 수행하겠지만요. 유지 보수를 단순화 하기 위해서 개인적인 패키지 폴더를 하나의 간단한 ZIP 압축파일로 `artifact` 저장소 타입을 사용 할 수 있습니다:
+어떤 특수한 경우에는, 앞서 언급된 온라인 타입의 저장소 혹은 VCS 하나라도 구성할 수 없을 때가 있습니다. 예를 들면 artifacts를 구축하여 조직간의 라이브러리 교환을 하려고 할 때 입니다. 물론, 대부분의 경우 비공개 저장소를 운영할 것입니다. 유지 보수를 단순화 하기 위해서 비공개 패키지 폴더를 하나의 간단한 ZIP 압축파일로 `artifact` 저장소 타입을 사용 할 수 있습니다:
 
 ```json
 {
@@ -571,9 +571,9 @@ composer.json
 만약 그곳에 두개의 다른버전의 압축파일이 존재한다면, 그 두개 모두 가져오게됩니다. artifact 폴더에 새버전의 압축파일이 추가되고 당신이 `update`를 실행하게 되면, 그 버전도 가져오고 composer는 최신 버전으로 업데이트 할 것입니다.
 
 
-## Disabling Packagist
+## Packagist 비활성화 하기
 
-당신의 `composer.json`에 이를 추가하여 기본 Packagist 저장소를 사용하지 않도록 설정 할 수 있습니다:
+`composer.json`에 기본 Packagist 저장소를 사용하지 않도록 설정 할 수 있습니다:
 
 
 ```json
