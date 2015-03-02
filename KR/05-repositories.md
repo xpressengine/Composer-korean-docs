@@ -506,38 +506,36 @@ PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
 > - composer는 커밋된 사항을 업데이트 하지 않습니다. 만약 당신이 'master'를 참조할 경우 패키지를 삭제하여
 >   강제 업데이트를 하고, 불안정한 lock 파일에 대하여 대처 할 필요가 있습니다.
 
-## Hosting your own
+## Hosting your own 나만의 호스팅 운영
 
-당신의 패키지를 packagist에 넣는데에 대부분의 시간을 쓰겠지만, 여기에 소유한 저장소에 호스팅할 수 있는 사례가 있습니다.
+대부분 여러분의 패키지를 패키지스트에 올리는데 집중하겠지만, 자신의 고유한 저장소를 호스팅할 수 있는 방법도 있습니다.
 
-* **Private company packages:** 만약 당신이 회사 내부적으로 composer를 사용하는 경우 당신의 개인 패키지를 유지 할 수 있습니다.
-* **Separate ecosystem:** 만약 당신의 프로젝트가 가진 생태계에서 그 패키지들이 훌륭한 PHP 커뮤니티에 의해서 재사용 될 수 없는 경우, 당신은 프로젝트를 packagist에 각각 저장하고 싶을지도 모릅니다. 한 예로 워드프레스 플러그인을 들 수 있겠습니다.
+* **Private company packages:** 만약 당신이 회사 내부적으로 composer를 사용하는 경우 여러분의 사설 패키지를 유지 할 수 있습니다.
+* **Separate ecosystem:** 만약 여러분의 프로젝트가 고유한 생태계를 가지고 있으며 그 패키지들이 PHP 커뮤니티에 의해서 재사용 될 수 없는 경우, 당신은 프로젝트를 패키지스트에 각각 따로 저장하고 싶을 수도 있습니다. 한 예로 워드프레스 플러그인과 같은 경우를 들 수 있겠습니다.
 
-당신이 소유한 패키지를 호스팅할 때, 포함된 `composer` 저장소 기본 유형을 최상의 성능을 위해 추천하는 바입니다.
+여러분의 고유한 패키지를 호스팅하는 경우, 최상의 성능을 위해서 저장소 타입은 `composer`으로 설정하는 것을 추천합니다. 
 
-그곳엔 `composer` 저장소를 만들기 위한 몇가지 도구들을 제공하고 있습니다.
+다음의 `composer` 저장소를 만들기 위한 몇가지 도구들을 제공하고 있습니다.
 
 
-### Packagist
+### Packagist - 패키지스트
 
-packagist는 기본적으로 오픈소스 사용을 지원합니다. 이 뜻은 당신이 packagist의 복사본을 설치 할 수 있고,
-re-brand 할 수 있으며 이것을 사용할 수 있다는 뜻입니다. 이것을 정말 손쉽게 할 수 있습니다. 그러나 소-중 규모의 회사에서 몇가지 패키지들을
-추적하기 위해서는 그 규모나 복잡성으로 인하여 Satis를 사용하는 것이 나을 것 입니다.
+패키지스트는 기본적으로 오픈소스입니다. 이 말은 여러분이 패키지스트의 복사본을 설치하여 새롭게 운영할 수 있으며 사용할 수 있다는 뜻입니다. 이것을 정말 손쉽게 할 수 있습니다. 그러나 소-중 규모의 회사에서 몇개의 패키지들을 제공하기 위해서는 그 규모나 복잡성으로 인하여 Satis를 사용하는 것이 더 나을 것 입니다.
 
-packagist는 Symfony2와 [available on
-GitHub](https://github.com/composer/packagist)을 지원합니다. 그것은 composer 내부적으로 VCS 저장소와 composer 사용자간의 프록시 역활을 합니다. 이것은 모든 VCS 패키지들 리스트들을 보유하고, 주기적으로 정보를 갱신하며, composer 저장소에 나타냅니다.
+패키지스트는 Symfony2 어플리케이션으로 [GitHub](https://github.com/composer/packagist)에서 확인할 수 있습니다. 패키지스트는 내부적으로 컴포저를 사용하며  VCS 저장소와 composer 사용자간의 프록시 역활을 수행 합니다. 이러한 역활은 모든 VCS 패키지들의 리스트들을 보유하고, 주기적으로 정보를 갱신하며, 컴포저 저장소를 나타나게 합니다.
 
-당신이 소유한 복사본을 설정하려면, 간단히 [packagist
-github repository](https://github.com/composer/packagist에 있는 지침을 따르면 됩니다.
+패키지스트를 따로 설정하고자 한다면  [packagist github repository](https://github.com/composer/packagist에 있는 지침을 따르면 됩니다.
 
 ### Satis
 
-Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 초경량 정적 파일기반 버전이라고 볼 수 있겠습니다.
+Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 초경량 정적 파일 기반 버전이라고 볼 수 있습니다.
 
-당신은 `composer.json`을 포함하는 저장소를 비롯하여 보통 VCS와 패키지 저장소 경로를 제공 받을 수 있습니다. 이것은 모든 패키지의 `required`와 `packages.json`의 덤프를 당신의 `composer` 저장소로 가져옵니다.
+여러분은 `composer.json`을 포함하는 저장소를 비롯하여 보통 VCS와 패키지 저장소 경로를 제공 받을 수 있습니다. 이것은 모든 패키지의 `required`와 `packages.json`의 정보를 여러분의 `composer` 저장소로 가져옵니다.
 
 더 자세한 정보를 얻기 원하시면 [the satis GitHub repository](https://github.com/composer/satis) 혹은
-the [Satis article](articles/handling-private-packages-with-satis.md)에 방문하십시오.
+[Satis article](articles/handling-private-packages-with-satis.md)에서 확인하실 수 있습니다.
+
+(번역주 : 사내 활용용도나 기타 사용의 목적으로 비공개 패키지 저장소를 운영해야 하는 경우에 satis 를 통해서 사설 packagist 를 운영하는 효과를 낼 수 있습니다. )
 
 ### Artifact - 아티팩트
 
