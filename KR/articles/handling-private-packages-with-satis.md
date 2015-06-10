@@ -1,7 +1,3 @@
-<!--
-    tagline: Host your own composer repository
--->
-
 # Handling private packages with Satis or Toran Proxy
 
 # Toran Proxy

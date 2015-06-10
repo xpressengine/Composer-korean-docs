@@ -1,4 +1,3 @@
-
 # HTTP basic authentication
 
 여러분의 [Satis or Toran Proxy](handling-private-packages-with-satis.md) 서버는 HTTP 기본인증을 사용하여 보안을 강화할 수 있습니다. 프로젝트가 해당 저장소에 접근을 허용하기 위해서 컴포저에 인증에 필요한 정보를 추가해야 합니다. 

@@ -1,7 +1,3 @@
-<!--
-    tagline: Modify and extend Composer's functionality
--->
-
 # Setting up and using plugins - 플러그인 설정및 사용법
 
 ## Synopsis - 시놉시스

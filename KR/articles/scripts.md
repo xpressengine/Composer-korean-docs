@@ -1,7 +1,3 @@
-<!--
-    tagline: Script are callbacks that are called before/after installing packages
--->
-
 # Scripts - 스크립트
 
 ## 스크립트(script)란?

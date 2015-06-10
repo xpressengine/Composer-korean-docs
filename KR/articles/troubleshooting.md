@@ -1,6 +1,3 @@
-<!--
-    tagline: Solving problems
--->
 # Troubleshooting - 문제 해결
 
 이 섹션은 컴포저를 사용하는 중에 나타날 수 있는 공통된 문제들을 어떻게 해결하는지에 대한 목록입니다.  
