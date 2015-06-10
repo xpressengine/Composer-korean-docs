@@ -1,0 +1,18 @@
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}" />
+
+    <script src="{{ '/js/prism.js' | prepend: site.baseurl }}"></script>
+
+    <link rel="stylesheet" href="{{ '/css/layout.css' | prepend: site.baseurl }}" />
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" >
+</head>
