@@ -4,9 +4,9 @@
 
 ## General - 일반적인 해결방법
 
-1. 누군가에게 질문하기 전에 일반적인 문제인지 확인하기위해 [`composer diagnose`](../03-cli.md#diagnose)를 실행하세요. (실행 후) 모든 항목이 체크 되었다면(오류가 있다고 나오지 않았다면) 다음 단계로 넘어가세요. 
+1. 누군가에게 질문하기 전에 일반적인 문제인지 확인하기위해 [`composer diagnose`](/Composer-korean-docs/doc/03-cli.md#diagnose)를 실행하세요. (실행 후) 모든 항목이 체크 되었다면(오류가 있다고 나오지 않았다면) 다음 단계로 넘어가세요.
 
-2. 컴포저를 사용하면서 어떠한 문제를 겪을 때에는 **최신버젼을 사용** 하길 권장합니다. 자세한 사항은 [self-update](../03-cli.md#self-update)에서 확인하세요. 
+2. 컴포저를 사용하면서 어떠한 문제를 겪을 때에는 **최신버젼을 사용** 하길 권장합니다. 자세한 사항은 [self-update](/Composer-korean-docs/doc/03-cli.md#self-update)에서 확인하세요.
 
 3. `curl -sS https://getcomposer.org/installer | php -- --check`라는 명령어를 통해서 인스톨러 체크를 실행하여 설치에 문제가 없는지 확인해야 합니다. 
 
@@ -18,7 +18,7 @@
 
 1. `composer.json`에 **오타가 있는지**, 혹은 저장소(repository)의 branch 나 tag 이름이 올바른지 꼼꼼히 확인하세요.
 
-2. **[minimum-stability](../04-schema.md#minimum-stability)를 올바르게 설정했는지** 확인해야 합니다. 문제가 발생하지 않기 위해서는, "dev"에 있는 `minimum-stability`를 설정하세요. 
+2. **[minimum-stability](/Composer-korean-docs/doc/04-schema.md#minimum-stability)를 올바르게 설정했는지** 확인해야 합니다. 문제가 발생하지 않기 위해서는, "dev"에 있는 `minimum-stability`를 설정하세요.
 
 3. **[Packagist](https://packagist.org/)에 존재하지 않는** 페키지들은 항상 **루트페키지 안에서 정의되어야** 합니다.(해당 페키지는 모든 벤더에 의존됩니다.) 
 
@@ -44,15 +44,16 @@
 
 composer.json:
 
-```json
+{% highlight json %}
 {
     "require": {
         "A": "0.2",
         "B": "0.11 as 0.1"
     }
 }
-```
-[aliases](aliases.md)에서 더 자세한 내용을 확인하세요. 
+{% endhighlight %}
+
+[aliases](/Composer-korean-docs/doc/articles/aliases.md)에서 더 자세한 내용을 확인하세요.
 
 ## Memory limit errors : 메모리 제한 오류의 경우
 
@@ -67,22 +68,22 @@ PHP의 `memory_limit` 부분을 올려주세요.
 
 현재 `memory_limit` 설정값을 확인하기 위해서는, 아래와 같이 실행하세요: 
 
-```sh
+{% highlight sh %}
 php -r "echo ini_get('memory_limit').PHP_EOL;"
-```
+{% endhighlight %}
 
 `php.ini` 파일을 수정하여 메모리 제한 값을 올리는 일을 하세요. (ex. Debian계열의 시스템에서는 `/etc/php5/cli/php.ini` 입니다.): 
 
-```ini
+{% highlight ini %}
 ; Use -1 for unlimited or define an explicit value like 512M
 memory_limit = -1
-```
+{% endhighlight %}
 
 혹은 커맨드 라인 문법으로 제한을 올릴 수 있습니다: 
 
-```sh
+{% highlight sh %}
 php -d memory_limit=-1 composer.phar <...>
-```
+{% endhighlight %}
 
 
 ## "The system cannot find the path specified" (Windows) : 시스템이 명시된 경로를 찾을 수 없다고 하는 경우. (Windows만 해당.)
@@ -92,7 +93,7 @@ php -d memory_limit=-1 composer.phar <...>
 3. 만약 위의 것이 어떠한 경로에도 존재하지 않는 파일이라고 확인하고, 만약 그 경우라면 그냥 그것들을 삭제 하세요. 
 
 
-## API rate limit and OAuth tokens (API rate limit 과 OAuth 토큰)
+## API rate limit and OAuth tokens (API rate limit 과 OAuth 토큰) {#api-rate-limit-and-oauth-tokens}
 
 Github의 API에 대한 접근 횟수 제한 때문에 컴포저가 인증을 위해 당신의 username(ID)와 passoword를 요구할 수 있습니다만 그대로 진행하시면 됩니다. 
 
@@ -112,19 +113,19 @@ Github의 API에 대한 접근 횟수 제한 때문에 컴포저가 인증을 �
 
 이 경우 VPS가 out of memony를 실행하면서 Swap 가능한 공간이 없기 때문에 발생할 수 있습니다. 
 
-```sh
+{% highlight sh %}
 free -m
 
 total used free shared buffers cached
 Mem: 2048 357 1690 0 0 237
 -/+ buffers/cache: 119 1928
 Swap: 0 0 0
-```
+{% endhighlight %}
 
 당신이 Swap (용량)을 사용 할 수 있도록 가능하게 하는 예제 입니다: 
 
-```sh
+{% highlight sh %}
 /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
 /sbin/mkswap /var/swap.1
 /sbin/swapon /var/swap.1
-```
+{% endhighlight %}

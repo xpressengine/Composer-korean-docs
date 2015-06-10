@@ -2,7 +2,7 @@
 
 ## 설치하기
 
-아직 컴포저를 설치하지 않았다면, [소개](00-intro.md) 챕터를 참고하시기 바랍니다. 
+아직 컴포저를 설치하지 않았다면, [소개](/Composer-korean-docs/doc/00-intro.md) 챕터를 참고하시기 바랍니다.
 
 ## `composer.json`: 프로젝트 셋업
 
@@ -13,13 +13,14 @@
 ### `require` key
 
 `composer.json`에서 처음으로 살펴볼 것은 매번 확인하게 되는 `require`키입니다. 이 키는 컴포저에게 프로젝트가 어떤 패키지들을 필요로 하는지 알려줍니다. 
-```json
+
+{% highlight json %}
 {
     "require": {
         "monolog/monolog": "1.0.*"
     }
 }
-```
+{% endhighlight %}
 
 보시는 바와 같이 `require` 는 **패키지 이름** (e.g. `monolog/monolog`)
 과 **패키지 버전** (e.g. `1.0.*`)의 맵핑 형태로 된 객체들로 표현됩니다.
@@ -30,7 +31,7 @@
 
 위에서 예시로든 `monolog/monolog`의 경우에는 벤더의 이름과 패키지 이름이 동일한 경우 입니다. 프로젝트가 하나만 존재하는 경우에는 이렇게 구성하는것이 권장됩니다.  또한 나중에 관련된 프로젝트를 동일한 이름에 더 추가할 수도 있습니다. 만약 라이브러리를 유지 보수한다면, 더 작은 부분들로 이루어 질 수 있도록 손쉽게 분리 할 수 있습니다. 
 
-### 패키지 버전
+### 패키지 버전 {#package-versions}
 
 이전 예제에서 monolog 의 `1.0.*` 버전을 필요로 하다고 설정했습니다. 이 의미는 어떠한 `1.0` 브랜치도 가능하다는 뜻입니다. 따라서 버전이 `1.0.0`이 될수도 `1.0.2` 또는 `1.0.20`이 될수도 있습니다.
 
@@ -61,15 +62,15 @@
 
 ### Stability 버전 안정성
 
-기본적으로 버전 표시의 고려대상으로은 안정화 버전(stable)만을 의미합니다. 만약 RC, 베타, 알파 또는 개발 버전과 같은 표현이 필요하다면 [안정성 표시기호](04-schema.md#package-links)를 참고하십시오. 패키지의 의존성을 표시하는데 이러한 안정성 표현이 필요하다면 [최소 안정성](04-schema.md#minimum-stability) 셋팅을 참고하십시오.
+기본적으로 버전 표시의 고려대상으로은 안정화 버전(stable)만을 의미합니다. 만약 RC, 베타, 알파 또는 개발 버전과 같은 표현이 필요하다면 [안정성 표시기호](/Composer-korean-docs/doc/04-schema.md#package-links)를 참고하십시오. 패키지의 의존성을 표시하는데 이러한 안정성 표현이 필요하다면 [최소 안정성](/Composer-korean-docs/doc/04-schema.md#minimum-stability) 셋팅을 참고하십시오.
 
 ## 의존 패키지 설치하기
 
 의존관계가 선언된 패키지들을 로컬 프로젝트로 다운받기 위해서는 다음과 같이 `composer.phar`의 `install` 명령어를 입력하면 됩니다.
 
-```sh
+{% highlight sh %}
 php composer.phar install
-```
+{% endhighlight %}
 
 이 명령어를 입력하면 `monolog/monolog` 패키지의 매칭 되는 가장 최신버전을 `vendor`디렉토리에 다운로드 받습니다. 
 `vendor` 디렉토리는 서드파티의 패키지들이 다운로드 되는 폴더를 의미합니다. 위에서 살펴본 monolog 경우에는 `vendor/monolog/monolog`에 다운로드 됩니다. 
@@ -92,19 +93,19 @@ php composer.phar install
 
 이 말은 어떤 새로운 의존성 패키지가 새롭게 업데이트 되더라도 자동으로 업데이트 할 수 없다는 것을 의미합니다. 새로운 버전으로 업데이트 받기 위해서는  `update` 명령어를 사용합니다. 그렇게 하면 버전에 알맞는(`composer.json` 파일에 맞는) 최신의 패키지를 업데이트 하고 lock 파일을 새롭게 생성하게 됩니다. 
 
-```sh
+{% highlight sh %}
 php composer.phar update
-```
+{% endhighlight %}
 > **주의:** 컴포저는 `composer.lock` 파일과 `composer.json` 파일의 정보가 동기화 되어 있지 않다면 `install`명령어 수행시 경고를 표시합니다. 
  
 만약 하나의 의존 패키지들을 설치하거나 업데이트 하고자 한다면 다음처럼 각각의 패키지들을 나열하여 실행할 수 있습니다. 
 
-```sh
+{% highlight sh %}
 php composer.phar update monolog/monolog [...]
-```
+{% endhighlight %}
 
 > **주의:** 라이브러리에는 lock 파일을 커밋하는 것이 불필요 합니다 .
-> 보다 자세한 사항은: [Libraries - Lock file](02-libraries.md#lock-file)을 참고하십시오.
+> 보다 자세한 사항은: [Libraries - Lock file](/Composer-korean-docs/doc/02-libraries.md#lock-file)을 참고하십시오.
 
 ## Packagist - 패키지스트
 
@@ -118,27 +119,27 @@ php composer.phar update monolog/monolog [...]
 
 컴포저는 라이브러리들에 대한 오토로딩 정보를 `vendor/autoload.php` 파일에 저장합니다. 이 파일을 include 함으로써 오도로딩을 손쉽게 적용할 수 있습니다. 
 
-```php
+{% highlight php %}
 require 'vendor/autoload.php';
-```
+{% endhighlight %}
 
 이렇게 함으로써 서드파티의 코드를를 사용하는 것을 아주 쉽게 만들어 줍니다. 예를 들어 : 작성하고 있는 프로젝트가 monolog 에 의존성을 가지고 있을 때 오토로딩을 사용하면 바로 해당 클래스를 사용할 수 있다는 것을 의미합니다. 
 
-```php
+{% highlight php %}
 $log = new Monolog\Logger('name');
 $log->pushHandler(new Monolog\Handler\StreamHandler('app.log', Monolog\Logger::WARNING));
 $log->addWarning('Foo');
-```
+{% endhighlight %}
 
 오토로딩의 설정은 `composer.json` 의 `autoload` 설정을 통해서도 할 수 있습니다. 
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-4": {"Acme\\": "src/"}
     }
 }
-```
+{% endhighlight %}
 
 위의 경우 컴포저는 `Acme` 네임스페이스를 [PSR-4](http://www.php-fig.org/psr/psr-4/)에 따라서 오토로딩을 설정합니다. 오토로딩은 네임스페이스에 대한 디렉토리 매핑을 정의합니다. `src` 디렉토리는 `vendor` 디렉토리와 마찬가지로 프로젝트 루트 디렉토리에 존재합니다. 예를 들어 `src/Foo.php` 파일은 `Acme\Foo` 클래스를 의미합니다. 
 
@@ -146,13 +147,13 @@ $log->addWarning('Foo');
 
 autoload.php 파일을 include 하게 되면 오토로더 인스턴스를 리턴 받을 수 있습니다. 이 리턴받은 인스턴스를 통해서 추가적인 네임스페이스를 지정할 수도 있습니다. 테스트가 필요한 경우 다음 예제처럼 유용하게 사용할 수 있습니다. 
 
-```php
+{% highlight php %}
 $loader = require 'vendor/autoload.php';
 $loader->add('Acme\\Test\\', __DIR__);
-```
+{% endhighlight %}
 
-PSR-4 오토로딩 이외에도 classmap 형태의 오토로딩도 지원합니다. 이 경우 PSR-4 형식에 맞지 않더라도 클래스를 오토로딩할 수 있습니다. 보다 자세한 정보는 [autoload reference](04-schema.md#autoload)을 참고하십시오. 
+PSR-4 오토로딩 이외에도 classmap 형태의 오토로딩도 지원합니다. 이 경우 PSR-4 형식에 맞지 않더라도 클래스를 오토로딩할 수 있습니다. 보다 자세한 정보는 [autoload reference](/Composer-korean-docs/doc/04-schema.md#autoload)을 참고하십시오.
 
 > **주의:** 컴포저는 자체적인 오토로더를 제공합니다. 컴포저의 자체적인 오토로더를 사용하지 않는 경우 연관된 배열을 리턴하게끔 구성된 `vendor/composer/autoload_*.php` 파일들을 include 하여 고유한 오토로더를 구성할 수 도 있습니다. 
 
-&larr; [Intro](00-intro.md)  |  [Libraries](02-libraries.md) &rarr;
+&larr; [Intro](/Composer-korean-docs/doc/00-intro.md)  |  [Libraries](/Composer-korean-docs/doc/02-libraries.md) &rarr;

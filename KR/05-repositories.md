@@ -28,7 +28,7 @@ composer는 의존성 관리자로 패키지들을 로컬 공간에 설치합니
 
 composer가 기본적으로 확인하는 저장소는 Packagist 밖에 없습니다. `composer.json`를 통해서 저장소를 선언하면 프로젝트에 필요한 저장소를 더 추가할 수 있습니다.
 
-repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키지에 정의된 저장소는 로드 되지 않을 것입니다. 그 이유에 대해서는 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
+repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키지에 정의된 저장소는 로드 되지 않을 것입니다. 그 이유에 대해서는 [FAQ entry](/Composer-korean-docs/doc/faqs/why-can't-composer-load-repositories-recursively.md) 문서를 읽어 보시기 바랍니다.
 
 ## Types
 
@@ -39,11 +39,11 @@ repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키�
 이 타입은 또한, packagist가 사용하는 저장소 타입입니다. `composer` 저장소를 참조하기 위해서는, `packages.json` 파일 이전에 경로를 적용하기만 하면 됩니다. packagist의 경우, `/packages.json` 위치에 파일이 있고, 저장소 URL은 `packagist.org` 입니다.
 `example.org/packages.json`의 저장소 URL은 `example.org`가 될 것입니다.
 
-#### packages
+#### packages {#packages}
 
 필수 필드는 `packages` 밖에 없습니다. JSON 구조는 아래와 같습니다.
 
-```json
+{% highlight json %}
 {
     "packages": {
         "vendor/package-name": {
@@ -54,7 +54,7 @@ repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키�
         }
     }
 }
-```
+{% endhighlight %}
 
 `@composer.json` 표시는  아래와 같은 최소한의 패키지 버전을 담고 있는 `composer.json`의 내용이 됩니다.
 
@@ -64,7 +64,7 @@ repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키�
 
 최소 패키지는 아래와 같습니다.
 
-```json
+{% highlight json %}
 {
     "name": "smarty/smarty",
     "version": "3.1.7",
@@ -73,9 +73,9 @@ repositories 는 root 패키지에서만 유효하며, 하위 의존성 패키�
         "type": "zip"
     }
 }
-```
+{% endhighlight %}
 
-여기에 [schema](04-schema.md)에 있는 다른 필드 정보도 명시할 수도 있습니다.
+여기에 [schema](/Composer-korean-docs/doc/04-schema.md)에 있는 다른 필드 정보도 명시할 수도 있습니다.
 
 #### notify-batch
 
@@ -84,21 +84,21 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
 
 사용예:
 
-```json
+{% highlight json %}
 {
     "notify-batch": "/downloads/"
 }
-```
+{% endhighlight %}
 
 `monolog/monolog` 패키지가 들어있는 `example.org/packages.json`이 있다고 하면,  `example.org/downloads/`로 아래와 같은 JSON 요청 body를 담아 `POST` 요청을 하게 될 것입니다.
 
-```json
+{% highlight json %}
 {
     "downloads": [
         {"name": "monolog/monolog", "version": "1.2.1.0"},
     ]
 }
-```
+{% endhighlight %}
 
 `version` 필드는 정규 표현 방식의 버전 넘버를 따릅니다.
 
@@ -111,7 +111,7 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
 
 예제:
 
-```json
+{% highlight json %}
 {
     "includes": {
         "packages-2011.json": {
@@ -125,7 +125,7 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
         }
     }
 }
-```
+{% endhighlight %}
 
 파일의 `SHA-1 sum`은 캐시되어 있다가 해시가 변경될 경우에만 재요청 하게 됩니다.
 
@@ -140,7 +140,7 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
 
 예제 :
 
-```json
+{% highlight json %}
 {
     "provider-includes": {
         "providers-a.json": {
@@ -152,13 +152,13 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
     },
     "providers-url": "/p/%package%$%hash%.json"
 }
-```
+{% endhighlight %}
 
 여기에 나오는 파일들의 내용은 아래 예제 처럼, 패키지명과 파일 무결성 검증을 위한 해시를 나열하고 있습니다.
 
 예제 :
 
-```json
+{% highlight json %}
 {
     "providers": {
         "acme/foo": {
@@ -169,7 +169,7 @@ URL은 절대 경로(저장소와 동일한 도메인을 사용하게 게 됨)�
         }
     }
 }
-```
+{% endhighlight %}
 
 위 파일은 해당 저장소에서 `providers-url`을 조회한 파일을 참조하여, `%package%`는  패키지명으로, `%hash%`는 sha256 필드로 치환한 후,  acme/foo 와 acme/bar 를 찾을 수 있음을 선언하고 있습니다. 이파일들은 자체적으로 [위에서 설명](#packages)한 패키지 정의로 구성되어 있습니다.
 
@@ -190,11 +190,11 @@ VCS는 버전컨트롤시스템을 말하며 git, svn 또는 hg와 같은 버전
 
 #### VCS 저장소에서 패키지 불러오기
 
-몇가지 사용 예를 들어 봅시다. 가장 보편적인 예는 써드파티의 라이브러리르 포크(fork) 하여 수정하는 경우입니다. 여러분의 프로젝트가 특정한 라이브러리를 사용 하고 있고, 그 라이브러리의 일부를 변경하고자 한다면, 여러분의 프로젝트가 패치(patch)된 버전을 사용하길 원할 것입니다. (대부분의 경우와 같이) 라이브러리가 GitHub에 있다면, 손쉽게 라이브러리를 포크(fork) 하여 변경사항을 푸시(push)할 수 있습니다. 그 후에 프로젝트의 `composer.json`을 수정합니다. 이 때 할일은 여러분의 포크(fork)를 저장소로 추가하고 버전이 여러분의 별도의 브랜치를 가리키도록 수정하는 것입니다. 버전 명명 방식에 대한 더 많은 정보는 [Libraries - 라이브러리](02-libraries.md)에서 확인할 수 있습니다.
+몇가지 사용 예를 들어 봅시다. 가장 보편적인 예는 써드파티의 라이브러리르 포크(fork) 하여 수정하는 경우입니다. 여러분의 프로젝트가 특정한 라이브러리를 사용 하고 있고, 그 라이브러리의 일부를 변경하고자 한다면, 여러분의 프로젝트가 패치(patch)된 버전을 사용하길 원할 것입니다. (대부분의 경우와 같이) 라이브러리가 GitHub에 있다면, 손쉽게 라이브러리를 포크(fork) 하여 변경사항을 푸시(push)할 수 있습니다. 그 후에 프로젝트의 `composer.json`을 수정합니다. 이 때 할일은 여러분의 포크(fork)를 저장소로 추가하고 버전이 여러분의 별도의 브랜치를 가리키도록 수정하는 것입니다. 버전 명명 방식에 대한 더 많은 정보는 [Libraries - 라이브러리](/Composer-korean-docs/doc/02-libraries.md)에서 확인할 수 있습니다.
 
 다음 예제는 버그를 수정하기 위해 `bugfix` 브랜치에서 monolog를 패치했다고 간주합니다:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -206,19 +206,19 @@ VCS는 버전컨트롤시스템을 말하며 git, svn 또는 hg와 같은 버전
         "monolog/monolog": "dev-bugfix"
     }
 }
-```
+{% endhighlight %}
 
 이제 `php composer.phar update`를 실행하면, 패키지스트(packagist)의 `monolog/monolog` 대신에 여러분이 수정한 버전을 가져오게 됩니다.
 
 명심할 것은 원본 패키지에서 완전히 이전하려는 것이 아니고 장기간 동안 포크(fork)를 유지하는 한 패키지의 이름을 변경해서는 안된다는 점입니다. 별도의 저장소는 패키지스트(packagist)보다 우선권을 가지기 때문에 컴포저는 원본이 아닌 당신의 패키지를 선택하게 될 것입니다. 패키지 이름은 기본 브랜치에서 가져오기 때문에 만약 패키지 이름을 변경하길 원한다면, feature 브랜치가 아닌 기본(흔히 master) 브랜치에서 변경해야 합니다.
 
-프로젝트가 의존하는 패키지들 중에 하나가 여러분이 포크(fork)한 패키지를 필요로 한다면, 버전 제약에 그것을 맞춰주거나 또는 그러지 않도록 인라인-별칭(inline-alias)를 지정하는 것이 가능합니다. 더 많은 정보는 [앨리어스 - aliases](articles/aliases.md) 문서에서 볼 수 있습니다.
+프로젝트가 의존하는 패키지들 중에 하나가 여러분이 포크(fork)한 패키지를 필요로 한다면, 버전 제약에 그것을 맞춰주거나 또는 그러지 않도록 인라인-별칭(inline-alias)를 지정하는 것이 가능합니다. 더 많은 정보는 [앨리어스 - aliases](/Composer-korean-docs/doc/articles/aliases.md) 문서에서 볼 수 있습니다.
 
 #### 사설 저장소 사용하기
 
 공용 저장소와 완전히 동일한 방식으로 GitHub과 BitBucket의 사설 저장소를 사용하는 것이 가능합니다.
 
-```json
+{% highlight json %}
 {
     "require": {
         "vendor/my-private-repo": "dev-master"
@@ -230,7 +230,7 @@ VCS는 버전컨트롤시스템을 말하며 git, svn 또는 hg와 같은 버전
         }
     ]
 }
-```
+{% endhighlight %}
 
 필요한 건 단지 git 클라이언트를 위한 SSH 키를 설치하는 것 뿐입니다. 
 
@@ -264,7 +264,7 @@ GitHub 저장소에서 `no-api` 키를 `true`로 설정한다면 컴포저는 Gi
 Subversion은 브랜치(branches)와 태그(tags) 개념을 내재하고 있지 않기 때문에, 컴포저는 기본적으로 코드가 `$url/trunk`, `$url/branches` 그리고 `$url/tags` 내에 존재한다고 간주합니다. 여러분의 저장소가 다른 디렉토리 구조를 가지고 있다면 해당 값들을 변경할 수 있습니다. 예를 들어 첫자가 대문자인 디렉토리명을 사용한다면  다음과 같이 저장소를 설정할 수 있습니다:
 (역자주 : 굳이 Trunk 폴더가 따로 있다면..)
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -276,15 +276,15 @@ Subversion은 브랜치(branches)와 태그(tags) 개념을 내재하고 있지 
         }
     ]
 }
-```
+{% endhighlight %}
 
 branches 또는 tags 디렉토리를 가지고 있지 않다면 `branches-path` 또는 `tags-path` 항목을 `false`로 설정하여 완전히 사용불가능하도록 할 수 있습니다.
 
 패키지가 예를 들어 `/trunk/foo/bar/composer.json`과 `/tags/1.0/foo/bar/composer.json`처럼 서브디렉토리 내에 존재한다면, `"package-path"` 옵션을 설정함으로써 컴포저가 해당 서브디렉토리에 접근하도록 만들 수 있습니다. 이번 예의 경우 `"package-path": "foo/bar/"`이 될 것입니다.
 
-사설 Subversion 저장소를 가지고 있다면 설정([Schema - 구조](04-schema.md) 참조) 내의 http-basic 섹션에서 자격증명(credential) 정보를 저장할 수 있습니다:
+사설 Subversion 저장소를 가지고 있다면 설정([Schema - 구조](/Composer-korean-docs/doc/04-schema.md) 참조) 내의 http-basic 섹션에서 자격증명(credential) 정보를 저장할 수 있습니다:
 
-```json
+{% highlight json %}
 {
     "http-basic": {
         "svn.example.org": {
@@ -293,11 +293,11 @@ branches 또는 tags 디렉토리를 가지고 있지 않다면 `branches-path` 
         }
     }
 }
-```
+{% endhighlight %}
 
 Subversion 클라이언트가 기본적으로 자격증명(credential)을 저장하도록 설정되어 있다면 이 자격증명(credential) 정보는 현재 사용자로 저장될 것이고 기존에 저장된 자격증명(credential) 정보는 덮어쓰여질 것입니다. 저장소 설정에서 `"svn-cache-credentials"` 옵션을 설정함으로써 이러한 행동을 변경할 수 있습니다:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -307,7 +307,7 @@ Subversion 클라이언트가 기본적으로 자격증명(credential)을 저장
         }
     ]
 }
-```
+{% endhighlight %}
 
 ### PEAR
 
@@ -315,7 +315,7 @@ Subversion 클라이언트가 기본적으로 자격증명(credential)을 저장
 
 예제 `pear2.php.net` 사용:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -328,7 +328,7 @@ Subversion 클라이언트가 기본적으로 자격증명(credential)을 저장
         "pear-pear2/PEAR2_HTTP_Request": "*"
     }
 }
-```
+{% endhighlight %}
 이 경우에 채널의 단축 이름은 `pear2`입니다.  그래서 `PEAR2_HTTP_Request` 패키지 이름은 `pear-pear2/PEAR2_HTTP_Request`에서 온 것입니다.
 
 > **참고:** `pear` 저장소는 패키지당 많은 요청을 필요로합니다.
@@ -360,7 +360,7 @@ PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
 설명하자면, 이 예제에서는 당신의 PEAR 저장소에서 `BasePackage`, `TopLevelPackage1`와 `TopLevelPackage2` 패키지들을 가져오고 `IntermediatePackage`는 Github저장소에서 가져옵니다:
 
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -378,7 +378,7 @@ PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
         "foobar/TopLevelPackage2": "*"
     }
 }
-```
+{% endhighlight %}
 
 ### Package
 
@@ -388,7 +388,7 @@ PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
 
 여기 smarty 템플릿 엔진을 위한 예제가 있습니다:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -415,7 +415,7 @@ PEAR 채널 패키지에 임의 제공자 이름을 사용 할 수있습니다.
         "smarty/smarty": "3.1.*"
     }
 }
-```
+{% endhighlight %}
 
 일반적으로 당신이 소스 부분에서 신경을 쓰고 싶지 않다면 이것을 꼭 넣을 필요는 없습니다. 
 
@@ -452,7 +452,7 @@ Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 
 여러분은 `composer.json`을 포함하는 저장소를 비롯하여 보통 VCS와 패키지 저장소 경로를 제공 받을 수 있습니다. 이것은 모든 패키지의 `required`와 `packages.json`의 정보를 여러분의 `composer` 저장소로 가져옵니다.
 
 더 자세한 정보를 얻기 원하시면 [the satis GitHub repository](https://github.com/composer/satis) 혹은
-[Satis article](articles/handling-private-packages-with-satis.md)에서 확인하실 수 있습니다.
+[Satis article](/Composer-korean-docs/doc/articles/handling-private-packages-with-satis.md)에서 확인하실 수 있습니다.
 
 (번역주 : 사내 활용용도나 기타 사용의 목적으로 비공개 패키지 저장소를 운영해야 하는 경우에 satis 를 통해서 사설 packagist 를 운영하는 효과를 낼 수 있습니다. )
 
@@ -460,7 +460,7 @@ Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 
 
 어떤 특수한 경우에는, 앞서 언급된 온라인 타입의 저장소 혹은 VCS 하나라도 구성할 수 없을 때가 있습니다. 예를 들면 artifacts를 구축하여 조직간의 라이브러리 교환을 하려고 할 때 입니다. 물론, 대부분의 경우 비공개 저장소를 운영할 것입니다. 유지 보수를 단순화 하기 위해서 비공개 패키지 폴더를 하나의 간단한 ZIP 압축파일로 `artifact` 저장소 타입을 사용 할 수 있습니다:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -474,16 +474,16 @@ Satis는 정적 `composer` 저장소 생성기입니다. 이것은 packagist의 
         "acme-corp/parser": "10.3.5"
     }
 }
-```
+{% endhighlight %}
 
 각각의 zip 파일들은 `composer.json`의 root 폴더를 압축한 것입니다:
 
-```sh
+{% highlight sh %}
 unzip -l acme-corp-parser-10.3.5.zip
 
 composer.json
 ...
-```
+{% endhighlight %}
 
 만약 그곳에 두개의 다른버전의 압축파일이 존재한다면, 그 두개 모두 가져오게됩니다. artifact 폴더에 새버전의 압축파일이 추가되고 당신이 `update`를 실행하게 되면, 그 버전도 가져오고 composer는 최신 버전으로 업데이트 할 것입니다.
 
@@ -493,7 +493,7 @@ composer.json
 `composer.json`에 기본 Packagist 저장소를 사용하지 않도록 설정 할 수 있습니다:
 
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -501,6 +501,6 @@ composer.json
         }
     ]
 }
-```
+{% endhighlight %}
 
-&larr; [Schema](04-schema.md)  |  [Community](06-community.md) &rarr;
+&larr; [Schema](/Composer-korean-docs/doc/04-schema.md)  |  [Community](/Composer-korean-docs/doc/06-community.md) &rarr;

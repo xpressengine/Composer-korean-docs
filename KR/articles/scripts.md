@@ -45,7 +45,7 @@
 
 스크립트 정의 예제:
 
-```json
+{% highlight json %}
 {
     "scripts": {
         "post-update-cmd": "MyVendor\\MyClass::postUpdate",
@@ -61,11 +61,11 @@
         ]
     }
 }
-```
+{% endhighlight %}
 
 위의 예제에서 사용한 `MyVendor\MyClass`라는 클래스는 다음의 PHP를 실행할 것입니다:
 
-```php
+{% highlight php %}
 <?php
 
 namespace MyVendor;
@@ -91,7 +91,7 @@ class MyClass
         // make cache toasty
     }
 }
-```
+{% endhighlight %}
 
 이벤트가 발생 했을 때, 컴포저의 내부 이벤트 핸들러는 `Composer\Script\Event` 객체를 받습니다. 그리고 이 객체는 PHP 콜백의 첫번째 매개변수로 사용가능합니다. 이 `Event` 다음 접근자를 통해 다른 객체에 접근할 수 있습니다:
 
@@ -104,9 +104,9 @@ class MyClass
 
 스크립트를 직접 실행하고 싶다면 다음의 명령어를 이용하면 됩니다:
 
-```sh
+{% highlight sh %}
 composer run-script [--dev] [--no-dev] script
-```
+{% endhighlight %}
 
 예를들어 `composer run-script post-install-cmd`은 **post-install-cmd**에 정의된 스크립트들을 실행할 것입니다.
 
@@ -118,13 +118,13 @@ composer run-script [--dev] [--no-dev] script
 
 위에 명시된 사용할 수 있는 이벤트 중에 원하는 것이 없다면 사용자 정의 스크립트를 추가할 수 있습니다. 그리고 이는 run-script를 통해서 사용가능하고, 컴포저의 자연스러운 커맨드 처럼 사용할 수 있습니다. 예를 들어 아래와 같이 단순한 내용을 정의하였다면 `composer test`라는 명령어를 통해 사용가능합니다:
 
-```json
+{% highlight json %}
 {
     "scripts": {
         "test": "phpunit"
     }
 }
-```
+{% endhighlight %}
 
-> **참고:** 컴포저의 [bin-dir](articles/vendor-binaries.md#vendor-binaries를-vendor/bin-이외에-다른-곳에 설치가-가능한가요-)은 PATH의 최상위를 입력할 수 있는데, 이는 의존하고 있는 패키지들의 실행파일들을 쉽게 CLI 커맨드로서 입력할 수 있게 합니다.
+> **참고:** 컴포저의 [bin-dir](/Composer-korean-docs/doc/articles/vendor-binaries.md#vendor-binaries를-vendor/bin-이외에-다른-곳에 설치가-가능한가요-)은 PATH의 최상위를 입력할 수 있는데, 이는 의존하고 있는 패키지들의 실행파일들을 쉽게 CLI 커맨드로서 입력할 수 있게 합니다.
 > 예를들어 PHPUnit을 의존하고 있고, `bin-dir`을 `scripts`라는 값으로 설정을 해놓았다면 스크립트에서 `scripts/phpunit`라는 값을 통해 접근이 가능합니다.

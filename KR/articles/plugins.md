@@ -20,7 +20,7 @@
 
 다음 예제를 확인하십시오. 
 
-```json
+{% highlight json %}
 {
     "name": "my/plugin-package",
     "type": "composer-plugin",
@@ -28,7 +28,7 @@
         "composer-plugin-api": "1.0.0"
     }
 }
-```
+{% endhighlight %}
 
 ### Plugin Class - 플러그인 클래스 
 
@@ -36,7 +36,7 @@
 플러그인이 로딩된 후에 `activate()` 메소드가 [`Composer\Composer`][4] 와 [`Composer\IO\IOInterface`][5] 인스턴스를 인자로 넘겨 받아서 호출됩니다. 이 두개의 객체를 활용하여 모든 설정은 모든 내부 오브젝트와 상태를 원하는 대로 조절할 수 있게 됩니다. 
 
 예제:
-```php
+{% highlight php %}
 <?php
 
 namespace phpDocumentor\Composer;
@@ -53,7 +53,7 @@ class TemplateInstallerPlugin implements PluginInterface
         $composer->getInstallationManager()->addInstaller($installer);
     }
 }
-```
+{% endhighlight %}
 
 ## Event Handler - 이벤트 핸들러
 
@@ -68,7 +68,7 @@ class TemplateInstallerPlugin implements PluginInterface
 
 예제:
 
-```php
+{% highlight php %}
 <?php
 
 namespace Naderman\Composer\AWS;
@@ -111,7 +111,7 @@ class AwsPlugin implements PluginInterface, EventSubscriberInterface
         }
     }
 }
-```
+{% endhighlight %}
 
 ## Using Plugins - 플러그인 사용하기
 
@@ -120,10 +120,10 @@ class AwsPlugin implements PluginInterface, EventSubscriberInterface
 > `--no-plugins` 컴포저 명령 옵션으로 모든 설치된 명령들을 비활성시킬 수 있습니다. 
 > 이는 특히 설치나 업데이트를 할 때 플러그인들로 발생하는 에러를 방지하는데 유용합니다.
 
-[1]: ../04-schema.md#type
-[2]: ../04-schema.md#extra
+[1]: /Composer-korean-docs/doc/04-schema.md#type
+[2]: /Composer-korean-docs/doc/04-schema.md#extra
 [3]: https://github.com/composer/composer/blob/master/src/Composer/Plugin/PluginInterface.php
 [4]: https://github.com/composer/composer/blob/master/src/Composer/Composer.php
 [5]: https://github.com/composer/composer/blob/master/src/Composer/IO/IOInterface.php
 [6]: https://github.com/composer/composer/blob/master/src/Composer/EventDispatcher/EventSubscriberInterface.php
-[7]: ./scripts.md#event-names
+[7]: /Composer-korean-docs/doc/articles/scripts.md#event-names

@@ -25,4 +25,4 @@ IRC 채널은 irc.freenode.org 의 [#composer](irc://irc.freenode.org/composer)�
 
 스택 오버플로우에서 [컴포저 관련 질문들](http://stackoverflow.com/questions/tagged/composer-php)을 확인하실 수도 있습니다.
 
-&larr; [Repositories](05-repositories.md)
+&larr; [Repositories](/Composer-korean-docs/doc/05-repositories.md)

@@ -72,7 +72,7 @@ composer 가 기본으로 지원하는 4가지 타입들 (설치 패키지가 �
   filesystem. As such, it does not require a dist or source key to be
   installable.
  - **metapackage:** requirement가 포함된 비어있는 패키지는 작동시 설치가 된다. 그러나 파일이 포함되어 있지 않으면 어떠한 내용도 파일시스템에 쓰지 않는다. 그러므로 설치시에 dist 혹은 source key 를 요구하지 않고 설치됩니다.
-- **composer-plugin:** `composer-plugin`타입의 패키지는 다른 커스텀 패키지들을 위해 인스톨러를 제공합니다. 자세한 내용은 [dedicated article](articles/custom-installers.md)에서 확인 할수 있습니다.
+- **composer-plugin:** `composer-plugin`타입의 패키지는 다른 커스텀 패키지들을 위해 인스톨러를 제공합니다. 자세한 내용은 [dedicated article](/Composer-korean-docs/doc/articles/custom-installers.md)에서 확인 할수 있습니다.
   
 Only use a custom type if you need custom logic during installation. It is
 recommended to omit this field and have it just default to `library`.
@@ -132,32 +132,32 @@ recommended to omit this field and have it just default to `library`.
 
 사용예:
 
-```json
+{% highlight json %}
 {
     "license": "MIT"
 }
-```
+{% endhighlight %}
 
 배열 형태의 선언은 여러개의 라이센스 중 선택해서 사용해야 하는 패키지에서 설정 할 수 있습니다.
 
 다른 라이센스의 예:
 
-```json
+{% highlight json %}
 {
     "license": [
        "LGPL-2.1",
        "GPL-3.0+"
     ]
 }
-```
+{% endhighlight %}
 
 위의 형태 대신에 or로 구분된 괄호로 묶은 형태로 라이센스를 표시 할 수도 있습니다.
 
-```json
+{% highlight json %}
 {
     "license": "(LGPL-2.1 or GPL-3.0+)"
 }
-```
+{% endhighlight %}
 
 비슷한 경우로 결합한 형태의 라이센스가 지원 되는 경우 위의 예시에서 "or" 대신 "and" 구분자를 사용하여 설정 할 수 있습니다.
 
@@ -175,7 +175,7 @@ recommended to omit this field and have it just default to `library`.
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "authors": [
         {
@@ -192,7 +192,7 @@ recommended to omit this field and have it just default to `library`.
         }
     ]
 }
-```
+{% endhighlight %}
 
 필수 입력 사항은 아니지만, 가급적 입력하기를 권장합니다. 
 
@@ -211,30 +211,30 @@ recommended to omit this field and have it just default to `library`.
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "support": {
         "email": "support@example.org",
         "irc": "irc://irc.freenode.org/composer"
     }
 }
-```
+{% endhighlight %}
 
 필수 항목이 아닙니다. 
 
-### Package links (패키지 관련사항)
+### Package links (패키지 관련사항) {#package-links}
 
-해당 내용에서는 패키지의 이름에 대응하는 [버전 제약](01-basic-usage.md#package-versions) 객체를 갖습니다.
+해당 내용에서는 패키지의 이름에 대응하는 [버전 제약](/Composer-korean-docs/doc/01-basic-usage.md#package-versions) 객체를 갖습니다.
 
 사용예시 
 
-```json
+{% highlight json %}
 {
     "require": {
         "monolog/monolog": "1.0.*"
     }
 }
-```
+{% endhighlight %}
 
 모든 패키지 관련사항은 선택사항입니다.
 
@@ -243,44 +243,44 @@ recommended to omit this field and have it just default to `library`.
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "require": {
         "monolog/monolog": "1.0.*@beta",
         "acme/foo": "@dev"
     }
 }
-```
+{% endhighlight %}
 
 만약 의존하고 있는 패키지들 중 하나가 안정적이지 않는 패키지라면 해당 패캐지의 확실한 안정성 플래그(stability flag)를 통해 명시적으로 표시해주어야 합니다.
 
 사용예 : 
 
-```json
+{% highlight json %}
 {
     "require": {
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "doctrine/data-fixtures": "@dev"
     }
 }
-```
+{% endhighlight %}
 
 `require`과 `require-dev`는 추가적으로 개발버전을 위한 참조 값(예컨데, commit)을 명시적으로 표기할 수 있습니다. 이는 업데이트를 수행하더라도 주어진 상태를 고정할 수 있도록 해줍니다. 개발버전을 명시적으로 표기하고자 할 때 `#<ref>`의 형태로 추가하시면 됩니다.
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "require": {
         "monolog/monolog": "dev-master#2eb0c0978d290a1c45346a1955188929cb4e5db7",
         "acme/foo": "1.0.x-dev#abc123"
     }
 }
-```
+{% endhighlight %}
 
 > **주의:** 이 기능은 매우 편리해 보이지만, 근본적인 위험성 때문에 장시간동안 패키지들을 사용하는 방법이 되어서는 안됩니다. composer.json 메타데이터는 기본적으로 커밋 해쉬값보다 branch 이름으로 부터 정보를 읽어들일 것입니다. 이러한 몇가지 상황 때문에 실제적으로 사용하는 방법이라고 보기 어렵고, 가능한한 항상 Tag 가 표시된 릴리즈를 사용하도록 변경해야합니다.
 
-패키지 정보에 대해 해당하지 않는 버전에 대응하려면 패키지 정보를 한줄로 별칭을 작성함에 따라 가능합니다. 더 많은 정보는 [별칭](articles/aliases.md)에서 볼 수 있습니다.
+패키지 정보에 대해 해당하지 않는 버전에 대응하려면 패키지 정보를 한줄로 별칭을 작성함에 따라 가능합니다. 더 많은 정보는 [별칭](/Composer-korean-docs/doc/articles/aliases.md)에서 볼 수 있습니다.
 
 
 #### require
@@ -317,13 +317,13 @@ recommended to omit this field and have it just default to `library`.
 
 사용예:
 
-```json
+{% highlight json %}
 {
     "suggest": {
         "monolog/monolog": "Allows more advanced logging of the application flow"
     }
 }
-```
+{% endhighlight %}
 
 ### autoload
 
@@ -344,7 +344,7 @@ PSR-4는 설치와 업데이트하는 동안 생성된 `vendor/composer/autoload
 
 사용예 : 
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-4": {
@@ -353,29 +353,29 @@ PSR-4는 설치와 업데이트하는 동안 생성된 `vendor/composer/autoload
         }
     }
 }
-```
+{% endhighlight %}
 
 같은 네임스페이스의 접두사를 여러 디렉토리에서 찾을 수 있다면 다음과 같이 배열을 통해 정의할 수 있습니다.
 
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-4": { "Monolog\\": ["src/", "lib/"] }
     }
 }
-```
+{% endhighlight %}
 
 어떠한 네임스페이스에도 찾을 수 있는 폴백 디렉터리가 필요하면 다음과 같이 네임스페이스를 비워두면 됩니다.
 
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-4": { "": "src/" }
     }
 }
-```
+{% endhighlight %}
 
 #### PSR-0
 
@@ -387,7 +387,7 @@ PSR-0는 설치와 업데이트하는 동안 생성된 `vendor/composer/autoload
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-0": {
@@ -397,37 +397,37 @@ PSR-0는 설치와 업데이트하는 동안 생성된 `vendor/composer/autoload
         }
     }
 }
-```
+{% endhighlight %}
 
 같은 네임스페이스의 접두사를 여러 디렉토리에서 찾을 수 있다면 다음과 같이 배열을 통해 정의할 수 있습니다.
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-0": { "Monolog\\": ["src/", "lib/"] }
     }
 }
-```
+{% endhighlight %}
 
 PSR-0 스타일은 네임스페이스 선언을 하지 않은 클래스도 사용이 가능합니다. 이는 전역 네임스페이스에 있는 라이브러리 클래스를 사용할 때 매우 유용합니다. php 소스파일이 패키지의 기본 디렉터리에 위치한다면 다음 예제처럼 작성하실 수 있습니다.
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-0": { "UniqueGlobalClass": "" }
     }
 }
-```
+{% endhighlight %}
 
 어떠한 네임스페이스에도 대응할 수 있는 폴백 디렉터리가 필요하면 다음과 같이 네임스페이스를 비워두면 됩니다.
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-0": { "": "src/" }
     }
 }
-```
+{% endhighlight %}
 
 #### Classmap
 
@@ -438,13 +438,13 @@ PSR-0/4에서 지원하지 않는 모든 라이브러리의 오토로드를 사�
 사용예 :
 
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "classmap": ["src/", "lib/", "Something.php"]
     }
 }
-```
+{% endhighlight %}
 
 #### Files
 
@@ -452,13 +452,13 @@ PSR-0/4에서 지원하지 않는 모든 라이브러리의 오토로드를 사�
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "files": ["src/MyLibrary/functions.php"]
     }
 }
-```
+{% endhighlight %}
 
 ### autoload-dev (root-only)
 
@@ -470,7 +470,7 @@ PSR-0/4에서 지원하지 않는 모든 라이브러리의 오토로드를 사�
 
 사용예 :
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-4": { "MyLibrary\\": "src/" }
@@ -479,7 +479,7 @@ PSR-0/4에서 지원하지 않는 모든 라이브러리의 오토로드를 사�
         "psr-4": { "MyLibrary\\Tests\\": "tests/" }
     }
 }
-```
+{% endhighlight %}
 
 ### include-path
 
@@ -493,11 +493,11 @@ PHP의 `include_path`에 추가되는 경로(paths)입니다.
 
 사용예:
 
-```json
+{% highlight json %}
 {
     "include-path": ["lib/"]
 }
-```
+{% endhighlight %}
 
 필수 항목이 아닙니다. 
 
@@ -514,18 +514,18 @@ PHP의 `include_path`에 추가되는 경로(paths)입니다.
 이렇게 하고자 할 때, `autoload`와 `target-dir`은 다음과 같이 정의하면 됩니다.
 
 
-```json
+{% highlight json %}
 {
     "autoload": {
         "psr-0": { "Symfony\\Component\\Yaml\\": "" }
     },
     "target-dir": "Symfony/Component/Yaml"
 }
-```
+{% endhighlight %}
 
 필수 항목이 아닙니다. 
 
-### minimum-stability (root-only)
+### minimum-stability (root-only) {#minimum-stability}
 
 - stability : 안정성
 - requirement : 요구사항
@@ -558,11 +558,11 @@ Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 �
 * **pear:** 해당값을 통해 pear 저장소를 프로젝트에 추가할 수 있습니다.
 * **package:** 만약 Composer를 지원하지 않는 프로젝트에 의존하고 싶다면, 무엇이든간에 당신은 `package` 저장소를 사용하는 패키지를 정의할 수 있습니다. 그저 단순하게 `composer.json` 객체를 나열하면 됩니다.
 
-더 많은 정보를 얻고자 한다면 다음 링크를 참고하시면 됩니다. [Repositories](05-repositories.md)
+더 많은 정보를 얻고자 한다면 다음 링크를 참고하시면 됩니다. [Repositories](/Composer-korean-docs/doc/05-repositories.md)
 
 사용예:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -604,11 +604,11 @@ Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 �
         }
     ]
 }
-```
+{% endhighlight %}
 
 > **주의:** 해당 항목의 경우 순서가 중요합니다. 컴포저는 패키지를 찾을 때 먼저 정의한 저장소부터 뒤쪽으로 순차적으로 검색하며, 가장 먼저 발견되는 패키지를 가져옵니다. Packagist를 기본값으로 사용자 정의 저장소를 덮어씌우고 싶다면 Packagist를 맨 마지막에 추가하시면 됩니다.
 
-### config (root-only)
+### config (root-only) {#config}
 
 설정을 변경합니다. 변경한 설정은 (현재) 프로젝트에만 적용됩니다. (--global 옵션을 붙여주면 전체에도 설정됩니다.)
 
@@ -619,11 +619,11 @@ Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 �
 * **preferred-install:** 기본값은 auto이고, source, dist, auto중 선택할 수 있습니다. 이 옵션으로 선호하는 방법을 선택해 설치할 수 있습니다. (source는 git clone과 같은 소스파일을 그대로 받는 방식, dist는 zip과같이 압축된 형태로 받는 방식, auto는 어떤것이든 상관없이 받는 방식입니다.)
 * **store-auths:** 사용자 인증을 위한 메세지 표시로, `true` (저장), `false` (저장 안함), `prompt` (항상 물음) 중 하나를 선택할 수 있습니다. 기본값은 `prompt` 입니다.
 * **github-protocols:** 기본값은 `["git", "https", "ssh"]`입니다. github.com 에서 cloning 하는 프로토콜의 우선순위로, 예를 들면 HTTPS 프로토콜 우선 순위를 프록시 뒤에, 또는, 효율성이 낮은 git protocol로 사용자가 아무렇게나 재구성할 수 있습니다.
-* **github-oauth:** 도메인 네임과 OAuth 키에 대한 목록입니다. 예를 들어 `{"github.com": "oauthtoken"}` 에서 value인 `oauthtoken`는 github 비밀 저장소 접근 가능케 해주며, 낮은 IP 기반의 속도제한이 있는 API에 대한 접근을 회피 할 수 있도록 해줍니다. github의 OAuth 토큰을 얻는 방법을 읽어보시기 바랍니다. [Read more](articles/troubleshooting.md#api-rate-limit-and-oauth-tokens)
+* **github-oauth:** 도메인 네임과 OAuth 키에 대한 목록입니다. 예를 들어 `{"github.com": "oauthtoken"}` 에서 value인 `oauthtoken`는 github 비밀 저장소 접근 가능케 해주며, 낮은 IP 기반의 속도제한이 있는 API에 대한 접근을 회피 할 수 있도록 해줍니다. github의 OAuth 토큰을 얻는 방법을 읽어보시기 바랍니다. [Read more](/Composer-korean-docs/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens)
 * **http-basic:** 인증에 사용되는 도메인 네임과 사용자이름/비밀번호 목록입니다.`{"example.org": {"username": "alice", "password": "foo"}` 위와 같은 방식으로 작성을 하면 `alice/foo` 값이 `example.org` 에 인증을 하게 됩니다.
 * **vendor-dir:** 기본값은 `vendor` 입니다. 사용자는 원한다면 다른 디렉토리에 의존성을 설치할 수 있습니다. `$HOME`과 `~`는 `vendor-dir` 와 `$-dir` 이하의 모든 사용자의 홈디렉토리 경로로 대체할 수 있습니다.
 * **bin-dir:** 기본값은 `vendor/bin` 입니다. 만약 프로젝트가 바이너리를 include했다면, `vendor/bin`에 해당하는 디렉토리에 심볼릭링크로 가리켜지게 됩니다.
-* **cache-dir:** UNIX 에서의 기본값은 `$COMPOSER_HOME/cache` 이고, Window 에서의 기본값은 `C:\Users\<user>\AppData\Local\Composer` 입니다. Composer에 의해 사용된 캐시가 모두 저장됩니다. 또한 03-CLI에서 [COMPOSER_HOME](03-cli.md#composer-home)를 참고하기 바랍니다.
+* **cache-dir:** UNIX 에서의 기본값은 `$COMPOSER_HOME/cache` 이고, Window 에서의 기본값은 `C:\Users\<user>\AppData\Local\Composer` 입니다. Composer에 의해 사용된 캐시가 모두 저장됩니다. 또한 03-CLI에서 [COMPOSER_HOME](/Composer-korean-docs/doc/03-cli.md#composer-home)를 참고하기 바랍니다.
 * **cache-files-dir:** 기본값은 `$cache-dir/files` 입니다. 캐시를 압축 패키지로 저장하는 경로입니다.
 * **cache-repo-dir:** 기본값은 `$cache-dir/repo` 입니다. `composer` 타입의 metadata 저장소와 `svn`, `github`, 그리고 `bitbucket` 타입의 VCS 저장소를 저장하는 경로입니다.
 * **cache-vcs-dir:** 기본값은 `$cache-dir/vcs` 입니다. VCS 저장소인 `git`/`hg` 의 metadata를 불러해서 빠른속도로 속도설치하는 VCS clones을 저장하는 경로입니다.
@@ -639,13 +639,13 @@ Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 �
 
 사용예:
 
-```json
+{% highlight json %}
 {
     "config": {
         "bin-dir": "bin"
     }
 }
-```
+{% endhighlight %}
 
 > **주의:** `http-basic`, `github-oauth` 와 같이 사용자 인증 관련 옵션은 `composer.json`외에 `auth.json` 파일 내에 지정할 수 있습니다. 이러한 방법은 .gitignore에 추가할 수 있고, 개발자는 자신의 자격 증명(?)이 가능합니다.
 
@@ -653,7 +653,7 @@ Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 �
 
 설치 과정의 여러 부분들을 후킹하여 스크립트를 실행 할 수 있습니다
 
-여기를 보시면 [Scripts](articles/scripts.md) 자세한 설명과 예제가 있습니다.
+여기를 보시면 [Scripts](/Composer-korean-docs/doc/articles/scripts.md) 자세한 설명과 예제가 있습니다.
 
 ### extra
 
@@ -662,9 +662,9 @@ Composer는 packagist 저장소를 기본값으로 사용합니다. 그 밖에 �
 사실상 뭐든지 할 수 있습니다. 스크립트 내에서 액세스 하기위한 이벤트 핸들러는
 아래와 같습니다:
 
-```php
+{% highlight php %}
 $extra = $event->getComposer()->getPackage()->getExtra();
-```
+{% endhighlight %}
 
 선택적으로 사용 가능합니다.
 
@@ -672,7 +672,7 @@ $extra = $event->getComposer()->getPackage()->getExtra();
 
 설정 파일을 바이너리로 처리하고, `bin-dir`이라는 심볼릭 링크로 만듭니다.
 
-오른쪽 링크를 보시면 [Vendor Binaries](articles/vendor-binaries.md) 자세한 설명이 나옵니다.
+오른쪽 링크를 보시면 [Vendor Binaries](/Composer-korean-docs/doc/articles/vendor-binaries.md) 자세한 설명이 나옵니다.
 
 선택적으로 사용 가능합니다.
 
@@ -690,17 +690,17 @@ $extra = $event->getComposer()->getPackage()->getExtra();
 
 예제:
 
-```json
+{% highlight json %}
 {
     "archive": {
         "exclude": ["/foo/bar", "baz", "/*.test", "!/foo/bar/baz"]
     }
 }
-```
+{% endhighlight %}
 
 위 예제는 `/dir/foo/bar/file`, `/foo/bar/baz`, `/file.php`,
 `/foo/my.test`, 4가지 경로를 include 하면, `/foo/bar/any`, `/foo/baz`, and `/my.test`, 3가지 경로를 exclude합니다.
 
 선택적으로 사용 가능합니다.
 
-&larr; [Command-line interface](03-cli.md)  |  [Repositories](05-repositories.md) &rarr;
+&larr; [Command-line interface](/Composer-korean-docs/doc/03-cli.md)  |  [Repositories](/Composer-korean-docs/doc/05-repositories.md) &rarr;

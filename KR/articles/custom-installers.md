@@ -30,7 +30,7 @@ An example use-case would be:
 
 An example composer.json of such a template package would be:
 
-```json
+{% highlight json %}
 {
     "name": "phpdocumentor/template-responsive",
     "type": "phpdocumentor-template",
@@ -38,7 +38,7 @@ An example composer.json of such a template package would be:
         "phpdocumentor/template-installer-plugin": "*"
     }
 }
-```
+{% endhighlight %}
 
 > **IMPORTANT**: to make sure that the template installer is present at the
 > time the template package is installed, template packages should require
@@ -68,7 +68,7 @@ requirements:
 
 Example:
 
-```json
+{% highlight json %}
 {
     "name": "phpdocumentor/template-installer-plugin",
     "type": "composer-plugin",
@@ -83,7 +83,7 @@ Example:
         "composer-plugin-api": "1.0.0"
     }
 }
-```
+{% endhighlight %}
 
 ### The Plugin class
 
@@ -96,7 +96,7 @@ autoloadable and matches the `extra.class` element in the package definition.
 
 Example:
 
-```php
+{% highlight php %}
 <?php
 
 namespace phpDocumentor\Composer;
@@ -113,7 +113,7 @@ class TemplateInstallerPlugin implements PluginInterface
         $composer->getInstallationManager()->addInstaller($installer);
     }
 }
-```
+{% endhighlight %}
 
 ### The Custom Installer class
 
@@ -142,7 +142,7 @@ source for the exact signature):
 
 Example:
 
-```php
+{% highlight php %}
 <?php
 
 namespace phpDocumentor\Composer;
@@ -177,7 +177,7 @@ class TemplateInstaller extends LibraryInstaller
         return 'phpdocumentor-template' === $packageType;
     }
 }
-```
+{% endhighlight %}
 
 The example demonstrates that it is quite simple to extend the
 [`Composer\Installer\LibraryInstaller`][5] class to strip a prefix
@@ -187,8 +187,8 @@ different installation path.
 > _Instead of being installed in `/vendor` any package installed using this
 > Installer will be put in the `/data/templates/<stripped name>` folder._
 
-[1]: ../04-schema.md#type
-[2]: ../04-schema.md#extra
+[1]: /Composer-korean-docs/doc/04-schema.md#type
+[2]: /Composer-korean-docs/doc/04-schema.md#extra
 [3]: https://github.com/composer/composer/blob/master/src/Composer/Plugin/PluginInterface.php
 [4]: https://github.com/composer/composer/blob/master/src/Composer/Installer/InstallerInterface.php
 [5]: https://github.com/composer/composer/blob/master/src/Composer/Installer/LibraryInstaller.php

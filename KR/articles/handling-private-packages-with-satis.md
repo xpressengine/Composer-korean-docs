@@ -20,16 +20,16 @@ or install via CLI:
 For example let's assume you have a few packages you want to reuse across your
 company but don't really want to open-source. You would first define a Satis
 configuration: a json file with an arbitrary name that lists your curated 
-[repositories](../05-repositories.md).
+[repositories](/Composer-korean-docs/doc/05-repositories.md).
 
 Here is an example configuration, you see that it holds a few VCS repositories,
-but those could be any types of [repositories](../05-repositories.md). Then it
+but those could be any types of [repositories](/Composer-korean-docs/doc/05-repositories.md). Then it
 uses `"require-all": true` which selects all versions of all packages in the
 repositories you defined.
 
 The default file Satis looks for is `satis.json` in the root of the repository.
 
-```json
+{% highlight json %}
 {
     "name": "My Repository",
     "homepage": "http://packages.example.org",
@@ -40,14 +40,14 @@ The default file Satis looks for is `satis.json` in the root of the repository.
     ],
     "require-all": true
 }
-```
+{% endhighlight %}
 
 If you want to cherry pick which packages you want, you can list all the packages
 you want to have in your satis repository inside the classic composer `require` key,
 using a `"*"` constraint to make sure all versions are selected, or another
 constraint if you want really specific versions.
 
-```json
+{% highlight json %}
 {
     "repositories": [
         { "type": "vcs", "url": "http://github.com/mycompany/privaterepo" },
@@ -60,7 +60,7 @@ constraint if you want really specific versions.
         "company/package3": "2.0.0"
     }
 }
-```
+{% endhighlight %}
 
 Once you did this, you just run `php bin/satis build <configuration file> <build dir>`.
 For example `php bin/satis build config.json web/` would read the `config.json`
@@ -88,7 +88,7 @@ everything should work smoothly. You don't need to copy all your repositories
 in every project anymore. Only that one unique repository that will update
 itself.
 
-```json
+{% highlight json %}
 {
     "repositories": [ { "type": "composer", "url": "http://packages.example.org/" } ],
     "require": {
@@ -97,7 +97,7 @@ itself.
         "company/package3": "dev-master"
     }
 }
-```
+{% endhighlight %}
 
 ### Security
 
@@ -107,7 +107,7 @@ connection options for the server.
 
 Example using a custom repository using SSH (requires the SSH2 PECL extension):
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -123,13 +123,13 @@ Example using a custom repository using SSH (requires the SSH2 PECL extension):
         }
     ]
 }
-```
+{% endhighlight %}
 
 > **Tip:** See [ssh2 context options](http://www.php.net/manual/en/wrappers.ssh2.php#refsect1-wrappers.ssh2-options) for more information.
 
 Example using HTTP over SSL using a client certificate:
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -143,7 +143,7 @@ Example using HTTP over SSL using a client certificate:
         }
     ]
 }
-```
+{% endhighlight %}
 
 > **Tip:** See [ssl context options](http://www.php.net/manual/en/context.ssl.php) for more information.
 
@@ -159,7 +159,7 @@ Subversion) will not have downloads available and thus installations usually tak
 To enable your satis installation to create downloads for all (Git, Mercurial and Subversion) your packages, add the
 following to your `satis.json`:
 
-```json
+{% highlight json %}
 {
     "archive": {
         "directory": "dist",
@@ -168,7 +168,7 @@ following to your `satis.json`:
         "skip-dev": true
     }
 }
-```
+{% endhighlight %}
 
 #### Options explained
 
@@ -194,12 +194,12 @@ It is possible to make satis automatically resolve and add all dependencies for 
 with the Downloads functionality to have a complete local mirror of packages. Just add the following
 to your `satis.json`:
 
-```json
+{% highlight json %}
 {
     "require-dependencies": true,
     "require-dev-dependencies": true
 }
-```
+{% endhighlight %}
 
 When searching for packages, satis will attempt to resolve all the required packages from the listed repositories.
 Therefore, if you are requiring a package from Packagist, you will need to define it in your `satis.json`.

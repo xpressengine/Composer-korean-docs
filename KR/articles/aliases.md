@@ -19,7 +19,7 @@ dev 버전이 충돌을 일으키는 문제가 발생합니다. 왜냐하면 `de
 
 여러분의 VCS 저장소에 `dev-master` 브랜치가 있다고 해 봅시다. 최신의 master의 개발 버전을 원하는 경우는 상당히 흔한 경우입니다. 이를 위해서 컴포저는 당신이 `dev-master`를 `1.0.x-dev` 버전으로 별칭을 지정할 수 있도록 합니다. 이렇게 하기 위해서는 `composer.json` 중 `extra` 아래 `branch-alias` 필드를 다음과 같이 지정하면 됩니다.
 
-```json
+{% highlight json %}
 {
     "extra": {
         "branch-alias": {
@@ -27,7 +27,7 @@ dev 버전이 충돌을 일으키는 문제가 발생합니다. 왜냐하면 `de
         }
     }
 }
-```
+{% endhighlight %}
 
 만약 호환되지 않는(non-comparible) 버전(dev-develop 같은)을 별칭하는 경우 브랜치 이름에 `dev-` 접두사를 붙여야 합니다. 또한 호환되는 버전(즉, 숫자로 시작하고, `.x-dev`로 끝나는)을 별칭할 수 있는데 좀 더 명확한 버전을 지정해야만 합니다. 예를 들면, 1.x-dev는 1.2.x-dev 로 별칭되어야 한다.
 
@@ -49,7 +49,7 @@ dev 버전이 충돌을 일으키는 문제가 발생합니다. 왜냐하면 `de
 
 여러분의 프로젝트 최상의 폴더의 `composer.json` 에 다음을 추가하기만 하면 됩니다.
 
-```json
+{% highlight json %}
 {
     "repositories": [
         {
@@ -62,7 +62,7 @@ dev 버전이 충돌을 일으키는 문제가 발생합니다. 왜냐하면 `de
         "monolog/monolog": "dev-bugfix as 1.0.x-dev"
     }
 }
-```
+{% endhighlight %}
 
 이렇게 하면, 여러분의 깃허브에서 `monolog/monolog`의 `dev-bugfix` 버전을 가지고 와서 `1.0.x-dev`라고 별칭할 것입니다. 
 

@@ -11,11 +11,11 @@
 
 Vendor binaries는 `composer.json`에 `bin` 항목을 추가하여 설정할 수 있습니다. 프로젝트에 여러개의 파일을 필요로 한다면 배열 형식으로 설정하면 됩니다. 
 
-```json
+{% highlight json %}
 {
     "bin": ["bin/my-script", "bin/my-other-script"]
 }
-```
+{% endhighlight %}
 
 ## composer.json 파일에 vendor binary 를 정의하는 것은 무엇을 의미하나요?
 
@@ -36,26 +36,26 @@ Vendor binaries는 `composer.json`에 `bin` 항목을 추가하여 설정할 수
 
 `my-vendor/project-a` 패키지가 다음과 같은 바이너리를 가지고 있다고 해봅시다:
 
-```json
+{% highlight json %}
 {
     "name": "my-vendor/project-a",
     "bin": ["bin/project-a-bin"]
 }
-```
+{% endhighlight %}
 
 이 `composer.json`을 기반으로 `composer install` 이 실행될 때에는 `bin/project-a-bin` 과 관련된 어떤 것도 싱행되지는 않을 것입니다. 
 
 하지만 `my-vendor/project-b` 프로젝트가 다음과 같이 의존성을 가지고 있다고 해봅시다:
 
 
-```json
+{% highlight json %}
 {
     "name": "my-vendor/project-b",
     "require": {
         "my-vendor/project-a": "*"
     }
 }
-```
+{% endhighlight %}
 
 이 `composer.json`을 기반으로 `composer install`이 실행 될 때에는 project-b의 의존성을 체크하고 `vendor/bin` 을 설치하게 됩니다. 
 
@@ -83,13 +83,13 @@ Vendor binaries는 `composer.json`에 `bin` 항목을 추가하여 설정할 수
 
 설정을 지정한 예는 다음과 같은 형태일 것입니다. :
 
-```json
+{% highlight json %}
 {
     "config": {
         "bin-dir": "scripts"
     }
 }
-```
+{% endhighlight %}
 
 `composer.json`에 위와 같이 지정하고 `composer install`을 실행하면 `vendor/bin/` 대신에 `scripts/` 폴더에 vendor binaries 를 설치합니다. 
 
