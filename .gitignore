@@ -1,4 +1,7 @@
-
+/gh-pages/_site
+/gh-pages/.sass-cache
+/node_modules/
+.grunt
 
 /* PhpStorm */
 .idea
