@@ -42,11 +42,9 @@ d) 컴포저는 패키지가 설치되어야하는 버전을 찾아, 알맞은 �
 
 컴포저는 PHP 5.3.2+ 이상에서 동작합니다. 몇가지 민감한 PHP 설정을 필요로 하지만 인스톨러를 사용하면 이러한 비호환성을 체크하고 경고를 확인할 수 있습니다. 
 
-To install packages from sources instead of simple zip archives, you will need
-git, svn or hg depending on how the package is version-controlled.
+소스로 부터 패키지를 인스톨하기 위해서 zip파일을 다운받는 대신에 패키지가 관리되고 있는 git, svr 또는 hg 와 같은 버전관리 시스템을 사용할 수 있습니다. 
 
-Composer is multi-platform and we strive to make it run equally well on Windows,
-Linux and OSX.
+컴포저는 멀티 플랫폼을 지원하며 윈도우(Windows), 리눅스(Linux) 그리고 맥OSX(OSX)에서 동일하게 동작합니다. 
 
 ## 설치방법 - Linux / Unix / OSX
 
